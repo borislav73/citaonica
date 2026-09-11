@@ -357,7 +357,7 @@ sup.fnref a {
   text-align: left;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 640px), (max-width: 1100px) and (pointer: coarse) {
   html { font-size: 17px; }
   .wrap { padding: 1rem 0.85rem 3rem; }
   .titlepage h1 { font-size: 1.55rem; }
@@ -904,7 +904,7 @@ body:not(.shelf-open) .shelf-open-btn { display: flex; }
   padding: 0;
   flex: 0 0 auto;
 }
-@media (min-width: 641px) {
+@media (min-width: 1101px), (min-width: 641px) and (hover: hover) and (pointer: fine) {
   .topnav { position: sticky; }
   .topnav .shelf-open-btn {
     position: absolute;
