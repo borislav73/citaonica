@@ -268,6 +268,55 @@
     } else if (prefer) {
       voiceSel.value = prefer.name;
     }
+    updateVoiceHint();
+  }
+
+  function pageLangIsSr() {
+    return (document.documentElement.lang || "").toLowerCase().indexOf("sr") === 0;
+  }
+
+  function hasBookVoice() {
+    return voices.some(function (v) {
+      const L = (v.lang || "").toLowerCase();
+      const N = (v.name || "").toLowerCase();
+      if (pageLangIsSr()) return /^sr/.test(L) || /serb/.test(N);
+      return /^hr/.test(L) || /croat/.test(N);
+    });
+  }
+
+  function ensureVoiceHint() {
+    if (document.getElementById("tts-voice-hint")) return document.getElementById("tts-voice-hint");
+    if (!bar) return null;
+    const hint = document.createElement("div");
+    hint.id = "tts-voice-hint";
+    hint.className = "tts-voice-hint";
+    hint.hidden = true;
+    const sr = pageLangIsSr();
+    hint.innerHTML = sr
+      ? '<p>На овом уређају нема српског гласа. Читање ће звучати на другом језику док не преузмете језични пакет.</p>'
+        + '<a class="tts-voice-store" href="https://play.google.com/store/apps/details?id=com.google.android.tts" target="_blank" rel="noopener">Отвори Google гласове</a>'
+        + '<ol>'
+        + '<li>Инсталирајте или ажурирајте <em>Speech Services by Google</em>.</li>'
+        + '<li>У тој апликацији отворите језик и преузмите српски глас.</li>'
+        + '<li>Вратите се овамо и поново одаберите глас.</li>'
+        + '</ol>'
+        + '<p class="tts-voice-alt">iPhone: Подешавања → Приступачност → Изговорени садржај → Гласови.</p>'
+      : '<p>Na ovom uređaju nema hrvatskog glasa. Čitanje će zvučati na drugom jeziku dok ne preuzmete jezični paket.</p>'
+        + '<a class="tts-voice-store" href="https://play.google.com/store/apps/details?id=com.google.android.tts" target="_blank" rel="noopener">Otvori Google glasove</a>'
+        + '<ol>'
+        + '<li>Instalirajte ili ažurirajte <em>Speech Services by Google</em>.</li>'
+        + '<li>U toj aplikaciji otvorite jezik i preuzmite hrvatski glas.</li>'
+        + '<li>Vratite se ovamo i ponovo odaberite glas.</li>'
+        + '</ol>'
+        + '<p class="tts-voice-alt">iPhone: Postavke → Pristupačnost → Izgovoreni sadržaj → Glasovi.</p>';
+    bar.appendChild(hint);
+    return hint;
+  }
+
+  function updateVoiceHint() {
+    const hint = ensureVoiceHint();
+    if (!hint) return;
+    hint.hidden = hasBookVoice();
   }
 
   fillVoices();
@@ -400,6 +449,8 @@
     if (open) {
       bar.removeAttribute("hidden");
       ensureWrapped();
+      fillVoices();
+      updateVoiceHint();
     } else {
       bar.setAttribute("hidden", "");
     }

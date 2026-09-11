@@ -943,3 +943,40 @@ body.catalog .topnav { position: sticky; top: 0; }
     box-shadow: 8px 0 24px rgba(26,26,26,0.12);
   }
 }
+
+.tts-voice-hint {
+  border-top: 1px solid var(--rule);
+  padding: 0.7rem 1.25rem 0.85rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--fg);
+  background: #efe8dc;
+}
+.tts-voice-hint[hidden] { display: none !important; }
+.tts-voice-hint p { margin: 0 0 0.55rem; text-align: left; }
+.tts-voice-hint ol {
+  margin: 0.45rem 0 0;
+  padding-left: 1.2rem;
+}
+.tts-voice-hint li { margin: 0.15rem 0; }
+.tts-voice-hint .tts-voice-alt {
+  margin: 0.55rem 0 0;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+a.tts-voice-store {
+  display: inline-block;
+  margin: 0.15rem 0 0.2rem;
+  padding: 0.38rem 0.75rem;
+  background: #3d3429;
+  color: #faf8f5;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+a.tts-voice-store:hover { background: #2a241c; }
+body.tts-open:has(#tts-voice-hint:not([hidden])) { padding-bottom: 12.5rem; }
+@media (max-width: 640px) {
+  .tts-voice-hint { padding: 0.6rem 0.7rem 0.75rem; font-size: 0.78rem; }
+}
