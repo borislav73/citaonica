@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Čitaonica</title>
+<link rel="stylesheet" href="assets/reader.css">
+</head>
+<body class="catalog shelf-open">
+
+<aside class="shelfbar" id="shelfbar" aria-label="Popis knjiga">
+  <div class="shelfbar-head">
+    <p class="shelfbar-title">Knjige</p>
+    <button type="button" class="shelf-close" id="shelf-close" title="Zatvori popis" aria-label="Zatvori popis">×</button>
+  </div>
+  <nav class="shelf-list">
+    <a class="shelf-item is-here" href="index.html">
+      <span class="lang">Početna</span>
+      <span class="ttl">Čitaonica</span>
+    </a>
+    <a class="shelf-item" href="knjige/davenant-hr.html">
+      <span class="lang">Hrvatski</span>
+      <span class="ttl">Rasprava o smrti Kristovoj</span>
+      <span class="sub">s obzirom na njezin opseg i posebne dobrobiti</span>
+    </a>
+    <a class="shelf-item" href="knjige/davenant-sr.html">
+      <span class="lang">Srpski</span>
+      <span class="ttl">Rasprava o smrti Hristovoj</span>
+      <span class="sub">s obzirom na njen opseg i posebne koristi</span>
+    </a>
+    <a class="shelf-item" href="knjige/39-clanaka-hr.html">
+      <span class="lang">Hrvatski</span>
+      <span class="ttl">Trideset i devet članaka vjere</span>
+      <span class="sub">Anglikanske crkve</span>
+    </a>
+  </nav>
+</aside>
+
+<button type="button" class="shelf-open-btn" id="shelf-open" title="Otvori popis knjiga" aria-label="Otvori popis knjiga" aria-controls="shelfbar">
+  <span></span><span></span><span></span>
+</button>
+
+<div class="stage">
+  <div class="topnav">
+    <div class="topnav-inner">
+      <a class="brand" href="index.html">Čitaonica</a>
+      <nav aria-label="Stranice">
+        <a href="index.html" class="is-here">Početna</a>
+      </nav>
+    </div>
+  </div>
+
+  <main class="wrap catalog-home">
+    <h1>O čitanju</h1>
+    <p class="italics">Knjiga ne traži žurbu. Traži pozornost koja se predaje rečenici, a zatim sljedećoj, dok se misao ne slegne.</p>
+    <p>Teološka knjiga nije ukras police. Ona je razgovor s ljudima koji su duže od nas gledali u Pismo, u Crkvu i u vlastitu savjest. Čitanje takva teksta usporava nas: ne da bismo manje znali, nego da bismo točnije vjerovali i točnije govorili.</p>
+    <p>Ovdje su knjige poredane lijevo. Otvori naslov i čitaj u istome obliku u kojemu je tekst slagan — bez ometanja, s mogućnošću da se sluša naglas. Popis se može sklopiti kad treba više mjesta za stranicu.</p>
+    <p>Korist je tiha, ali nije mala. Tko čita ozbiljnu knjigu, uči razlikovati tvrdo od meka, staro od puka navike, i vlastito mišljenje od predaje. To je vježba razuma u službi vjere, i vjere u službi razuma.</p>
+  </main>
+</div>
+
+<script>
+(function () {
+  var openBtn = document.getElementById("shelf-open");
+  var closeBtn = document.getElementById("shelf-close");
+  function setOpen(on) {
+    document.body.classList.toggle("shelf-open", on);
+  }
+  if (openBtn) openBtn.addEventListener("click", function () { setOpen(true); });
+  if (closeBtn) closeBtn.addEventListener("click", function () { setOpen(false); });
+})();
+</script>
+</body>
+</html>
