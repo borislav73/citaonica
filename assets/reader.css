@@ -382,7 +382,7 @@ sup.fnref a {
     grid-area: menu;
     align-self: center;
     justify-self: center;
-    width: 2.2rem;
+    width: 1.7rem;
     height: 1.2rem;
     padding: 0;
     transform: none;
@@ -878,18 +878,20 @@ body.shelf-open .shelfbar { transform: translateX(0); }
   top: 0.55rem;
   left: 0.55rem;
   z-index: 70;
-  width: 2.2rem;
-  height: 2.2rem;
-  padding: 0.45rem 0.38rem;
+  width: 1.7rem;
+  height: 1.35rem;
+  padding: 0.15rem 0;
   background: transparent;
   border: 0;
   cursor: pointer;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
 }
 body:not(.shelf-open) .shelf-open-btn { display: flex; }
 .shelf-open-btn span {
   display: block;
+  width: 0.95rem;
   height: 2px;
   background: var(--muted);
   border-radius: 1px;
@@ -897,7 +899,7 @@ body:not(.shelf-open) .shelf-open-btn { display: flex; }
 .topnav .shelf-open-btn {
   position: static;
   z-index: auto;
-  width: 2.2rem;
+  width: 1.7rem;
   height: 1.2rem;
   padding: 0;
   flex: 0 0 auto;
@@ -909,11 +911,14 @@ body:not(.shelf-open) .shelf-open-btn { display: flex; }
     left: 0.55rem;
     top: 50%;
     transform: translateY(-50%);
-    width: 2.2rem;
+    width: 1.7rem;
     height: 1.2rem;
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+  }
+  body:not(.shelf-open) .topnav-inner {
+    padding-left: 2.6rem;
   }
   body.shelf-open .topnav .shelf-open-btn {
     display: none;
