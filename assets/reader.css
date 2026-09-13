@@ -228,7 +228,7 @@ h2.sec {
 
 /* Body text justified throughout (paragraphs, objections, answers) */
 p {
-  font-size: 0.95rem;
+  font-size: 0.5rem;
   margin: 0 0 0.95em;
   text-indent: 1.15em;
   text-align: justify;
