@@ -1124,18 +1124,25 @@ body.notes-open .notes-panel { transform: none; }
   grid-row: 1 / span 3;
 }
 .note-body { margin: 0 0 0.25rem; grid-column: 2; }
-.note-actions { grid-column: 2; display: flex; gap: 0.7rem; }
+.note-actions { grid-column: 2; display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.2rem; }
 .note-quote {
   font-style: italic;
   color: var(--muted);
   margin: 0 0 0.3rem;
+  grid-column: 2;
 }
 .note-card button {
   font: inherit;
   font-size: 0.72rem;
-  border: 0;
-  background: none;
-  color: var(--link);
+  font-weight: 600;
+  border: 1px solid var(--rule);
+  background: #fff;
+  color: var(--accent);
   cursor: pointer;
-  padding: 0;
+  padding: 0.28rem 0.55rem;
+  border-radius: 4px;
+}
+.note-card button:hover {
+  border-color: var(--accent);
+  background: #faf8f5;
 }
