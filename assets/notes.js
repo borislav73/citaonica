@@ -46,6 +46,13 @@
     return el;
   }
 
+  function syncDockHeight() {
+    const bar = document.getElementById("tts-bar");
+    const open = document.body.classList.contains("tts-open") && bar && !bar.hidden;
+    const h = open ? Math.ceil(bar.getBoundingClientRect().height) : 0;
+    document.documentElement.style.setProperty("--tts-bar-h", h ? h + "px" : "0px");
+  }
+
   function setTrayOpen(on) {
     modeOn = on;
     const el = tray();
@@ -54,6 +61,7 @@
     if (!on) active = "";
     renderTray();
     document.body.classList.toggle("hl-dock-open", on);
+    syncDockHeight();
   }
 
   function renderTray() {
@@ -321,6 +329,15 @@
     addToggle();
     paint();
     renderList();
+    syncDockHeight();
+    window.addEventListener("resize", syncDockHeight);
+    const bar = document.getElementById("tts-bar");
+    if (bar && typeof MutationObserver !== "undefined") {
+      new MutationObserver(syncDockHeight).observe(bar, { attributes: true, attributeFilter: ["hidden", "class"] });
+    }
+    document.body.addEventListener("click", function () {
+      setTimeout(syncDockHeight, 50);
+    });
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
