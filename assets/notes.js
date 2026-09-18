@@ -4,76 +4,122 @@
     || document.title
     || location.pathname;
   const KEY = "citaonica-notes:" + bookId;
+  const COLOR_KEY = "citaonica-hl-color";
+  const COLORS = [
+    { id: "rose", hex: "#f48fb1" },
+    { id: "orange", hex: "#ffb74d" },
+    { id: "gold", hex: "#ffe566" },
+    { id: "green", hex: "#81c784" },
+    { id: "blue", hex: "#64b5f6" },
+    { id: "violet", hex: "#9575cd" }
+  ];
   const t = {
-    mark: sr ? "Означи" : "Označi",
+    hint: sr ? "Одабери боју, затим означи текст." : "Odaberi boju, zatim označi tekst.",
     note: sr ? "Биљешка" : "Bilješka",
     save: sr ? "Сачувај" : "Spremi",
     cancel: sr ? "Одустани" : "Odustani",
     remove: sr ? "Уклони" : "Ukloni",
-    list: sr ? "Биљешке" : "Bilješke",
-    empty: sr ? "Нема сачуваних биљешки на овој књизи." : "Nema spremljenih bilješki na ovoj knjizi.",
-    prompt: sr ? "Упиши биљешку уз овај одломак:" : "Upiši bilješku uz ovaj odlomak:",
+    list: sr ? "Ознаке" : "Oznake",
+    empty: sr ? "Нема ознака на овој књизи." : "Nema oznaka na ovoj knjizi.",
+    prompt: sr ? "Биљешка уз овај одломак:" : "Bilješka uz ovaj odlomak:",
+    clear: sr ? "Без боје (брисање)" : "Bez boje (brisanje)"
   };
 
   let items = [];
-  try {
-    items = JSON.parse(localStorage.getItem(KEY) || "[]") || [];
-  } catch (e) {
-    items = [];
+  try { items = JSON.parse(localStorage.getItem(KEY) || "[]") || []; } catch (e) { items = []; }
+  let active = localStorage.getItem(COLOR_KEY) || "gold";
+  if (!COLORS.some(function (c) { return c.id === active; })) active = "gold";
+
+  function persist() { localStorage.setItem(KEY, JSON.stringify(items)); }
+  function uid() { return "n" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+  function colorHex(id) {
+    const c = COLORS.find(function (x) { return x.id === id; });
+    return c ? c.hex : "#ffe566";
   }
 
-  function persist() {
-    localStorage.setItem(KEY, JSON.stringify(items));
+  function tray() {
+    let el = document.getElementById("hl-tray");
+    if (el) return el;
+    el = document.createElement("div");
+    el.id = "hl-tray";
+    el.className = "hl-tray";
+    document.body.appendChild(el);
+    return el;
   }
 
-  function uid() {
-    return "n" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
-  }
-
-  function popover(x, y, quote, range) {
-    closePop();
-    const box = document.createElement("div");
-    box.className = "note-pop";
-    box.id = "note-pop";
-    box.style.left = Math.min(window.innerWidth - 220, Math.max(8, x)) + "px";
-    box.style.top = Math.min(window.innerHeight - 80, Math.max(8, y)) + "px";
-    const b1 = document.createElement("button");
-    b1.type = "button";
-    b1.textContent = t.mark;
-    b1.addEventListener("click", function () {
-      addItem({ kind: "mark", quote: quote });
-      paint();
-      closePop();
+  function renderTray() {
+    const el = tray();
+    el.innerHTML = "";
+    const hint = document.createElement("span");
+    hint.className = "hl-hint";
+    hint.textContent = t.hint;
+    el.appendChild(hint);
+    COLORS.forEach(function (c) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "hl-dot" + (active === c.id ? " is-on" : "");
+      b.style.background = c.hex;
+      b.title = c.id;
+      b.addEventListener("click", function (ev) {
+        ev.stopPropagation();
+        active = c.id;
+        localStorage.setItem(COLOR_KEY, active);
+        renderTray();
+      });
+      el.appendChild(b);
     });
-    const b2 = document.createElement("button");
-    b2.type = "button";
-    b2.textContent = t.note;
-    b2.addEventListener("click", function () {
-      const text = window.prompt(t.prompt, "");
-      if (text === null) return;
-      addItem({ kind: "note", quote: quote, text: text });
-      paint();
+    const eraser = document.createElement("button");
+    eraser.type = "button";
+    eraser.className = "hl-dot hl-erase" + (active === "erase" ? " is-on" : "");
+    eraser.title = t.clear;
+    eraser.addEventListener("click", function (ev) {
+      ev.stopPropagation();
+      active = "erase";
+      renderTray();
+    });
+    el.appendChild(eraser);
+    const listBtn = document.createElement("button");
+    listBtn.type = "button";
+    listBtn.className = "hl-list-btn";
+    listBtn.textContent = t.list;
+    listBtn.addEventListener("click", function () {
+      document.body.classList.toggle("notes-open");
       renderList();
-      closePop();
     });
-    box.appendChild(b1);
-    box.appendChild(b2);
-    document.body.appendChild(box);
+    el.appendChild(listBtn);
+    const x = document.createElement("button");
+    x.type = "button";
+    x.className = "hl-x";
+    x.setAttribute("aria-label", "Zatvori");
+    x.textContent = "×";
+    x.addEventListener("click", function () { el.hidden = true; });
+    el.appendChild(x);
   }
 
-  function closePop() {
-    const el = document.getElementById("note-pop");
-    if (el) el.remove();
+  function showTrayNear(rect) {
+    const el = tray();
+    el.hidden = false;
+    const left = Math.min(window.innerWidth - 320, Math.max(8, rect.left));
+    const top = Math.min(window.innerHeight - 64, Math.max(8, rect.bottom + 8));
+    el.style.left = left + "px";
+    el.style.top = top + "px";
+    el.style.position = "fixed";
   }
 
   function addItem(partial) {
     items.push({
       id: uid(),
-      kind: partial.kind,
-      quote: (partial.quote || "").slice(0, 400),
+      kind: partial.kind || "mark",
+      quote: (partial.quote || "").slice(0, 500),
       text: partial.text || "",
-      at: Date.now(),
+      color: partial.color || active,
+      at: Date.now()
     });
+    persist();
+  }
+
+  function removeByQuote(quote) {
+    items = items.filter(function (it) { return it.quote !== quote; });
     persist();
   }
 
@@ -93,33 +139,35 @@
     });
     const root = document.querySelector("main") || document.body;
     items.forEach(function (it) {
-      if (!it.quote || it.quote.length < 8) return;
-      highlightFirst(root, it.quote);
+      if (!it.quote || it.quote.length < 4) return;
+      highlightFirst(root, it);
     });
   }
 
-  function highlightFirst(root, quote) {
+  function highlightFirst(root, it) {
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
       acceptNode: function (n) {
         if (!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
-        if (n.parentElement && n.parentElement.closest("script, style, .tts-bar, .shelfbar, .topnav, .note-pop, .notes-panel, mark.user-hl")) {
+        if (n.parentElement && n.parentElement.closest("script, style, .tts-bar, .shelfbar, .topnav, .hl-tray, .notes-panel, mark.user-hl")) {
           return NodeFilter.FILTER_REJECT;
         }
         return NodeFilter.FILTER_ACCEPT;
-      },
+      }
     });
     let node;
     while ((node = walker.nextNode())) {
-      const idx = node.nodeValue.indexOf(quote);
+      const idx = node.nodeValue.indexOf(it.quote);
       if (idx === -1) continue;
       const range = document.createRange();
       range.setStart(node, idx);
-      range.setEnd(node, idx + quote.length);
+      range.setEnd(node, Math.min(node.nodeValue.length, idx + it.quote.length));
       const mark = document.createElement("mark");
       mark.className = "user-hl";
-      try {
-        range.surroundContents(mark);
-      } catch (e) {}
+      mark.dataset.color = it.color || "gold";
+      mark.dataset.id = it.id;
+      mark.style.background = colorHex(it.color);
+      mark.title = it.text || "";
+      try { range.surroundContents(mark); } catch (e) {}
       return;
     }
   }
@@ -137,48 +185,98 @@
     h.className = "notes-panel-title";
     h.textContent = t.list;
     panel.appendChild(h);
-    const notes = items.filter(function (it) { return it.kind === "note"; });
-    if (!notes.length) {
+    if (!items.length) {
       const p = document.createElement("p");
       p.className = "notes-empty";
       p.textContent = t.empty;
       panel.appendChild(p);
       return;
     }
-    notes.forEach(function (it) {
+    items.slice().reverse().forEach(function (it) {
       const card = document.createElement("div");
       card.className = "note-card";
+      const sw = document.createElement("span");
+      sw.className = "note-swatch";
+      sw.style.background = colorHex(it.color);
       const q = document.createElement("p");
       q.className = "note-quote";
-      q.textContent = "«" + it.quote + "»";
-      const body = document.createElement("p");
-      body.textContent = it.text;
+      q.textContent = it.quote;
+      q.addEventListener("click", function () {
+        const m = document.querySelector('mark.user-hl[data-id="' + it.id + '"]');
+        if (m) m.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+      card.appendChild(sw);
+      card.appendChild(q);
+      if (it.text) {
+        const body = document.createElement("p");
+        body.className = "note-body";
+        body.textContent = it.text;
+        card.appendChild(body);
+      }
+      const row = document.createElement("div");
+      row.className = "note-actions";
+      const nb = document.createElement("button");
+      nb.type = "button";
+      nb.textContent = t.note;
+      nb.addEventListener("click", function () {
+        const text = window.prompt(t.prompt, it.text || "");
+        if (text === null) return;
+        it.text = text;
+        it.kind = text ? "note" : "mark";
+        persist();
+        paint();
+        renderList();
+      });
       const rm = document.createElement("button");
       rm.type = "button";
       rm.textContent = t.remove;
       rm.addEventListener("click", function () { removeItem(it.id); });
-      card.appendChild(q);
-      card.appendChild(body);
-      card.appendChild(rm);
+      row.appendChild(nb);
+      row.appendChild(rm);
+      card.appendChild(row);
       panel.appendChild(card);
     });
   }
 
   document.addEventListener("mouseup", function (ev) {
-    if (ev.target.closest && ev.target.closest(".note-pop, .notes-panel, .tts-bar, .shelfbar, .topnav, .auth-slot")) return;
+    if (ev.target.closest && ev.target.closest(".hl-tray, .notes-panel, .tts-bar, .shelfbar, .topnav, .auth-slot")) return;
     const sel = window.getSelection();
-    if (!sel || sel.isCollapsed) {
-      closePop();
-      return;
-    }
+    if (!sel || sel.isCollapsed) return;
     const quote = String(sel).replace(/\s+/g, " ").trim();
-    if (quote.length < 8) return;
+    if (quote.length < 4) return;
     const rect = sel.getRangeAt(0).getBoundingClientRect();
-    popover(rect.left + window.scrollX, rect.bottom + window.scrollY + 6, quote);
+    showTrayNear(rect);
+    if (active === "erase") {
+      items = items.filter(function (it) { return quote.indexOf(it.quote) === -1 && it.quote.indexOf(quote) === -1; });
+      persist();
+    } else {
+      const exists = items.some(function (it) { return it.quote === quote; });
+      if (!exists) addItem({ kind: "mark", quote: quote, color: active });
+      else {
+        items.forEach(function (it) {
+          if (it.quote === quote) it.color = active;
+        });
+        persist();
+      }
+    }
+    paint();
+    renderList();
+    sel.removeAllRanges();
   });
 
-  document.addEventListener("keydown", function (ev) {
-    if (ev.key === "Escape") closePop();
+  document.addEventListener("click", function (ev) {
+    const mark = ev.target.closest && ev.target.closest("mark.user-hl");
+    if (!mark) return;
+    const id = mark.dataset.id;
+    const it = items.find(function (x) { return x.id === id; });
+    if (!it) return;
+    const text = window.prompt(t.prompt, it.text || "");
+    if (text === null) return;
+    it.text = text;
+    it.kind = text ? "note" : "mark";
+    persist();
+    paint();
+    renderList();
   });
 
   function addToggle() {
@@ -192,12 +290,22 @@
     btn.className = "auth-btn";
     btn.textContent = t.list;
     btn.addEventListener("click", function () {
+      const el = tray();
+      el.hidden = false;
+      el.style.position = "fixed";
+      el.style.right = "1rem";
+      el.style.left = "auto";
+      el.style.top = "4.2rem";
       document.body.classList.toggle("notes-open");
+      renderList();
     });
     slot.appendChild(btn);
   }
 
   function boot() {
+    renderTray();
+    const el = tray();
+    el.hidden = true;
     addToggle();
     paint();
     renderList();
