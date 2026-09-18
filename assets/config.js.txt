@@ -1,4 +1,0 @@
-window.CITAONICA_CONFIG = {
-  supabaseUrl: "https://TVOJ-PROJEKT.supabase.co",
-  supabaseAnonKey: "TVOJ-ANON-KEY"
-};
