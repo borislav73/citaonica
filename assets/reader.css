@@ -1016,6 +1016,10 @@ mark.user-hl {
   border-radius: 2px;
   cursor: pointer;
 }
+.hl-tray[hidden],
+.hl-tray.is-closed {
+  display: none !important;
+}
 .hl-tray {
   position: fixed;
   z-index: 80;
