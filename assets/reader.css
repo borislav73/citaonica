@@ -1056,6 +1056,8 @@ body.tts-open:has(#tts-voice-hint:not([hidden])) { padding-bottom: 12.5rem; }
 }
 
 /* Auth + notes */
+.topnav .auth-slot,
+.topnav #account-slot { display: none !important; }
 .auth-slot {
   margin-left: 0.6rem;
   display: flex;

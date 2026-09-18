@@ -34,21 +34,26 @@
   }
 
   function slot() {
-    let el = document.getElementById("account-slot") || document.getElementById("auth-slot");
-    if (el) return el;
+    document.querySelectorAll(".topnav .auth-slot, .topnav #auth-slot, .topnav #account-slot").forEach(function (n) {
+      n.remove();
+    });
+    let el = document.getElementById("account-slot");
     const side = document.querySelector(".shelfbar");
     if (side) {
-      el = document.createElement("div");
-      el.id = "account-slot";
-      el.className = "account-slot";
-      side.appendChild(el);
+      if (!el || !side.contains(el)) {
+        el = document.createElement("div");
+        el.id = "account-slot";
+        el.className = "account-slot";
+        side.appendChild(el);
+      }
       return el;
     }
+    if (el) return el;
     const inner = document.querySelector(".topnav-inner");
     if (!inner) return null;
     el = document.createElement("div");
-    el.id = "auth-slot";
-    el.className = "auth-slot";
+    el.id = "account-slot";
+    el.className = "account-slot";
     inner.appendChild(el);
     return el;
   }
