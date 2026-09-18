@@ -34,8 +34,16 @@
   }
 
   function slot() {
-    let el = document.getElementById("auth-slot");
+    let el = document.getElementById("account-slot") || document.getElementById("auth-slot");
     if (el) return el;
+    const side = document.querySelector(".shelfbar");
+    if (side) {
+      el = document.createElement("div");
+      el.id = "account-slot";
+      el.className = "account-slot";
+      side.appendChild(el);
+      return el;
+    }
     const inner = document.querySelector(".topnav-inner");
     if (!inner) return null;
     el = document.createElement("div");
