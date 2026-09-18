@@ -1,6 +1,7 @@
 (function () {
   const cfg = window.CITAONICA || {};
-  const ready = !!(cfg.supabaseUrl && cfg.supabaseAnonKey && window.supabase);
+  const publicKey = cfg.supabaseAnonKey || cfg.supabasePublishableKey || "";
+  const ready = !!(cfg.supabaseUrl && publicKey && window.supabase);
   const sr = (document.documentElement.lang || "").indexOf("sr") === 0;
   const t = {
     login: sr ? "Пријава преко Googleа" : "Prijava preko Googlea",
@@ -15,6 +16,15 @@
   let client = null;
   let user = null;
   const listeners = [];
+
+  function displayName(u) {
+    if (!u) return t.guest;
+    const m = u.user_metadata || {};
+    const raw = (m.given_name || m.full_name || m.name || "").trim();
+    if (raw) return raw.split(/\s+/)[0];
+    if (u.email) return u.email.split("@")[0];
+    return t.guest;
+  }
 
   function emit() {
     listeners.forEach(function (fn) {
@@ -42,7 +52,8 @@
     if (user) {
       const name = document.createElement("span");
       name.className = "auth-name";
-      name.textContent = user.email || user.user_metadata && user.user_metadata.full_name || t.guest;
+      name.textContent = displayName(user);
+      name.title = user.email || "";
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "auth-btn";
@@ -88,7 +99,7 @@
   async function start() {
     render();
     if (!ready) return;
-    client = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey);
+    client = window.supabase.createClient(cfg.supabaseUrl, publicKey);
     window.CitaonicaAuth.client = function () { return client; };
     const { data } = await client.auth.getSession();
     user = data && data.session ? data.session.user : null;
