@@ -1022,19 +1022,27 @@ mark.user-hl {
 }
 .hl-tray {
   position: fixed;
+  left: 50%;
+  bottom: 1.15rem;
+  top: auto;
+  right: auto;
+  transform: translateX(-50%);
   z-index: 80;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.35rem 0.4rem;
+  justify-content: center;
+  gap: 0.4rem 0.45rem;
   background: #2b2b2b;
   color: #f3efe8;
-  padding: 0.45rem 0.55rem;
-  border-radius: 10px;
+  padding: 0.55rem 0.7rem;
+  border-radius: 14px;
   box-shadow: 0 8px 28px rgba(0,0,0,.28);
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  max-width: calc(100vw - 1.2rem);
+  max-width: calc(100vw - 1.4rem);
 }
+body.hl-dock-open { padding-bottom: 4.5rem; }
+body.tts-open.hl-dock-open { padding-bottom: 9rem; }
 .hl-hint {
   font-size: 0.72rem;
   color: #ddd;
