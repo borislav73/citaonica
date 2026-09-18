@@ -445,6 +445,19 @@ sup.fnref a {
   white-space: nowrap;
 }
 .tts-toggle-nav:hover { color: var(--link); border-color: var(--link); }
+.nav-action-btn {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: #f3efe7;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 0.28rem 0.6rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.nav-action-btn:hover { color: var(--link); border-color: var(--link); }
 .tts-toggle-fab {
   display: none;
 }
@@ -1103,11 +1116,28 @@ body.tts-open.hl-dock-open { padding-bottom: calc(var(--tts-bar-h, 6.4rem) + 4.2
   transition: transform .2s ease;
 }
 body.notes-open .notes-panel { transform: none; }
-.notes-panel-title {
+.notes-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
   margin: 0 0 0.6rem;
+}
+.notes-panel-title {
+  margin: 0;
   font-weight: 700;
   color: var(--accent);
 }
+.notes-panel-x {
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 0.15rem;
+}
+.notes-panel-x:hover { color: var(--accent); }
 .notes-empty { color: var(--muted); }
 .note-card {
   border-top: 1px solid var(--rule);

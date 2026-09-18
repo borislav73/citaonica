@@ -16,7 +16,8 @@
     hint: sr ? "Одабери боју, затим означи текст." : "Odaberi boju, zatim označi tekst.",
     note: sr ? "Биљешка" : "Bilješka",
     remove: sr ? "Уклони" : "Ukloni",
-    list: sr ? "Ознаке" : "Oznake",
+    list: sr ? "Означено" : "Označeno",
+    markBtn: sr ? "Означи" : "Označi",
     empty: sr ? "Нема ознака на овој књизи." : "Nema oznaka na ovoj knjizi.",
     prompt: sr ? "Биљешка уз овај одломак:" : "Bilješka uz ovaj odlomak:",
     clear: sr ? "Уклони ознаку" : "Ukloni oznaku"
@@ -215,10 +216,22 @@
       document.body.appendChild(panel);
     }
     panel.innerHTML = "";
+    const head = document.createElement("div");
+    head.className = "notes-panel-head";
     const h = document.createElement("p");
     h.className = "notes-panel-title";
     h.textContent = t.list;
-    panel.appendChild(h);
+    const close = document.createElement("button");
+    close.type = "button";
+    close.className = "notes-panel-x";
+    close.setAttribute("aria-label", "Zatvori");
+    close.textContent = "×";
+    close.addEventListener("click", function () {
+      document.body.classList.remove("notes-open");
+    });
+    head.appendChild(h);
+    head.appendChild(close);
+    panel.appendChild(head);
     if (!items.length) {
       const p = document.createElement("p");
       p.className = "notes-empty";
@@ -314,10 +327,11 @@
       btn = document.createElement("button");
       btn.type = "button";
       btn.id = "notes-toggle";
-      btn.className = "auth-btn";
+      btn.className = "nav-action-btn";
       slot.appendChild(btn);
     }
-    btn.textContent = t.list;
+    btn.className = "nav-action-btn";
+    btn.textContent = t.markBtn;
     btn.addEventListener("click", function () {
       setTrayOpen(!modeOn);
     });
