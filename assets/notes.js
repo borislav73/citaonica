@@ -286,7 +286,7 @@
   }
 
   document.addEventListener("mouseup", function (ev) {
-    if (!modeOn || !active) return;
+    if (!loggedIn() || !modeOn || !active) return;
     if (ev.target.closest && ev.target.closest(".hl-tray, .notes-panel, .tts-bar, .shelfbar, .topnav, .auth-slot")) return;
     const quote = currentQuote();
     if (!quote || quote.length < 4) return;
@@ -303,6 +303,10 @@
   document.addEventListener("click", function (ev) {
     const mark = ev.target.closest && ev.target.closest("mark.user-hl");
     if (!mark) return;
+    if (!loggedIn()) {
+      if (window.CitaonicaAuth && window.CitaonicaAuth.openSignIn) window.CitaonicaAuth.openSignIn();
+      return;
+    }
     if (modeOn && active === "erase") {
       const it = items.find(function (x) { return x.id === mark.dataset.id; });
       if (it) removeItem(it.id);
@@ -319,28 +323,62 @@
     renderList();
   });
 
+  function loggedIn() {
+    return !!(window.CitaonicaAuth && window.CitaonicaAuth.getUser && window.CitaonicaAuth.getUser());
+  }
+
   function addToggle() {
-    let btn = document.getElementById("notes-toggle");
-    if (!btn) {
-      const slot = document.getElementById("auth-slot") || document.querySelector(".topnav-inner");
-      if (!slot) return;
-      btn = document.createElement("button");
-      btn.type = "button";
-      btn.id = "notes-toggle";
-      btn.className = "nav-action-btn";
-      slot.appendChild(btn);
-    }
-    btn.className = "nav-action-btn";
-    btn.textContent = t.markBtn;
-    btn.addEventListener("click", function () {
+    document.querySelectorAll("#notes-toggle").forEach(function (n) {
+      if (n.closest && n.closest(".topnav")) n.remove();
+    });
+    const tools = document.getElementById("markup-tools");
+    if (!tools) return;
+    tools.innerHTML = "";
+    const markBtn = document.createElement("button");
+    markBtn.type = "button";
+    markBtn.id = "notes-toggle";
+    markBtn.className = "markup-link";
+    markBtn.textContent = t.markBtn;
+    markBtn.addEventListener("click", function () {
+      if (!loggedIn()) {
+        if (window.CitaonicaAuth && window.CitaonicaAuth.openSignIn) window.CitaonicaAuth.openSignIn();
+        return;
+      }
       setTrayOpen(!modeOn);
     });
+    const listBtn = document.createElement("button");
+    listBtn.type = "button";
+    listBtn.className = "markup-link";
+    listBtn.textContent = t.list;
+    listBtn.addEventListener("click", function () {
+      if (!loggedIn()) {
+        if (window.CitaonicaAuth && window.CitaonicaAuth.openSignIn) window.CitaonicaAuth.openSignIn();
+        return;
+      }
+      document.body.classList.toggle("notes-open");
+      renderList();
+    });
+    tools.appendChild(markBtn);
+    tools.appendChild(listBtn);
   }
+
+  window.CitaonicaNotes = {
+    syncAuth: function () {
+      addToggle();
+      if (!loggedIn()) {
+        setTrayOpen(false);
+        document.body.classList.remove("notes-open");
+      }
+    }
+  };
 
   function boot() {
     renderTray();
     setTrayOpen(false);
     addToggle();
+    if (window.CitaonicaAuth && window.CitaonicaAuth.onChange) {
+      window.CitaonicaAuth.onChange(function () { addToggle(); });
+    }
     paint();
     renderList();
     syncDockHeight();
