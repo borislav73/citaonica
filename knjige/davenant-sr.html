@@ -22,6 +22,7 @@
       <span class="lang">Početna</span>
       <span class="ttl">Čitaonica</span>
     </a>
+    <div class="shelf-rule" aria-hidden="true"></div>
   </nav>
   <div id="account-slot" class="account-slot">
     <div class="markup-block">
@@ -39,7 +40,9 @@
 </button>
 
     <a class="brand" href="#top">Расправа о смрти Христовој</a>
-    <nav aria-label="Поглавља">
+<button type="button" class="tts-toggle-nav" id="tts-toggle-nav" aria-controls="tts-bar" title="Активирај читање наглас">Активирај читање наглас</button>
+</div>
+<nav class="chapbar" id="chapbar" aria-label="Poglavlja">
       <a href="#contents">Садржај</a>
       <a href="#kind">Читаоцу</a>
       <a href="#ch1">1</a>
@@ -52,10 +55,7 @@
       <a href="#gall">Додатак</a>
       <a href="#notes">Напомене</a>
     </nav>
-    <button type="button" class="tts-toggle-nav" id="tts-toggle-nav" aria-controls="tts-bar" title="Активирај читање наглас">Активирај читање наглас</button>
-  </div>
 </div>
-
 <main class="wrap">
 
 <header class="titlepage" id="top">
@@ -516,6 +516,7 @@
 <script src="../assets/auth.js"></script>
 <script src="../assets/notes.js"></script>
 <script src="../assets/shelf.js"></script>
+<script src="../assets/chapbar.js"></script>
 <script src="../assets/tts.js"></script>
 </body>
 </html>
