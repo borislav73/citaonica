@@ -6,4 +6,8 @@
   }
   if (openBtn) openBtn.addEventListener("click", function () { setOpen(true); });
   if (closeBtn) closeBtn.addEventListener("click", function () { setOpen(false); });
+  window.CitaonicaShelf = {
+    close: function () { setOpen(false); },
+    open: function () { setOpen(true); }
+  };
 })();

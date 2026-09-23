@@ -55,14 +55,21 @@
     document.documentElement.style.setProperty("--tts-bar-h", h ? h + "px" : "0px");
   }
 
+  function closeShelf() {
+    document.body.classList.remove("shelf-open");
+    if (window.CitaonicaShelf && window.CitaonicaShelf.close) window.CitaonicaShelf.close();
+  }
+
   function setTrayOpen(on) {
     modeOn = on;
     const el = tray();
     el.hidden = !on;
     el.classList.toggle("is-closed", !on);
     if (!on) active = "";
+    else if (!active) active = "gold";
     renderTray();
     document.body.classList.toggle("hl-dock-open", on);
+    if (on) closeShelf();
     syncDockHeight();
   }
 
@@ -305,50 +312,82 @@
     return true;
   }
 
-  function rangeFromPoint(x, y) {
-    if (document.caretRangeFromPoint) return document.caretRangeFromPoint(x, y);
+  function textNodeAt(x, y) {
+    const el = document.elementFromPoint(x, y);
+    if (!el || inChrome(el) || !el.closest("main")) return null;
+    let node = null;
+    let offset = 0;
     if (document.caretPositionFromPoint) {
       const pos = document.caretPositionFromPoint(x, y);
-      if (!pos || !pos.offsetNode) return null;
-      const r = document.createRange();
-      r.setStart(pos.offsetNode, pos.offset);
-      r.collapse(true);
-      return r;
+      if (pos && pos.offsetNode) {
+        node = pos.offsetNode;
+        offset = pos.offset;
+      }
+    } else if (document.caretRangeFromPoint) {
+      const r = document.caretRangeFromPoint(x, y);
+      if (r) {
+        node = r.startContainer;
+        offset = r.startOffset;
+      }
     }
-    return null;
+    if (!node) return null;
+    if (node.nodeType !== 3) {
+      const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
+      node = walker.nextNode();
+      offset = 0;
+    }
+    if (!node || node.nodeType !== 3) return null;
+    return { node: node, offset: offset };
   }
 
   function selectWordAt(x, y) {
-    const r = rangeFromPoint(x, y);
-    if (!r || r.startContainer.nodeType !== 3) return "";
-    const text = r.startContainer.nodeValue || "";
-    let a = r.startOffset;
-    let b = r.startOffset;
-    while (a > 0 && /[^\s.,;:!?()«»""\[\]]/.test(text.charAt(a - 1))) a--;
-    while (b < text.length && /[^\s.,;:!?()«»""\[\]]/.test(text.charAt(b))) b++;
+    const hit = textNodeAt(x, y);
+    if (!hit) return "";
+    const text = hit.node.nodeValue || "";
+    let a = hit.offset;
+    let b = hit.offset;
+    const ok = /[0-9A-Za-zÀ-žА-яЁёЂђЈјЉљЊњЋћЏџІіЇїЄєҐґ'’-]/;
+    while (a > 0 && ok.test(text.charAt(a - 1))) a--;
+    while (b < text.length && ok.test(text.charAt(b))) b++;
+    if (b - a < 2) {
+      a = Math.max(0, hit.offset - 12);
+      b = Math.min(text.length, hit.offset + 24);
+    }
     if (b - a < 2) return "";
-    const range = document.createRange();
-    range.setStart(r.startContainer, a);
-    range.setEnd(r.startContainer, b);
-    const sel = window.getSelection();
-    sel.removeAllRanges();
-    sel.addRange(range);
+    try {
+      const range = document.createRange();
+      range.setStart(hit.node, a);
+      range.setEnd(hit.node, b);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    } catch (e) {}
     return text.slice(a, b).replace(/\s+/g, " ").trim();
+  }
+
+  function markAt(x, y) {
+    if (!loggedIn() || !modeOn) return;
+    if (!active) active = "gold";
+    const quote = currentQuote() || selectWordAt(x, y);
+    if (!quote || quote.length < 2) return;
+    if (active === "erase") eraseQuote(quote);
+    else applyColor(active, quote);
+    const sel = window.getSelection();
+    if (sel) sel.removeAllRanges();
   }
 
   document.addEventListener("mouseup", function (ev) {
     if (inChrome(ev.target)) return;
-    applyCurrentSelection();
+    if (!applyCurrentSelection() && modeOn && active && ev.target.closest && ev.target.closest("main")) {
+      markAt(ev.clientX, ev.clientY);
+    }
   });
-
-  document.addEventListener("touchend", function (ev) {
-    if (inChrome(ev.target)) return;
-    setTimeout(applyCurrentSelection, 40);
-  }, { passive: true });
 
   let holdTimer = null;
   let holdX = 0;
   let holdY = 0;
+  let touchMoved = false;
+  let holdFired = false;
 
   function clearHold() {
     if (holdTimer) {
@@ -359,6 +398,8 @@
 
   document.addEventListener("touchstart", function (ev) {
     clearHold();
+    touchMoved = false;
+    holdFired = false;
     if (!loggedIn()) return;
     if (inChrome(ev.target)) return;
     const tch = ev.touches && ev.touches[0];
@@ -367,27 +408,34 @@
     holdY = tch.clientY;
     holdTimer = setTimeout(function () {
       holdTimer = null;
+      holdFired = true;
       if (!loggedIn()) return;
       if (!modeOn) setTrayOpen(true);
-      if (!active) return;
-      const quote = currentQuote() || selectWordAt(holdX, holdY);
-      if (!quote || quote.length < 2) return;
-      if (active === "erase") eraseQuote(quote);
-      else applyColor(active, quote);
-      const sel = window.getSelection();
-      if (sel) sel.removeAllRanges();
-    }, 480);
+      markAt(holdX, holdY);
+    }, 420);
   }, { passive: true });
 
   document.addEventListener("touchmove", function (ev) {
-    if (!holdTimer) return;
     const tch = ev.touches && ev.touches[0];
     if (!tch) return;
-    if (Math.abs(tch.clientX - holdX) > 12 || Math.abs(tch.clientY - holdY) > 12) clearHold();
+    if (Math.abs(tch.clientX - holdX) > 10 || Math.abs(tch.clientY - holdY) > 10) {
+      touchMoved = true;
+      clearHold();
+    }
   }, { passive: true });
 
   document.addEventListener("touchcancel", clearHold, { passive: true });
-  document.addEventListener("touchend", clearHold, { passive: true });
+
+  document.addEventListener("touchend", function (ev) {
+    clearHold();
+    if (holdFired || touchMoved) return;
+    if (inChrome(ev.target)) return;
+    if (!loggedIn() || !modeOn) return;
+    const tch = ev.changedTouches && ev.changedTouches[0];
+    const x = tch ? tch.clientX : holdX;
+    const y = tch ? tch.clientY : holdY;
+    setTimeout(function () { markAt(x, y); }, 10);
+  }, { passive: true });
 
   document.addEventListener("keydown", function (ev) {
     if (ev.key === "Escape") setTrayOpen(false);
@@ -437,6 +485,7 @@
         if (window.CitaonicaAuth && window.CitaonicaAuth.openSignIn) window.CitaonicaAuth.openSignIn();
         return;
       }
+      closeShelf();
       setTrayOpen(!modeOn);
     });
     const listBtn = document.createElement("button");
