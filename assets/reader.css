@@ -271,8 +271,15 @@ h3.chapn {
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.02em;
-  margin: 1.75rem 0 0.7rem;
+  margin: 1.75rem 0 0.35rem;
   color: var(--accent);
+}
+p.chap-title {
+  text-indent: 0;
+  font-style: italic;
+  font-size: 1.02rem;
+  color: var(--accent);
+  margin: 0 0 0.85rem;
 }
 
 /* Body text justified throughout (paragraphs, objections, answers) */
