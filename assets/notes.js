@@ -606,11 +606,21 @@
     renderTray();
     setTrayOpen(false);
     addToggle();
+    function syncDesktopPanel() {
+      if (!isTouch() && loggedIn()) {
+        document.body.classList.add("notes-open");
+        renderList();
+      }
+    }
     if (window.CitaonicaAuth && window.CitaonicaAuth.onChange) {
-      window.CitaonicaAuth.onChange(function () { addToggle(); });
+      window.CitaonicaAuth.onChange(function () {
+        addToggle();
+        syncDesktopPanel();
+      });
     }
     paint();
     renderList();
+    syncDesktopPanel();
     syncDockHeight();
     window.addEventListener("resize", syncDockHeight);
     const bar = document.getElementById("tts-bar");
