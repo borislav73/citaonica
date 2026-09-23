@@ -496,9 +496,17 @@
   function considerSelection() {
     if (inChrome(document.activeElement)) return;
     const q = currentQuote();
-    if (q && q.length >= 2) showSheet(q);
-    else if (!pendingQuote) hideSheet();
+    if (q && q.length >= 2) {
+      showSheet(q);
+      const sel = window.getSelection();
+      if (sel) sel.removeAllRanges();
+    } else if (!pendingQuote) hideSheet();
   }
+
+  document.addEventListener("contextmenu", function (ev) {
+    if (!isTouch()) return;
+    if (ev.target && ev.target.closest && ev.target.closest("main")) ev.preventDefault();
+  });
 
   document.addEventListener("mouseup", function (ev) {
     if (inChrome(ev.target)) return;
