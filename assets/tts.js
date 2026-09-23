@@ -153,7 +153,7 @@
 
   function buildQueue(startId) {
     ensureWrapped();
-    const start = document.getElementById(startId);
+    const start = document.getElementById(startId) || document.getElementById("top") || document.querySelector("main.wrap");
     if (!start) return [];
     const root = document.querySelector("main.wrap");
     const all = Array.prototype.slice.call(root.querySelectorAll(".tts-sent"));
@@ -163,6 +163,7 @@
     all.forEach(function (span) {
       if (!begun) {
         if (start.contains(span) || span === start) begun = true;
+        else if (start.compareDocumentPosition(span) & Node.DOCUMENT_POSITION_FOLLOWING) begun = true;
         else return;
       }
       const block = blockOf(span);
@@ -224,6 +225,18 @@
     return L.indexOf(lang) === 0;
   }
 
+  function englishScore(v) {
+    var L = (v.lang || "").toLowerCase();
+    var N = (v.name || "").toLowerCase();
+    var n = 50;
+    if (/^en-gb|^en_gb|^en-uk/.test(L) || /british|uk english|united kingdom/.test(N)) n -= 20;
+    else if (/^en-us|^en_us/.test(L) || /american|us english/.test(N)) n += 8;
+    else if (!/^en/.test(L) && !/english/.test(N)) n += 40;
+    if (/male|daniel|george|arthur|brian|ryan|thomas|rishi|oliver|james|william|david|michael|harry/.test(N)) n -= 15;
+    if (/female|samantha|karen|moira|tessa|fiona|zira|susan|hazel|kate|serena|siri|linda|mary/.test(N)) n += 12;
+    return n;
+  }
+
   function preferredVoice() {
     const chosen = voiceSel.value;
     if (chosen) {
@@ -231,7 +244,12 @@
       if (exact) return exact;
     }
     const lang = pageLang();
-    const hit = voices.find(function (v) { return voiceMatches(v, lang); });
+    var pool = voices.filter(function (v) { return voiceMatches(v, lang); });
+    if (lang === "en" && pool.length) {
+      pool.sort(function (a, b) { return englishScore(a) - englishScore(b); });
+      return pool[0];
+    }
+    const hit = pool[0];
     if (hit) return hit;
     if (lang === "hr") {
       const sl = voices.find(function (v) { return /^sl(-|$)/i.test(v.lang); });
@@ -254,6 +272,7 @@
     const lang = pageLang();
     const ranked = voices.slice().sort(function (a, b) {
       const score = function (v) {
+        if (lang === "en") return englishScore(v);
         if (voiceMatches(v, lang)) return 0;
         const L = (v.lang || "").toLowerCase();
         if (lang === "en") {
@@ -276,7 +295,9 @@
       opt.textContent = v.name + " (" + v.lang + ")";
       voiceSel.appendChild(opt);
     });
-    const prefer = ranked.find(function (v) { return voiceMatches(v, lang); });
+    const prefer = lang === "en"
+      ? ranked[0]
+      : ranked.find(function (v) { return voiceMatches(v, lang); });
     if (prev && ranked.some(function (v) { return v.name === prev; })) {
       voiceSel.value = prev;
     } else if (prefer) {
