@@ -2,6 +2,13 @@
   var nav = document.getElementById("chapbar");
   if (!nav) return;
 
+  function navOffset() {
+    var bar = document.querySelector(".topnav");
+    var h = bar ? bar.getBoundingClientRect().height : 0;
+    document.documentElement.style.scrollPaddingTop = Math.ceil(h + 8) + "px";
+    return h + 12;
+  }
+
   function labelOf(el) {
     var t = (el.textContent || "").trim();
     var m = t.match(/Chapter\s+([IVXLCDM]+|\d+)/i);
@@ -12,22 +19,37 @@
     return t.split(/\s+/).slice(0, 3).join(" ");
   }
 
-  if (nav.querySelector("a")) {
-    var existing = [].slice.call(nav.querySelectorAll("a"));
-    function syncExisting() {
-      var y = window.scrollY + 96;
-      var current = existing[0];
-      existing.forEach(function (a) {
-        var id = (a.getAttribute("href") || "").replace(/^#/, "");
-        var node = id && document.getElementById(id);
-        if (node && node.getBoundingClientRect().top + window.scrollY <= y) current = a;
+  function bind(links) {
+    function sync() {
+      var line = navOffset();
+      var current = links[0];
+      links.forEach(function (item) {
+        if (!item.el) return;
+        if (item.el.getBoundingClientRect().top <= line + 1) current = item;
       });
-      existing.forEach(function (a) {
-        a.classList.toggle("is-here", a === current);
+      links.forEach(function (item) {
+        item.a.classList.toggle("is-here", item === current);
       });
+      if (current && current.a && current.a.scrollIntoView) {
+        var a = current.a;
+        var r = a.getBoundingClientRect();
+        var nr = nav.getBoundingClientRect();
+        if (r.left < nr.left + 8 || r.right > nr.right - 8) {
+          a.scrollIntoView({ inline: "center", block: "nearest", behavior: "auto" });
+        }
+      }
     }
-    window.addEventListener("scroll", syncExisting, { passive: true });
-    syncExisting();
+    window.addEventListener("scroll", sync, { passive: true });
+    window.addEventListener("resize", sync);
+    sync();
+  }
+
+  if (nav.querySelector("a")) {
+    var existing = [].slice.call(nav.querySelectorAll("a")).map(function (a) {
+      var id = (a.getAttribute("href") || "").replace(/^#/, "");
+      return { a: a, el: id ? document.getElementById(id) : null };
+    });
+    bind(existing);
     return;
   }
 
@@ -43,31 +65,13 @@
     if (!id) {
       var art = el.closest("article.unit");
       id = art && art.id ? art.id : "sec-" + (i + 1);
-      if (!el.id) el.id = id + "-h";
+      el.id = id;
     }
     var a = document.createElement("a");
-    a.href = "#" + (el.id || id);
+    a.href = "#" + el.id;
     a.textContent = labelOf(el);
     nav.appendChild(a);
-    links.push({ el: el.id ? el : document.getElementById(id), a: a });
+    links.push({ el: el, a: a });
   });
-
-  function sync() {
-    var y = window.scrollY + 96;
-    var current = links[0];
-    links.forEach(function (item) {
-      var node = item.el;
-      if (!node) return;
-      if (node.getBoundingClientRect().top + window.scrollY <= y) current = item;
-    });
-    links.forEach(function (item) {
-      item.a.classList.toggle("is-here", item === current);
-    });
-    if (current && current.a && current.a.scrollIntoView) {
-      current.a.scrollIntoView({ inline: "center", block: "nearest", behavior: "auto" });
-    }
-  }
-
-  window.addEventListener("scroll", sync, { passive: true });
-  sync();
+  bind(links);
 })();
