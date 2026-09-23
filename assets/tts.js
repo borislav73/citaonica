@@ -206,20 +206,37 @@
     return { text: text, sents: sents };
   }
 
+  function pageLang() {
+    var meta = document.querySelector('meta[name="book-lang"]');
+    var raw = ((meta && meta.content) || document.documentElement.lang || "hr").toLowerCase();
+    if (/^en|english/.test(raw)) return "en";
+    if (/^sr|serb|срп/.test(raw)) return "sr";
+    if (/^hr|croat|hrv/.test(raw)) return "hr";
+    return raw.slice(0, 2);
+  }
+
+  function voiceMatches(v, lang) {
+    var L = (v.lang || "").toLowerCase();
+    var N = (v.name || "").toLowerCase();
+    if (lang === "en") return /^en/.test(L) || /english/.test(N);
+    if (lang === "sr") return /^(sr|bs)/.test(L) || /serb/.test(N);
+    if (lang === "hr") return /^hr/.test(L) || /croat/.test(N);
+    return L.indexOf(lang) === 0;
+  }
+
   function preferredVoice() {
     const chosen = voiceSel.value;
     if (chosen) {
       const exact = voices.find(function (v) { return v.name === chosen; });
       if (exact) return exact;
     }
-    const hr = voices.find(function (v) {
-      return /^hr(-|$)/i.test(v.lang) || /croat/i.test(v.name);
-    });
-    if (hr) return hr;
-    const sl = voices.find(function (v) { return /^sl(-|$)/i.test(v.lang); });
-    if (sl) return sl;
-    const sr = voices.find(function (v) { return /^(sr|bs)(-|$)/i.test(v.lang); });
-    if (sr) return sr;
+    const lang = pageLang();
+    const hit = voices.find(function (v) { return voiceMatches(v, lang); });
+    if (hit) return hit;
+    if (lang === "hr") {
+      const sl = voices.find(function (v) { return /^sl(-|$)/i.test(v.lang); });
+      if (sl) return sl;
+    }
     return voices.find(function (v) { return /^en/i.test(v.lang); }) || voices[0] || null;
   }
 
@@ -234,19 +251,21 @@
       voiceSel.appendChild(opt);
       return;
     }
-    const pageLang = (document.documentElement.lang || "hr").toLowerCase();
+    const lang = pageLang();
     const ranked = voices.slice().sort(function (a, b) {
       const score = function (v) {
+        if (voiceMatches(v, lang)) return 0;
         const L = (v.lang || "").toLowerCase();
-        const N = (v.name || "").toLowerCase();
-        if (pageLang.indexOf("sr") === 0) {
-          if (/^sr/i.test(L) || /serb/i.test(N)) return 0;
-          if (/^(hr|bs)/i.test(L) || /croat/i.test(N)) return 1;
-        } else {
-          if (/^hr/i.test(L) || /croat/i.test(N)) return 0;
-          if (/^(sl|sr|bs)/i.test(L) || /serb/i.test(N)) return 1;
+        if (lang === "en") {
+          if (/^en/.test(L)) return 0;
+          return 3;
         }
-        if (/^en/i.test(L)) return 2;
+        if (lang === "sr") {
+          if (/^(hr|bs)/.test(L)) return 1;
+        } else if (lang === "hr") {
+          if (/^(sl|sr|bs)/.test(L)) return 1;
+        }
+        if (/^en/.test(L)) return 2;
         return 3;
       };
       return score(a) - score(b) || a.name.localeCompare(b.name);
@@ -257,12 +276,7 @@
       opt.textContent = v.name + " (" + v.lang + ")";
       voiceSel.appendChild(opt);
     });
-    const prefer = ranked.find(function (v) {
-      const L = (v.lang || "");
-      const N = (v.name || "");
-      if (pageLang.indexOf("sr") === 0) return /^sr/i.test(L) || /serb/i.test(N);
-      return /^hr/i.test(L) || /croat/i.test(N);
-    });
+    const prefer = ranked.find(function (v) { return voiceMatches(v, lang); });
     if (prev && ranked.some(function (v) { return v.name === prev; })) {
       voiceSel.value = prev;
     } else if (prefer) {
@@ -272,16 +286,12 @@
   }
 
   function pageLangIsSr() {
-    return (document.documentElement.lang || "").toLowerCase().indexOf("sr") === 0;
+    return pageLang() === "sr";
   }
 
   function hasBookVoice() {
-    return voices.some(function (v) {
-      const L = (v.lang || "").toLowerCase();
-      const N = (v.name || "").toLowerCase();
-      if (pageLangIsSr()) return /^sr/.test(L) || /serb/.test(N);
-      return /^hr/.test(L) || /croat/.test(N);
-    });
+    const lang = pageLang();
+    return voices.some(function (v) { return voiceMatches(v, lang); });
   }
 
   function ensureVoiceHint() {
@@ -382,7 +392,7 @@
       u.voice = voice;
       u.lang = voice.lang;
     } else {
-      u.lang = document.documentElement.lang === "sr" ? "sr-RS" : "hr-HR";
+      u.lang = pageLang() === "sr" ? "sr-RS" : pageLang() === "en" ? "en-GB" : "hr-HR";
     }
     u.rate = parseFloat(rateSel.value) || 1;
     u.pitch = 1;
