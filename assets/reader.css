@@ -22,14 +22,10 @@
 html {
   scroll-behavior: smooth;
   font-size: 18px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  scroll-padding-top: var(--nav-h, 3.2rem);
+  scroll-padding-top: 6rem;
 }
 body {
   margin: 0;
-  overflow-x: hidden;
-  overflow-y: visible;
   max-width: 100%;
   min-height: 100%;
   background: var(--bg);
@@ -45,7 +41,8 @@ a:hover { text-decoration-thickness: 2px; }
 .topnav {
   position: sticky;
   top: 0;
-  z-index: 20;
+  z-index: 50;
+  flex-shrink: 0;
   background: #f3efe8;
   border-bottom: 1px solid var(--rule);
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -1026,6 +1023,7 @@ body:not(.shelf-open) .shelf-open-btn { display: flex; }
 
 .stage {
   min-height: 100vh;
+  overflow: visible;
 }
 body.shelf-open .stage {
   margin-left: min(14.5rem, 78vw);
