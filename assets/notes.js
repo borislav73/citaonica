@@ -75,7 +75,7 @@
     else if (!active) active = "gold";
     renderTray();
     document.body.classList.toggle("hl-dock-open", on);
-    if (on) closeShelf();
+    if (on && isTouch()) closeShelf();
     syncDockHeight();
   }
 
@@ -576,7 +576,7 @@
         if (window.CitaonicaAuth && window.CitaonicaAuth.openSignIn) window.CitaonicaAuth.openSignIn();
         return;
       }
-      closeShelf();
+      if (isTouch()) closeShelf();
       if (isTouch()) {
         setTrayOpen(false);
         return;
@@ -592,7 +592,7 @@
         if (window.CitaonicaAuth && window.CitaonicaAuth.openSignIn) window.CitaonicaAuth.openSignIn();
         return;
       }
-      closeShelf();
+      if (isTouch()) closeShelf();
       document.body.classList.add("notes-open");
       renderList();
     });
@@ -614,21 +614,11 @@
     renderTray();
     setTrayOpen(false);
     addToggle();
-    function syncDesktopPanel() {
-      if (!isTouch() && loggedIn()) {
-        document.body.classList.add("notes-open");
-        renderList();
-      }
-    }
     if (window.CitaonicaAuth && window.CitaonicaAuth.onChange) {
-      window.CitaonicaAuth.onChange(function () {
-        addToggle();
-        syncDesktopPanel();
-      });
+      window.CitaonicaAuth.onChange(function () { addToggle(); });
     }
     paint();
     renderList();
-    syncDesktopPanel();
     syncDockHeight();
     window.addEventListener("resize", syncDockHeight);
     const bar = document.getElementById("tts-bar");

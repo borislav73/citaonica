@@ -804,7 +804,7 @@ body.catalog {
   top: 0;
   left: 0;
   bottom: 0;
-  width: min(20rem, 86vw);
+  width: min(14.5rem, 78vw);
   background: #f3efe8;
   border-right: 1px solid var(--rule);
   z-index: 60;
@@ -944,7 +944,7 @@ body:not(.shelf-open) .shelf-open-btn { display: flex; }
   min-height: 100vh;
 }
 body.shelf-open .stage {
-  margin-left: min(20rem, 86vw);
+  margin-left: min(14.5rem, 78vw);
 }
 body.catalog .topnav { position: sticky; top: 0; }
 .catalog-home { padding-top: 2.2rem; padding-bottom: 4rem; max-width: 52rem; }
@@ -1232,7 +1232,7 @@ body.tts-open.hl-dock-open { padding-bottom: calc(var(--tts-bar-h, 6.4rem) + 4.2
   right: 0;
   top: var(--nav-h, 3.2rem);
   bottom: 0;
-  width: min(13rem, 82vw);
+  width: min(18rem, 86vw);
   background: #f3efe8;
   border-left: 1px solid var(--rule);
   padding: 0.8rem 0.85rem 5rem;
