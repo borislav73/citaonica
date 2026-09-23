@@ -225,6 +225,13 @@ h2.sec {
   margin: 2rem 0 0.85rem;
   line-height: 1.35;
 }
+h3.chapn {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 1.75rem 0 0.7rem;
+  color: var(--accent);
+}
 
 /* Body text justified throughout (paragraphs, objections, answers) */
 p {
