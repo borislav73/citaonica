@@ -920,10 +920,9 @@ body:not(.shelf-open) .shelf-open-btn { display: flex; }
 @media (min-width: 1101px), (min-width: 641px) and (hover: hover) and (pointer: fine) {
   .topnav { position: sticky; }
   .topnav .shelf-open-btn {
-    position: absolute;
-    left: 0.55rem;
-    top: 50%;
-    transform: translateY(-50%);
+    position: static;
+    transform: none;
+    align-self: center;
     width: 1.7rem;
     height: 1.2rem;
     padding: 0;
