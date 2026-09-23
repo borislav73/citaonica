@@ -823,7 +823,7 @@ body.shelf-open .shelfbar { transform: translateX(0); }
   border-bottom: 1px solid var(--rule);
   height: var(--topbar-h, 3.05rem);
   min-height: var(--topbar-h, 3.05rem);
-  box-sizing: border-box;
+  box-sizing: content-box;
 }
 .shelfbar-title {
   margin: 0;
