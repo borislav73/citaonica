@@ -1117,7 +1117,8 @@ body.tts-open:has(#tts-voice-hint:not([hidden])) { padding-bottom: 12.5rem; }
 
 /* Auth + notes */
 .topnav .auth-slot,
-.topnav #account-slot { display: none !important; }
+.topnav #account-slot,
+.topnav #notes-toggle { display: none !important; }
 .auth-slot {
   margin-left: 0.6rem;
   display: flex;
@@ -1298,4 +1299,12 @@ body.notes-open .notes-panel { transform: none; }
 .note-card button:hover {
   border-color: var(--accent);
   background: #faf8f5;
+}
+
+@media (pointer: coarse) {
+  main, main p, main blockquote, main li, main .enote {
+    -webkit-user-select: text;
+    user-select: text;
+    -webkit-touch-callout: default;
+  }
 }

@@ -14,6 +14,7 @@
   ];
   const t = {
     hint: sr ? "Одабери боју, затим означи текст." : "Odaberi boju, zatim označi tekst.",
+    hintTouch: sr ? "Одабери боју, затим дуго притисни текст." : "Odaberi boju, zatim dugo pritisni tekst.",
     note: sr ? "Биљешка" : "Bilješka",
     remove: sr ? "Уклони" : "Ukloni",
     list: sr ? "Означено" : "Označeno",
@@ -70,7 +71,7 @@
     el.innerHTML = "";
     const hint = document.createElement("span");
     hint.className = "hl-hint";
-    hint.textContent = t.hint;
+    hint.textContent = isTouch() ? t.hintTouch : t.hint;
     el.appendChild(hint);
     COLORS.forEach(function (c) {
       const b = document.createElement("button");
@@ -285,16 +286,108 @@
     });
   }
 
-  document.addEventListener("mouseup", function (ev) {
-    if (!loggedIn() || !modeOn || !active) return;
-    if (ev.target.closest && ev.target.closest(".hl-tray, .notes-panel, .tts-bar, .shelfbar, .topnav, .auth-slot")) return;
+  function isTouch() {
+    return window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+  }
+
+  function inChrome(el) {
+    return !!(el && el.closest && el.closest(".hl-tray, .notes-panel, .tts-bar, .shelfbar, .topnav, .auth-slot, .account-slot, .auth-modal"));
+  }
+
+  function applyCurrentSelection() {
+    if (!loggedIn() || !modeOn || !active) return false;
     const quote = currentQuote();
-    if (!quote || quote.length < 4) return;
+    if (!quote || quote.length < 2) return false;
     if (active === "erase") eraseQuote(quote);
     else applyColor(active, quote);
     const sel = window.getSelection();
     if (sel) sel.removeAllRanges();
+    return true;
+  }
+
+  function rangeFromPoint(x, y) {
+    if (document.caretRangeFromPoint) return document.caretRangeFromPoint(x, y);
+    if (document.caretPositionFromPoint) {
+      const pos = document.caretPositionFromPoint(x, y);
+      if (!pos || !pos.offsetNode) return null;
+      const r = document.createRange();
+      r.setStart(pos.offsetNode, pos.offset);
+      r.collapse(true);
+      return r;
+    }
+    return null;
+  }
+
+  function selectWordAt(x, y) {
+    const r = rangeFromPoint(x, y);
+    if (!r || r.startContainer.nodeType !== 3) return "";
+    const text = r.startContainer.nodeValue || "";
+    let a = r.startOffset;
+    let b = r.startOffset;
+    while (a > 0 && /[^\s.,;:!?()«»""\[\]]/.test(text.charAt(a - 1))) a--;
+    while (b < text.length && /[^\s.,;:!?()«»""\[\]]/.test(text.charAt(b))) b++;
+    if (b - a < 2) return "";
+    const range = document.createRange();
+    range.setStart(r.startContainer, a);
+    range.setEnd(r.startContainer, b);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    return text.slice(a, b).replace(/\s+/g, " ").trim();
+  }
+
+  document.addEventListener("mouseup", function (ev) {
+    if (inChrome(ev.target)) return;
+    applyCurrentSelection();
   });
+
+  document.addEventListener("touchend", function (ev) {
+    if (inChrome(ev.target)) return;
+    setTimeout(applyCurrentSelection, 40);
+  }, { passive: true });
+
+  let holdTimer = null;
+  let holdX = 0;
+  let holdY = 0;
+
+  function clearHold() {
+    if (holdTimer) {
+      clearTimeout(holdTimer);
+      holdTimer = null;
+    }
+  }
+
+  document.addEventListener("touchstart", function (ev) {
+    clearHold();
+    if (!loggedIn()) return;
+    if (inChrome(ev.target)) return;
+    const tch = ev.touches && ev.touches[0];
+    if (!tch) return;
+    holdX = tch.clientX;
+    holdY = tch.clientY;
+    holdTimer = setTimeout(function () {
+      holdTimer = null;
+      if (!loggedIn()) return;
+      if (!modeOn) setTrayOpen(true);
+      if (!active) return;
+      const quote = currentQuote() || selectWordAt(holdX, holdY);
+      if (!quote || quote.length < 2) return;
+      if (active === "erase") eraseQuote(quote);
+      else applyColor(active, quote);
+      const sel = window.getSelection();
+      if (sel) sel.removeAllRanges();
+    }, 480);
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function (ev) {
+    if (!holdTimer) return;
+    const tch = ev.touches && ev.touches[0];
+    if (!tch) return;
+    if (Math.abs(tch.clientX - holdX) > 12 || Math.abs(tch.clientY - holdY) > 12) clearHold();
+  }, { passive: true });
+
+  document.addEventListener("touchcancel", clearHold, { passive: true });
+  document.addEventListener("touchend", clearHold, { passive: true });
 
   document.addEventListener("keydown", function (ev) {
     if (ev.key === "Escape") setTrayOpen(false);
