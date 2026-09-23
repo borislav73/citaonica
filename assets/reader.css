@@ -1,5 +1,13 @@
 
 
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap&subset=latin,latin-ext,greek,greek-ext");
+
+@font-face {
+  font-family: "Citaonica Greek";
+  src: local("Noto Serif"), local("Noto Serif Greek"), local("Gentium Plus"), local("Times New Roman");
+  unicode-range: U+0370-03FF, U+1F00-1FFF, U+0300-036F;
+}
+
 :root {
   --topbar-h: 3.05rem;
   --bg: #faf8f5;
@@ -23,7 +31,7 @@ body {
   max-width: 100%;
   background: var(--bg);
   color: var(--fg);
-  font-family: "Liberation Serif", "Noto Serif", Georgia, "Times New Roman", serif;
+  font-family: "Citaonica Greek", "Noto Serif", "Liberation Serif", Georgia, "Times New Roman", serif;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
