@@ -22,13 +22,16 @@
 html {
   scroll-behavior: smooth;
   font-size: 18px;
-  overflow-x: clip;
+  overflow-x: hidden;
+  overflow-y: auto;
   scroll-padding-top: var(--nav-h, 3.2rem);
 }
 body {
   margin: 0;
-  overflow-x: clip;
+  overflow-x: hidden;
+  overflow-y: visible;
   max-width: 100%;
+  min-height: 100%;
   background: var(--bg);
   color: var(--fg);
   font-family: "Citaonica Greek", "Noto Serif", "Liberation Serif", Georgia, "Times New Roman", serif;
@@ -47,8 +50,10 @@ a:hover { text-decoration-thickness: 2px; }
   border-bottom: 1px solid var(--rule);
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
   font-size: 0.82rem;
-  display: flex;
-  flex-direction: column;
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch;
 }
 .topnav-inner {
   width: 100%;
@@ -90,9 +95,11 @@ a:hover { text-decoration-thickness: 2px; }
   align-items: center;
 }
 .chapbar {
-  width: 100%;
-  max-width: none;
-  margin: 0;
+  display: flex !important;
+  flex: 0 0 auto;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   background: #e8e2d6;

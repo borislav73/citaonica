@@ -1,11 +1,8 @@
 /* Čitaonica — postavke.
-   Na slici Settings → API Keys:
-   - Publishable key  → supabaseAnonKey (smije u preglednik)
-   - Secret key       → NIKAD ovdje
-   Project URL: https://<project-ref>.supabase.co
-   Google Client ID / Secret ostaju samo u Authentication → Providers → Google. */
+   Google prijava radi kad uneseš Supabase URL i anon ključ.
+   Do tada se bilješke i označavanja čuvaju lokalno u pregledniku. */
 window.CITAONICA = {
   supabaseUrl: "https://moacpptrhzuvregskjfh.supabase.co",
-  /* Zalijepi CIJELI Publishable key (gumb kopiranja pored sb_publishable_...). */
-  supabaseAnonKey: ""
+  supabaseAnonKey: "sb_publishable_8JmSWI9zOnXNy_a7SZKrUA_zJrpUvV4",
+  /* Google OAuth se pali u Supabase Dashboard → Authentication → Providers → Google */
 };
