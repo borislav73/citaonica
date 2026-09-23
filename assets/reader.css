@@ -225,6 +225,39 @@ h2.sec {
   margin: 2rem 0 0.85rem;
   line-height: 1.35;
 }
+h2.book-num {
+  text-align: center;
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin: 2.2rem 0 0.55rem;
+  line-height: 1.25;
+}
+p.book-sub {
+  text-align: center;
+  text-indent: 0;
+  font-size: 1.12rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 auto 1.6rem;
+  max-width: 38rem;
+}
+h3.matter-head {
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  margin: 0.4rem 0 0.85rem;
+}
+ol.matter {
+  margin: 0 0 2rem;
+  padding-left: 1.4rem;
+}
+ol.matter li {
+  margin: 0 0 0.35em;
+  line-height: 1.4;
+  font-size: 0.95rem;
+}
 h3.chapn {
   font-size: 1rem;
   font-weight: 700;
