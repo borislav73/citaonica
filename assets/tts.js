@@ -70,7 +70,7 @@
   function skipTextNode(node) {
     const p = node.parentElement;
     if (!p) return true;
-    return !!p.closest("sup.fnref, a.backref, [hidden], .attr, .toc, .footer-nav, .tts-bar");
+    return !!p.closest("sup.fnref, a.backref, aside.footnotes, p.fn, [hidden], .attr, .toc, .footer-nav, .tts-bar");
   }
 
   function sentenceBounds(text) {

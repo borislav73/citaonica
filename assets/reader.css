@@ -1371,3 +1371,35 @@ body.notes-open .notes-panel { transform: none; }
   border-radius: 5px;
   cursor: pointer;
 }
+
+sup.fnref {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 0.68em;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 0;
+  vertical-align: super;
+}
+sup.fnref a {
+  color: var(--muted);
+  text-decoration: none;
+  padding: 0 0.08em;
+}
+sup.fnref a:hover { color: var(--link); }
+aside.footnotes {
+  margin-top: 1.75rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed var(--rule);
+}
+p.fn {
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--muted);
+  text-indent: 0;
+  margin: 0 0 0.55em;
+}
+p.fn .backref {
+  color: var(--muted);
+  text-decoration: none;
+  margin-right: 0.2em;
+}
