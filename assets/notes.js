@@ -21,8 +21,14 @@
     markBtn: sr ? "Означи" : "Označi",
     empty: sr ? "Нема ознака на овој књизи." : "Nema oznaka na ovoj knjizi.",
     prompt: sr ? "Биљешка уз овај одломак:" : "Bilješka uz ovaj odlomak:",
-    clear: sr ? "Уклони ознаку" : "Ukloni oznaku"
+    clear: sr ? "Уклони ознаку" : "Ukloni oznaku",
+    copy: sr ? "Копирај" : "Kopiraj",
+    addNote: sr ? "Биљешка" : "Bilješka",
+    highlight: sr ? "Означи" : "Označi"
   };
+
+  let pendingQuote = "";
+  let sheetMode = "actions";
 
   let items = [];
   try { items = JSON.parse(localStorage.getItem(KEY) || "[]") || []; } catch (e) { items = []; }
@@ -304,13 +310,134 @@
 
   function applyCurrentSelection() {
     if (!loggedIn() || !modeOn || !active) return false;
-    const quote = currentQuote();
+    const quote = currentQuote() || pendingQuote;
     if (!quote || quote.length < 2) return false;
     if (active === "erase") eraseQuote(quote);
     else applyColor(active, quote);
     const sel = window.getSelection();
     if (sel) sel.removeAllRanges();
+    pendingQuote = "";
+    hideSheet();
     return true;
+  }
+
+  function sheet() {
+    let el = document.getElementById("hl-sheet");
+    if (el) return el;
+    el = document.createElement("div");
+    el.id = "hl-sheet";
+    el.className = "hl-sheet";
+    el.hidden = true;
+    document.body.appendChild(el);
+    return el;
+  }
+
+  function hideSheet() {
+    const el = document.getElementById("hl-sheet");
+    if (el) {
+      el.hidden = true;
+      el.classList.add("is-closed");
+    }
+    document.body.classList.remove("hl-sheet-open");
+    sheetMode = "actions";
+  }
+
+  function needLogin() {
+    if (loggedIn()) return false;
+    if (window.CitaonicaAuth && window.CitaonicaAuth.openSignIn) window.CitaonicaAuth.openSignIn();
+    return true;
+  }
+
+  function showSheet(quote) {
+    if (!quote || quote.length < 2) return;
+    pendingQuote = quote;
+    sheetMode = "actions";
+    closeShelf();
+    renderSheet();
+    const el = sheet();
+    el.hidden = false;
+    el.classList.remove("is-closed");
+    document.body.classList.add("hl-sheet-open");
+  }
+
+  function renderSheet() {
+    const el = sheet();
+    el.innerHTML = "";
+    const x = document.createElement("button");
+    x.type = "button";
+    x.className = "hl-sheet-x";
+    x.textContent = "×";
+    x.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      hideSheet();
+    });
+    el.appendChild(x);
+    if (sheetMode === "colors") {
+      const row = document.createElement("div");
+      row.className = "hl-sheet-colors";
+      COLORS.forEach(function (c) {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "hl-sheet-swatch";
+        b.style.background = c.hex;
+        b.addEventListener("click", function (ev) {
+          ev.preventDefault();
+          if (needLogin()) return;
+          applyColor(c.id, pendingQuote);
+          const sel = window.getSelection();
+          if (sel) sel.removeAllRanges();
+          pendingQuote = "";
+          hideSheet();
+        });
+        row.appendChild(b);
+      });
+      el.appendChild(row);
+      return;
+    }
+    const row = document.createElement("div");
+    row.className = "hl-sheet-actions";
+    function action(label, fn) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "hl-sheet-btn";
+      b.textContent = label;
+      b.addEventListener("click", function (ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        fn();
+      });
+      row.appendChild(b);
+    }
+    action(t.copy, function () {
+      const q = pendingQuote || currentQuote();
+      if (q && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(q).catch(function () {});
+      }
+      hideSheet();
+    });
+    action(t.addNote, function () {
+      if (needLogin()) return;
+      const q = pendingQuote || currentQuote();
+      if (!q) return;
+      const text = window.prompt(t.prompt, "");
+      if (text === null) return;
+      applyColor("gold", q);
+      const last = items[items.length - 1];
+      if (last && last.quote === q.slice(0, 500)) {
+        last.text = text || "";
+        last.kind = text ? "note" : "mark";
+        persist();
+        paint();
+        renderList();
+      }
+      hideSheet();
+    });
+    action(t.highlight, function () {
+      if (needLogin()) return;
+      sheetMode = "colors";
+      renderSheet();
+    });
+    el.appendChild(row);
   }
 
   function textNodeAt(x, y) {
@@ -366,77 +493,32 @@
     return text.slice(a, b).replace(/\s+/g, " ").trim();
   }
 
-  function markAt(x, y) {
-    if (!loggedIn() || !modeOn) return;
-    if (!active) active = "gold";
-    const quote = currentQuote() || selectWordAt(x, y);
-    if (!quote || quote.length < 2) return;
-    if (active === "erase") eraseQuote(quote);
-    else applyColor(active, quote);
-    const sel = window.getSelection();
-    if (sel) sel.removeAllRanges();
+  function considerSelection() {
+    if (inChrome(document.activeElement)) return;
+    const q = currentQuote();
+    if (q && q.length >= 2) showSheet(q);
+    else if (!pendingQuote) hideSheet();
   }
 
   document.addEventListener("mouseup", function (ev) {
     if (inChrome(ev.target)) return;
-    if (!applyCurrentSelection() && modeOn && active && ev.target.closest && ev.target.closest("main")) {
-      markAt(ev.clientX, ev.clientY);
+    if (isTouch()) {
+      setTimeout(considerSelection, 30);
+      return;
     }
+    applyCurrentSelection();
   });
 
-  let holdTimer = null;
-  let holdX = 0;
-  let holdY = 0;
-  let touchMoved = false;
-  let holdFired = false;
-
-  function clearHold() {
-    if (holdTimer) {
-      clearTimeout(holdTimer);
-      holdTimer = null;
-    }
-  }
-
-  document.addEventListener("touchstart", function (ev) {
-    clearHold();
-    touchMoved = false;
-    holdFired = false;
-    if (!loggedIn()) return;
-    if (inChrome(ev.target)) return;
-    const tch = ev.touches && ev.touches[0];
-    if (!tch) return;
-    holdX = tch.clientX;
-    holdY = tch.clientY;
-    holdTimer = setTimeout(function () {
-      holdTimer = null;
-      holdFired = true;
-      if (!loggedIn()) return;
-      if (!modeOn) setTrayOpen(true);
-      markAt(holdX, holdY);
-    }, 420);
-  }, { passive: true });
-
-  document.addEventListener("touchmove", function (ev) {
-    const tch = ev.touches && ev.touches[0];
-    if (!tch) return;
-    if (Math.abs(tch.clientX - holdX) > 10 || Math.abs(tch.clientY - holdY) > 10) {
-      touchMoved = true;
-      clearHold();
-    }
-  }, { passive: true });
-
-  document.addEventListener("touchcancel", clearHold, { passive: true });
-
   document.addEventListener("touchend", function (ev) {
-    clearHold();
-    if (holdFired || touchMoved) return;
     if (inChrome(ev.target)) return;
-    if (!loggedIn() || !modeOn) return;
-    const tch = ev.changedTouches && ev.changedTouches[0];
-    const x = tch ? tch.clientX : holdX;
-    const y = tch ? tch.clientY : holdY;
-    setTimeout(function () { markAt(x, y); }, 10);
+    setTimeout(considerSelection, 80);
   }, { passive: true });
+
+  document.addEventListener("selectionchange", function () {
+    if (!isTouch()) return;
+    const q = currentQuote();
+    if (q && q.length >= 2) pendingQuote = q;
+  });
 
   document.addEventListener("keydown", function (ev) {
     if (ev.key === "Escape") setTrayOpen(false);
@@ -487,6 +569,10 @@
         return;
       }
       closeShelf();
+      if (isTouch()) {
+        setTrayOpen(false);
+        return;
+      }
       setTrayOpen(!modeOn);
     });
     const listBtn = document.createElement("button");

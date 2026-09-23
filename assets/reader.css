@@ -1308,3 +1308,61 @@ body.notes-open .notes-panel { transform: none; }
     -webkit-touch-callout: default;
   }
 }
+.hl-sheet[hidden],
+.hl-sheet.is-closed { display: none !important; }
+.hl-sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 90;
+  background: #2a2a2a;
+  color: #f3efe8;
+  padding: 0.85rem 0.85rem calc(0.95rem + env(safe-area-inset-bottom, 0px));
+  box-shadow: 0 -8px 24px rgba(0,0,0,.28);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+.hl-sheet-x {
+  position: absolute;
+  top: 0.45rem;
+  right: 0.55rem;
+  border: 0;
+  background: #444;
+  color: #fff;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.hl-sheet-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1.4rem;
+}
+.hl-sheet-btn {
+  flex: 1;
+  font: inherit;
+  font-weight: 600;
+  padding: 0.7rem 0.35rem;
+  border: 1px solid #666;
+  border-radius: 8px;
+  background: transparent;
+  color: #f3efe8;
+  cursor: pointer;
+}
+.hl-sheet-colors {
+  display: flex;
+  justify-content: center;
+  gap: 0.55rem;
+  margin-top: 1.5rem;
+  padding-right: 1.6rem;
+}
+.hl-sheet-swatch {
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+}
