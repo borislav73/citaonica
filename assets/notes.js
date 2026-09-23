@@ -115,7 +115,8 @@
     listBtn.addEventListener("click", function (ev) {
       ev.preventDefault();
       ev.stopPropagation();
-      document.body.classList.toggle("notes-open");
+      closeShelf();
+      document.body.classList.add("notes-open");
       renderList();
     });
     el.appendChild(listBtn);
@@ -497,7 +498,8 @@
         if (window.CitaonicaAuth && window.CitaonicaAuth.openSignIn) window.CitaonicaAuth.openSignIn();
         return;
       }
-      document.body.classList.toggle("notes-open");
+      closeShelf();
+      document.body.classList.add("notes-open");
       renderList();
     });
     tools.appendChild(markBtn);
