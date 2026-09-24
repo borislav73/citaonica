@@ -1310,6 +1310,7 @@ body.tts-open.hl-dock-open { padding-bottom: calc(var(--tts-bar-h, 6.4rem) + 4.2
   margin: 0;
   flex: 1 1 auto;
   white-space: nowrap;
+  text-align: center;
 }
 .hl-x {
   margin-left: auto;

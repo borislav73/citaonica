@@ -14,7 +14,7 @@
   ];
   const t = {
     hint: sr ? "Одабери боју, затим означи текст." : "Odaberi boju, zatim označi tekst.",
-    hintTouch: sr ? "Одабери боју, затим дуго притисни текст." : "Odaberi boju, zatim dugo pritisni tekst.",
+    hintTouch: sr ? "Одабери боју за означавање текста." : "Odaberi boju za označavanje teksta.",
     note: sr ? "Биљешка" : "Bilješka",
     remove: sr ? "Уклони" : "Ukloni",
     list: sr ? "Означено" : "Označeno",
@@ -133,7 +133,7 @@
     top.className = "hl-tray-top";
     const hint = document.createElement("span");
     hint.className = "hl-hint";
-    hint.textContent = t.hint;
+    hint.textContent = isTouch() ? t.hintTouch : t.hint;
     top.appendChild(hint);
     const x = document.createElement("button");
     x.type = "button";
