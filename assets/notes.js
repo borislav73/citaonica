@@ -51,6 +51,7 @@
     el.className = "hl-tray is-closed";
     el.hidden = true;
     document.body.appendChild(el);
+    enableTrayDrag(el);
     return el;
   }
 
@@ -66,6 +67,52 @@
     if (window.CitaonicaShelf && window.CitaonicaShelf.close) window.CitaonicaShelf.close();
   }
 
+  function wordCount(s) {
+    return String(s || "").trim().split(/\s+/).filter(Boolean).length;
+  }
+
+  function placeTrayMobile() {
+    const el = tray();
+    if (!el || el.dataset.dragged === "1") return;
+    const nav = document.querySelector(".topnav");
+    const top = nav ? Math.ceil(nav.getBoundingClientRect().bottom) + 8 : 56;
+    el.style.top = top + "px";
+    el.style.bottom = "auto";
+    el.style.left = "50%";
+    el.style.right = "auto";
+    el.style.transform = "translateX(-50%)";
+  }
+
+  function enableTrayDrag(el) {
+    if (el.dataset.dragReady === "1") return;
+    el.dataset.dragReady = "1";
+    let dragging = false;
+    let sx = 0, sy = 0, ox = 0, oy = 0;
+    el.addEventListener("pointerdown", function (ev) {
+      if (ev.target.closest("button")) return;
+      dragging = true;
+      el.dataset.dragged = "1";
+      const r = el.getBoundingClientRect();
+      sx = ev.clientX;
+      sy = ev.clientY;
+      ox = r.left;
+      oy = r.top;
+      try { el.setPointerCapture(ev.pointerId); } catch (e) {}
+    });
+    el.addEventListener("pointermove", function (ev) {
+      if (!dragging) return;
+      ev.preventDefault();
+      el.style.left = (ox + ev.clientX - sx) + "px";
+      el.style.top = (oy + ev.clientY - sy) + "px";
+      el.style.right = "auto";
+      el.style.bottom = "auto";
+      el.style.transform = "none";
+    });
+    function stop() { dragging = false; }
+    el.addEventListener("pointerup", stop);
+    el.addEventListener("pointercancel", stop);
+  }
+
   function setTrayOpen(on) {
     modeOn = on;
     const el = tray();
@@ -75,7 +122,7 @@
     else if (!active) active = "gold";
     renderTray();
     document.body.classList.toggle("hl-dock-open", on);
-    if (on && isTouch()) closeShelf();
+    if (on && isTouch()) placeTrayMobile();
     syncDockHeight();
   }
 
@@ -84,7 +131,7 @@
     el.innerHTML = "";
     const hint = document.createElement("span");
     hint.className = "hl-hint";
-    hint.textContent = isTouch() ? t.hintTouch : t.hint;
+    hint.textContent = t.hint;
     el.appendChild(hint);
     COLORS.forEach(function (c) {
       const b = document.createElement("button");
@@ -98,6 +145,7 @@
         ev.stopPropagation();
         active = c.id;
         renderTray();
+        if (currentQuote() || pendingQuote) applyCurrentSelection();
       });
       el.appendChild(b);
     });
@@ -111,6 +159,7 @@
       ev.stopPropagation();
       active = "erase";
       renderTray();
+      if (currentQuote() || pendingQuote) applyCurrentSelection();
     });
     el.appendChild(eraser);
     const listBtn = document.createElement("button");
@@ -121,7 +170,7 @@
     listBtn.addEventListener("click", function (ev) {
       ev.preventDefault();
       ev.stopPropagation();
-      closeShelf();
+      if (isTouch()) closeShelf();
       document.body.classList.add("notes-open");
       renderList();
     });
@@ -311,7 +360,7 @@
   function applyCurrentSelection() {
     if (!loggedIn() || !modeOn || !active) return false;
     const quote = currentQuote() || pendingQuote;
-    if (!quote || quote.length < 2) return false;
+    if (!quote || wordCount(quote) < 2) return false;
     if (active === "erase") eraseQuote(quote);
     else applyColor(active, quote);
     const sel = window.getSelection();
@@ -496,10 +545,13 @@
   function considerSelection() {
     if (inChrome(document.activeElement)) return;
     const q = currentQuote();
-    if (q && q.length >= 2) {
-      showSheet(q);
-      const sel = window.getSelection();
-      if (sel) sel.removeAllRanges();
+    if (wordCount(q) >= 2) {
+      pendingQuote = q;
+      if (isTouch()) {
+        if (loggedIn()) setTrayOpen(true);
+        hideSheet();
+        return;
+      }
     } else if (!pendingQuote) hideSheet();
   }
 

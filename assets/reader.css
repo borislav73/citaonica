@@ -1268,6 +1268,19 @@ mark.user-hl {
   box-shadow: 0 8px 28px rgba(0,0,0,.28);
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
   max-width: calc(100vw - 1.4rem);
+  touch-action: none;
+  cursor: grab;
+}
+.hl-tray button { cursor: pointer; touch-action: manipulation; }
+@media (max-width: 860px) {
+  .hl-tray {
+    top: calc(var(--topbar-h, 3.05rem) + 2.15rem + 0.45rem);
+    bottom: auto;
+  }
+  body.hl-dock-open { padding-bottom: 0; }
+  body.tts-open .hl-tray {
+    bottom: auto;
+  }
 }
 body.hl-dock-open { padding-bottom: 4.5rem; }
 body.tts-open .hl-tray {
