@@ -1,9 +1,12 @@
 (function () {
   const sr = (document.documentElement.lang || "").indexOf("sr") === 0;
-  const bookId = (document.querySelector('meta[name="book-title"]') || {}).content
+  const bookTitle = (document.querySelector('meta[name="book-title"]') || {}).content
     || document.title
     || location.pathname;
+  const pageName = (location.pathname.split("/").pop() || "index.html");
+  const bookId = bookTitle + "::" + pageName;
   const KEY = "citaonica-notes:" + bookId;
+  const OLD_KEY = "citaonica-notes:" + bookTitle;
   const COLORS = [
     { id: "rose", hex: "#f8c5d6" },
     { id: "orange", hex: "#ffd9a3" },
@@ -32,11 +35,81 @@
 
   let items = [];
   try { items = JSON.parse(localStorage.getItem(KEY) || "[]") || []; } catch (e) { items = []; }
+  if (!items.length) {
+    try { items = JSON.parse(localStorage.getItem(OLD_KEY) || "[]") || []; } catch (e) { items = []; }
+  }
 
   let active = "";
   let modeOn = false;
 
-  function persist() { localStorage.setItem(KEY, JSON.stringify(items)); }
+  function sb() {
+    try {
+      return window.CitaonicaAuth && window.CitaonicaAuth.client && window.CitaonicaAuth.client();
+    } catch (e) { return null; }
+  }
+  function userId() {
+    const u = window.CitaonicaAuth && window.CitaonicaAuth.getUser && window.CitaonicaAuth.getUser();
+    return u && u.id;
+  }
+  function persist() {
+    localStorage.setItem(KEY, JSON.stringify(items));
+    pushCloud();
+  }
+  async function pushCloud() {
+    const client = sb();
+    const uid = userId();
+    if (!client || !uid) return;
+    const rows = items.map(function (it) {
+      return {
+        id: it.id,
+        user_id: uid,
+        book_id: bookId,
+        quote: it.quote || "",
+        note: it.text || "",
+        color: it.color || "gold",
+        kind: it.kind || "mark",
+        updated_at: new Date(it.at || Date.now()).toISOString()
+      };
+    });
+    try {
+      await client.from("highlights").delete().eq("user_id", uid).eq("book_id", bookId);
+      if (rows.length) await client.from("highlights").insert(rows);
+    } catch (e) {
+      console.warn("highlights push", e);
+    }
+  }
+  async function pullCloud() {
+    const client = sb();
+    const uid = userId();
+    if (!client || !uid) return;
+    try {
+      const res = await client.from("highlights").select("*").eq("book_id", bookId);
+      if (res.error) {
+        console.warn("highlights pull", res.error);
+        return;
+      }
+      const byId = {};
+      items.forEach(function (it) { byId[it.id] = it; });
+      (res.data || []).forEach(function (row) {
+        const it = {
+          id: row.id,
+          kind: row.kind || "mark",
+          quote: row.quote,
+          text: row.note || "",
+          color: row.color || "gold",
+          at: row.updated_at ? Date.parse(row.updated_at) : Date.now()
+        };
+        const local = byId[it.id];
+        if (!local || it.at >= (local.at || 0)) byId[it.id] = it;
+      });
+      items = Object.keys(byId).map(function (k) { return byId[k]; });
+      localStorage.setItem(KEY, JSON.stringify(items));
+      paint();
+      renderList();
+    } catch (e) {
+      console.warn("highlights pull", e);
+    }
+  }
   function uid() { return "n" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
   function colorHex(id) {
     const c = COLORS.find(function (x) { return x.id === id; });
@@ -667,6 +740,8 @@
       if (!loggedIn()) {
         setTrayOpen(false);
         document.body.classList.remove("notes-open");
+      } else {
+        pullCloud();
       }
     }
   };
