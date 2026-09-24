@@ -129,10 +129,27 @@
   function renderTray() {
     const el = tray();
     el.innerHTML = "";
+    const top = document.createElement("div");
+    top.className = "hl-tray-top";
     const hint = document.createElement("span");
     hint.className = "hl-hint";
     hint.textContent = t.hint;
-    el.appendChild(hint);
+    top.appendChild(hint);
+    const x = document.createElement("button");
+    x.type = "button";
+    x.className = "hl-x";
+    x.setAttribute("aria-label", "Zatvori");
+    x.textContent = "×";
+    x.addEventListener("mousedown", function (ev) { ev.preventDefault(); ev.stopPropagation(); });
+    x.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      setTrayOpen(false);
+    });
+    top.appendChild(x);
+    el.appendChild(top);
+    const dots = document.createElement("div");
+    dots.className = "hl-tray-dots";
     COLORS.forEach(function (c) {
       const b = document.createElement("button");
       b.type = "button";
@@ -147,7 +164,7 @@
         renderTray();
         if (currentQuote() || pendingQuote) applyCurrentSelection();
       });
-      el.appendChild(b);
+      dots.appendChild(b);
     });
     const eraser = document.createElement("button");
     eraser.type = "button";
@@ -161,7 +178,10 @@
       renderTray();
       if (currentQuote() || pendingQuote) applyCurrentSelection();
     });
-    el.appendChild(eraser);
+    dots.appendChild(eraser);
+    el.appendChild(dots);
+    const foot = document.createElement("div");
+    foot.className = "hl-tray-foot";
     const listBtn = document.createElement("button");
     listBtn.type = "button";
     listBtn.className = "hl-list-btn";
@@ -174,19 +194,8 @@
       document.body.classList.add("notes-open");
       renderList();
     });
-    el.appendChild(listBtn);
-    const x = document.createElement("button");
-    x.type = "button";
-    x.className = "hl-x";
-    x.setAttribute("aria-label", "Zatvori");
-    x.textContent = "×";
-    x.addEventListener("mousedown", function (ev) { ev.preventDefault(); ev.stopPropagation(); });
-    x.addEventListener("click", function (ev) {
-      ev.preventDefault();
-      ev.stopPropagation();
-      setTrayOpen(false);
-    });
-    el.appendChild(x);
+    foot.appendChild(listBtn);
+    el.appendChild(foot);
   }
 
   function currentQuote() {
