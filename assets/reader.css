@@ -973,15 +973,22 @@ body.shelf-open .shelfbar { transform: translateX(0); }
   top: 0.55rem;
   left: 0.55rem;
   z-index: 70;
-  width: 1.7rem;
-  height: 1.35rem;
-  padding: 0.15rem 0;
+  width: 2.4rem;
+  height: 2.4rem;
+  padding: 0;
+  margin: 0;
   background: transparent;
   border: 0;
+  border-radius: 0;
+  box-shadow: none;
   cursor: pointer;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  gap: 5px;
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
 }
 body:not(.shelf-open) .shelf-open-btn { display: flex; }
 .shelf-open-btn span {
@@ -994,10 +1001,12 @@ body:not(.shelf-open) .shelf-open-btn { display: flex; }
 .topnav .shelf-open-btn {
   position: static;
   z-index: auto;
-  width: 1.7rem;
-  height: 1.2rem;
+  width: 2.4rem;
+  height: 2.4rem;
   padding: 0;
+  margin: 0;
   flex: 0 0 auto;
+  align-self: center;
 }
 @media (min-width: 1101px), (min-width: 641px) and (hover: hover) and (pointer: fine) {
   .topnav { position: sticky; }
@@ -1012,7 +1021,7 @@ body:not(.shelf-open) .shelf-open-btn { display: flex; }
     box-sizing: border-box;
   }
   body:not(.shelf-open) .topnav-inner {
-    padding-left: 2.6rem;
+    padding-left: 0.55rem;
   }
   body.shelf-open .topnav .shelf-open-btn {
     display: none;
