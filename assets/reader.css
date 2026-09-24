@@ -1262,13 +1262,13 @@ mark.user-hl {
   gap: 0.45rem;
   background: #2b2b2b;
   color: #f3efe8;
-  padding: 0.45rem 0.7rem 0.55rem;
+  padding: 0.45rem 0.85rem 0.55rem;
   border-radius: 14px;
   box-shadow: 0 8px 28px rgba(0,0,0,.28);
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
   width: max-content;
-  min-width: 22.5rem;
-  max-width: calc(100vw - 1rem);
+  min-width: 17.2rem;
+  max-width: calc(100vw - 2.4rem);
   touch-action: none;
   cursor: grab;
 }
@@ -1315,8 +1315,8 @@ body.tts-open.hl-dock-open { padding-bottom: calc(var(--tts-bar-h, 6.4rem) + 4.2
   margin-left: auto;
 }
 .hl-dot {
-  width: 1.15rem;
-  height: 1.15rem;
+  width: 1.28rem;
+  height: 1.28rem;
   border-radius: 50%;
   border: 2px solid transparent;
   padding: 0;
