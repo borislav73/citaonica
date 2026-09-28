@@ -19,6 +19,12 @@
       <span class="ttl">Čitaonica</span>
     </a>
     <div class="shelf-rule" aria-hidden="true"></div>
+    <div class="lang-filter" id="lang-filter" role="tablist" aria-label="Jezik knjiga">
+      <button type="button" class="shelf-item lang-filter-btn is-here" data-filter="all" role="tab" aria-selected="true">Sve knjige</button>
+      <button type="button" class="shelf-item lang-filter-btn" data-filter="hr" role="tab" aria-selected="false">Knjige na Hrvatskom</button>
+      <button type="button" class="shelf-item lang-filter-btn" data-filter="sr" role="tab" aria-selected="false">Knjige na Srpskom</button>
+      <button type="button" class="shelf-item lang-filter-btn" data-filter="en" role="tab" aria-selected="false">Knjige na Engleskom</button>
+    </div>
   </nav>
   <div id="account-slot" class="account-slot">
     <div class="markup-block">
@@ -41,61 +47,61 @@
   <main class="wrap catalog-home">
     <h1>Knjige</h1>
     <div class="book-grid">
-      <a class="book-card" href="knjige/davenant/hr.html">
+      <a class="book-card" data-lang="hr" href="knjige/davenant/hr.html">
         <p class="lang">Hrvatski</p>
         <h2>Rasprava o smrti Kristovoj</h2>
         <p class="sub">s obzirom na njezin opseg i posebne dobrobiti</p>
         <p class="meta">John Davenant</p>
       </a>
-      <a class="book-card" href="knjige/davenant/sr.html">
+      <a class="book-card" data-lang="sr" href="knjige/davenant/sr.html">
         <p class="lang">Srpski</p>
         <h2>Расправа о смрти Христовој</h2>
         <p class="sub">с обзиром на њен опсег и посебне користи</p>
         <p class="meta">Џон Давенант</p>
       </a>
-      <a class="book-card" href="knjige/hooker/preface.html">
+      <a class="book-card" data-lang="en" href="knjige/hooker/preface.html">
         <p class="lang">English</p>
         <h2>Of the Laws of Ecclesiastical Polity</h2>
         <p class="sub">Books I–VIII</p>
         <p class="meta">Richard Hooker</p>
       </a>
-      <a class="book-card" href="knjige/39-clanaka-hr.html">
+      <a class="book-card" data-lang="hr" href="knjige/39-clanaka-hr.html">
         <p class="lang">Hrvatski</p>
         <h2>Trideset i devet članaka vjere</h2>
         <p class="sub">Anglikanske crkve</p>
         <p class="meta">Thomas Cranmer</p>
       </a>
-      <a class="book-card" href="knjige/39-clanova-sr.html">
+      <a class="book-card" data-lang="sr" href="knjige/39-clanova-sr.html">
         <p class="lang">Srpski</p>
         <h2>Тридесет и девет чланова вере</h2>
         <p class="sub">Англиканске цркве</p>
         <p class="meta">Томас Кранмер · Ипостас</p>
       </a>
-      <a class="book-card" href="knjige/heidelberg-sr.html">
+      <a class="book-card" data-lang="sr" href="knjige/heidelberg-sr.html">
         <p class="lang">Srpski</p>
         <h2>Хајделбершки катихизис</h2>
         <p class="sub">1563 · Ипостас, 2024</p>
         <p class="meta">Уршин и Олевианус</p>
       </a>
-      <a class="book-card" href="knjige/perkins-art-en.html">
+      <a class="book-card" data-lang="en" href="knjige/perkins-art-en.html">
         <p class="lang">English</p>
         <h2>The Art of Prophesying</h2>
         <p class="sub">A treatise on the manner of preaching</p>
         <p class="meta">William Perkins</p>
       </a>
-      <a class="book-card" href="knjige/jewel-apology-en.html">
+      <a class="book-card" data-lang="en" href="knjige/jewel-apology-en.html">
         <p class="lang">English</p>
         <h2>The Apology of the Church of England</h2>
         <p class="sub">An answer in defence of the Church of England</p>
         <p class="meta">John Jewel</p>
       </a>
-      <a class="book-card" href="knjige/perkins-reformed-catholic-en.html">
+      <a class="book-card" data-lang="en" href="knjige/perkins-reformed-catholic-en.html">
         <p class="lang">English</p>
         <h2>A Reformed Catholic</h2>
         <p class="sub">How near we may come to Rome, and wherein we must depart</p>
         <p class="meta">William Perkins</p>
       </a>
-      <a class="book-card" href="knjige/perkins-golden-chain-en.html">
+      <a class="book-card" data-lang="en" href="knjige/perkins-golden-chain-en.html">
         <p class="lang">English</p>
         <h2>A Golden Chain</h2>
         <p class="sub">The description of theology</p>
@@ -104,6 +110,39 @@
     </div>
   </main>
 </div>
+
+
+<script>
+(function () {
+  var box = document.getElementById("lang-filter");
+  if (!box) return;
+  var cards = [].slice.call(document.querySelectorAll(".book-card[data-lang]"));
+  var title = document.querySelector(".catalog-home > h1");
+  var labels = { all: "Knjige", hr: "Knjige na hrvatskom", sr: "Knjige na srpskom", en: "Knjige na engleskom" };
+  function apply(filter) {
+    box.querySelectorAll(".lang-filter-btn").forEach(function (btn) {
+      var on = btn.getAttribute("data-filter") === filter;
+      btn.classList.toggle("is-here", on);
+      btn.setAttribute("aria-selected", on ? "true" : "false");
+    });
+    cards.forEach(function (card) {
+      var show = filter === "all" || card.getAttribute("data-lang") === filter;
+      card.hidden = !show;
+    });
+    if (title) title.textContent = labels[filter] || "Knjige";
+    try { history.replaceState(null, "", filter === "all" ? location.pathname : "#lang=" + filter); } catch (e) {}
+  }
+  box.addEventListener("click", function (ev) {
+    var btn = ev.target.closest(".lang-filter-btn");
+    if (!btn) return;
+    apply(btn.getAttribute("data-filter") || "all");
+  });
+  var start = "all";
+  var m = (location.hash || "").match(/lang=(all|hr|sr|en)/);
+  if (m) start = m[1];
+  apply(start);
+})();
+</script>
 
 <script src="assets/config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

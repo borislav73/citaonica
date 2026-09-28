@@ -1013,6 +1013,25 @@ body.shelf-open .shelfbar { transform: translateX(0); }
   font-size: 0.86rem;
   color: var(--muted);
 }
+.lang-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+  padding-top: 0.1rem;
+}
+.lang-filter-btn {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  padding: 0.48rem 0.75rem;
+  color: var(--accent);
+  font-weight: 650;
+  font-size: 0.92rem;
+}
+.book-card[hidden] { display: none !important; }
 
 .shelf-open-btn {
   display: none;
