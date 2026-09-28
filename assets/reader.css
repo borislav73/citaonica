@@ -160,6 +160,12 @@ a:hover { text-decoration-thickness: 2px; }
   color: var(--accent);
   text-align: center;
 }
+.titlepage .subtitle.or-line {
+  margin-bottom: 0.12rem;
+}
+.titlepage .or-line + .subtitle {
+  margin-top: 0;
+}
 .titlepage .blurb {
   font-size: 0.95rem;
   line-height: 1.55;
