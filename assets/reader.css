@@ -363,6 +363,14 @@ p.chap-title {
   color: var(--muted);
   margin-right: 0.25em;
 }
+.pnum {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-style: normal;
+  font-weight: 650;
+  font-size: 0.82em;
+  color: var(--accent);
+  margin-right: 0.35em;
+}
 
 /* Body text justified throughout (paragraphs, objections, answers) */
 p {
