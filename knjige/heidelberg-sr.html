@@ -22,6 +22,27 @@ h3.sec-head { text-align: center; font-size: 1rem; font-weight: 600; font-style:
 .imprint { margin-top: 2.5rem; font-size: .88rem; color: var(--muted); }
 .imprint p { text-indent: 0; }
 .sign { text-align: right; font-style: italic; text-indent: 0; }
+
+h3.lday {
+  border-top: 1px solid var(--rule);
+  padding-top: 1.75rem;
+  margin-top: 2.1rem;
+}
+h2.part {
+  border-top: 1px solid var(--rule);
+  padding-top: 1.75rem;
+  margin-top: 2.1rem;
+}
+h2.part + h3.sec-head {
+  margin-top: 0.45rem;
+}
+h2.part + h3.sec-head + h3.lday,
+h2.part + h3.lday {
+  border-top: 0;
+  padding-top: 0.35rem;
+  margin-top: 0.9rem;
+}
+
 </style>
 </head>
 <body>
