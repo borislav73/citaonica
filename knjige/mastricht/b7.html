@@ -32,6 +32,12 @@ p.pars, .pars, .parthead, h3 { text-align:center; }
 
 p.adtext { text-align:center; margin:0.6rem 0 0.2rem; }
 blockquote.motto { text-align:center; font-style:italic; margin:0.3rem auto 1.2rem; max-width:36em; border:0; }
+
+h1.noteshead, .noteshead, h1.chap.notes, section.notes h1, 
+h2:has(+ .enote), h1:has(+ .enote) { text-align:center; border-top:1px solid var(--rule,#ddd); padding-top:1.6rem; margin-top:2.6rem; }
+.notes > h1, .notes > h2 { text-align:center; border-top:1px solid var(--rule,#ddd); padding-top:1.6rem; margin-top:2.6rem; }
+h1[id^="k"], h2[id^="k1-h"], .uvod h1, main h1:not(.chap) { text-align:center; }
+.front { text-align:center; margin-top:2rem; }
 </style>
 </head>
 <body>
@@ -75,11 +81,11 @@ blockquote.motto { text-align:center; font-style:italic; margin:0.3rem auto 1.2r
     <a class="brand" href="#top">Teoretsko-praktična teologija</a>
     <button type="button" class="tts-toggle-nav" id="tts-toggle-nav" aria-controls="tts-bar" title="Aktiviraj čitanje naglas">Aktiviraj čitanje naglas</button>
   </div>
-  <nav class="chapbar" id="chapbar" aria-label="Poglavlja"><a href="#k7-h2">POGLAVLJE PRVO</a><a href="#k7-h3">POGLAVLJE DRUGO</a><a href="#k7-h4">POGLAVLJE TREĆE</a><a href="#k7-h5">POGLAVLJE ČETVRTO</a><a href="#k7-h6">POGLAVLJE PETO</a><a href="#k7-h7">POGLAVLJE ŠESTO</a><a href="#k7-h8">POGLAVLJE SEDMO</a></nav>
+  <nav class="chapbar" id="chapbar" aria-label="Poglavlja"><a href="#k7-h2">1</a><a href="#k7-h3">2</a><a href="#k7-h4">3</a><a href="#k7-h5">4</a><a href="#k7-h6">5</a><a href="#k7-h7">6</a><a href="#k7-h8">7</a></nav>
 </div>
 <main class="wrap">
 <header class="titlepage" id="top">
-  <h1>Teoretsko-praktična teologija</h1>
+  <h1 style="text-align:center">Teoretsko-praktična teologija</h1>
   <p class="subtitle">Knjiga 7</p>
   <p class="author">Petrus van Mastricht</p>
   <p class="role">Prijevod: Boris Dželajlija</p>

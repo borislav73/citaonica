@@ -32,6 +32,12 @@ p.pars, .pars, .parthead, h3 { text-align:center; }
 
 p.adtext { text-align:center; margin:0.6rem 0 0.2rem; }
 blockquote.motto { text-align:center; font-style:italic; margin:0.3rem auto 1.2rem; max-width:36em; border:0; }
+
+h1.noteshead, .noteshead, h1.chap.notes, section.notes h1, 
+h2:has(+ .enote), h1:has(+ .enote) { text-align:center; border-top:1px solid var(--rule,#ddd); padding-top:1.6rem; margin-top:2.6rem; }
+.notes > h1, .notes > h2 { text-align:center; border-top:1px solid var(--rule,#ddd); padding-top:1.6rem; margin-top:2.6rem; }
+h1[id^="k"], h2[id^="k1-h"], .uvod h1, main h1:not(.chap) { text-align:center; }
+.front { text-align:center; margin-top:2rem; }
 </style>
 </head>
 <body>
@@ -75,16 +81,16 @@ blockquote.motto { text-align:center; font-style:italic; margin:0.3rem auto 1.2r
     <a class="brand" href="#top">Teoretsko-praktična teologija</a>
     <button type="button" class="tts-toggle-nav" id="tts-toggle-nav" aria-controls="tts-bar" title="Aktiviraj čitanje naglas">Aktiviraj čitanje naglas</button>
   </div>
-  <nav class="chapbar" id="chapbar" aria-label="Poglavlja"><a href="#k9-h3">POGLAVLJE PRVO</a><a href="#k9-h4">POGLAVLJE DRUGO</a><a href="#k9-h5">POGLAVLJE TREĆE</a><a href="#k9-h6">POGLAVLJE ČETVRTO</a><a href="#k9-h7">POGLAVLJE PETO</a><a href="#k9-h8">POGLAVLJE ŠESTO</a><a href="#k9-h9">POGLAVLJE SEDMO</a><a href="#k9-h10">POGLAVLJE OSMO</a><a href="#k9-h11">POGLAVLJE DEVETO</a><a href="#k9-h12">POGLAVLJE DESETO</a><a href="#k9-h13">POGLAVLJE JEDANAESTO</a><a href="#k9-h14">POGLAVLJE DVANAESTO</a><a href="#k9-h15">POGLAVLJE TRINAESTO</a><a href="#k9-h16">POGLAVLJE ČETRNAESTO</a><a href="#k9-h17">POGLAVLJE PETNAESTO</a><a href="#k9-h18">POGLAVLJE ŠESNAESTO</a><a href="#k9-h19">POGLAVLJE SEDAMNAESTO</a><a href="#k9-h21">POGLAVLJE PRVO</a><a href="#k9-h22">POGLAVLJE DRUGO</a><a href="#k9-h23">POGLAVLJE TREĆE</a><a href="#k9-h24">POGLAVLJE ČETVRTO</a><a href="#k9-h25">POGLAVLJE PETO</a><a href="#k9-h26">POGLAVLJE ŠESTO</a><a href="#k9-h27">POGLAVLJE SEDMO</a><a href="#k9-h28">POGLAVLJE OSMO</a><a href="#k9-h29">POGLAVLJE DEVETO</a><a href="#k9-h30">POGLAVLJE DESETO</a><a href="#k9-h31">POGLAVLJE JEDANAESTO</a><a href="#k9-h32">POGLAVLJE DVANAESTO</a><a href="#k9-h33">POGLAVLJE TRINAESTO</a><a href="#k9-h34">POGLAVLJE ČETRNAESTO</a><a href="#k9-h35">POGLAVLJE PETNAESTO</a><a href="#k9-h37">POGLAVLJE PRVO</a><a href="#k9-h38">POGLAVLJE DRUGO</a><a href="#k9-h39">POGLAVLJE TREĆE</a><a href="#k9-h40">POGLAVLJE ČETVRTO</a><a href="#k9-h41">POGLAVLJE PETO</a><a href="#k9-h42">POGLAVLJE ŠESTO</a><a href="#k9-h43">POGLAVLJE SEDMO</a><a href="#k9-h44">POGLAVLJE OSMO</a></nav>
+  <nav class="chapbar" id="chapbar" aria-label="Poglavlja"><a href="#k9-h3">1</a><a href="#k9-h4">2</a><a href="#k9-h5">3</a><a href="#k9-h6">4</a><a href="#k9-h7">5</a><a href="#k9-h8">6</a><a href="#k9-h9">7</a><a href="#k9-h10">8</a><a href="#k9-h11">9</a><a href="#k9-h12">10</a><a href="#k9-h13">11</a><a href="#k9-h14">12</a><a href="#k9-h15">13</a><a href="#k9-h16">14</a><a href="#k9-h17">15</a><a href="#k9-h18">16</a><a href="#k9-h19">17</a><a href="#k9-h21">1</a><a href="#k9-h22">2</a><a href="#k9-h23">3</a><a href="#k9-h24">4</a><a href="#k9-h25">5</a><a href="#k9-h26">6</a><a href="#k9-h27">7</a><a href="#k9-h28">8</a><a href="#k9-h29">9</a><a href="#k9-h30">10</a><a href="#k9-h31">11</a><a href="#k9-h32">12</a><a href="#k9-h33">13</a><a href="#k9-h34">14</a><a href="#k9-h35">15</a><a href="#k9-h37">1</a><a href="#k9-h38">2</a><a href="#k9-h39">3</a><a href="#k9-h40">4</a><a href="#k9-h41">5</a><a href="#k9-h42">6</a><a href="#k9-h43">7</a><a href="#k9-h44">8</a></nav>
 </div>
 <main class="wrap">
 <header class="titlepage" id="top">
-  <h1>Teoretsko-praktična teologija</h1>
+  <h1 style="text-align:center">Teoretsko-praktična teologija</h1>
   <p class="subtitle">Knjiga 9</p>
   <p class="author">Petrus van Mastricht</p>
   <p class="role">Prijevod: Boris Dželajlija</p>
 </header>
-<h1 id="k9-h1" class="front">Nacrt moralne teologije</h1>
+<h1 id="k9-h1" class="front" style="text-align:center">Nacrt moralne teologije</h1>
 
 <h3 id="k9-a2" class="fsub">Predgovor</h3>
 
