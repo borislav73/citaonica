@@ -19,35 +19,29 @@ h2.sec .lab { font-size:0.78em; letter-spacing:0.08em; text-transform:uppercase;
 h2.sec .ttl { font-size:1.02em; margin-bottom:0.6rem; }
 span.secno { margin-right:0.55em; font-weight:600; color:var(--muted,#666); display:inline; }
 .dhead { text-align:center; font-size:0.92em; line-height:1.55; margin:2rem auto 1.2rem; max-width:36em; letter-spacing:0.02em; }
-.dhead br { display:block; }
 p.t-tr, .t-tr { text-align:center; margin:0.8rem 0; }
 header.titlepage { text-align:center; margin-bottom:2rem; }
 header.titlepage h1 { margin-bottom:0.3rem; }
-
-.titleblock { text-align:center; margin:1.5rem auto 1.2rem; max-width:40em; }
+h1.chap, h2.sec { text-align:center; }
+h2.sec { border-top:1px solid var(--rule,#ddd); padding-top:1.6rem; margin-top:2.4rem; }
+h1.chap { margin-top:2rem; border-top:1px solid var(--rule,#ddd); padding-top:1.8rem; }
+p.pars, .pars, .parthead, h3 { text-align:center; }
+p.adtext { text-align:center; margin:0.6rem 0 0.2rem; }
+blockquote.motto { text-align:center; font-style:italic; margin:0.3rem auto 1.2rem; max-width:36em; border:0; }
+h3.theorema { border-top:1px solid var(--rule,#ddd); padding-top:1.4rem; margin:2.2rem 0 0.8rem; text-align:center; }
+h3.theorema .lab, h3.theorema .ttl { display:block; }
+h3.theorema .lab { font-size:0.82em; letter-spacing:0.08em; margin-bottom:0.2rem; }
+h3.theorema .ttl { font-size:1.02em; }
+.noteshead { text-align:center; border-top:1px solid var(--rule,#ddd); padding-top:1.6rem; margin-top:2.6rem; }
+.front { text-align:center; margin-top:2rem; }
+.titleblock, .titleblock p, .titleblock h1 { text-align:center; }
+.titleblock .t-vol { font-weight:700; }
 .titleblock .t-main { font-size:1.6em; margin:0.4rem 0; }
 .titleblock .t-sub { font-size:0.95em; color:var(--muted,#666); }
 aside.license { margin:1.6rem auto; max-width:42em; padding:1rem 1.2rem; border:1px solid var(--rule,#ddd); border-radius:6px; background:rgba(0,0,0,0.025); font-size:0.9em; line-height:1.5; }
 aside.license p { margin:0.5rem 0; }
-
-.titleblock, .titleblock p, .titleblock h1 { text-align:center; }
-.titleblock .t-vol { font-weight:700; }
-
-h2.sec, h1.chap { text-align:center; }
-h2.sec { border-top:1px solid var(--rule,#ddd); padding-top:1.6rem; margin-top:2.4rem; }
-h1.chap { margin-top:2rem; }
-p.pars, .pars, .parthead, h3 { text-align:center; }
-.notes-anchor { scroll-margin-top:5rem; }
-
-p.adtext { text-align:center; margin:0.6rem 0 0.2rem; }
-blockquote.motto { text-align:center; font-style:italic; margin:0.3rem auto 1.2rem; max-width:36em; border:0; }
-
-h1.noteshead, .noteshead, h1.chap.notes, section.notes h1, 
-h2:has(+ .enote), h1:has(+ .enote) { text-align:center; border-top:1px solid var(--rule,#ddd); padding-top:1.6rem; margin-top:2.6rem; }
-.notes > h1, .notes > h2 { text-align:center; border-top:1px solid var(--rule,#ddd); padding-top:1.6rem; margin-top:2.6rem; }
-h1[id^="k"], h2[id^="k1-h"], .uvod h1, main h1:not(.chap) { text-align:center; }
-.front { text-align:center; margin-top:2rem; }
 </style>
+
 </head>
 <body>
 <aside class="shelfbar" id="shelfbar" aria-label="Navigacija">
@@ -90,11 +84,11 @@ h1[id^="k"], h2[id^="k1-h"], .uvod h1, main h1:not(.chap) { text-align:center; }
     <a class="brand" href="#top">Teoretsko-praktična teologija</a>
     <button type="button" class="tts-toggle-nav" id="tts-toggle-nav" aria-controls="tts-bar" title="Aktiviraj čitanje naglas">Aktiviraj čitanje naglas</button>
   </div>
-  <nav class="chapbar" id="chapbar" aria-label="Poglavlja"><a href="#k1-h1">Napomena prevodite</a><a href="#k1-h2">Predgovor</a><a href="#k1-h3">Kazalo poglavlja</a><a href="#k1-h4">Metodički raspored</a><a href="#notes">Bilješke</a></nav>
+  <nav class="chapbar" id="chapbar" aria-label="Poglavlja"><a href="#notes">Bilješke</a></nav>
 </div>
 <main class="wrap">
 <header class="titlepage" id="top">
-  <h1 style="text-align:center">Teoretsko-praktična teologija</h1>
+  <h1>Teoretsko-praktična teologija</h1>
   <p class="subtitle">Uvod</p>
   <p class="author">Petrus van Mastricht</p>
   <p class="role">Prijevod: Boris Dželajlija</p>
@@ -1262,7 +1256,7 @@ h1[id^="k"], h2[id^="k1-h"], .uvod h1, main h1:not(.chap) { text-align:center; }
 <p id="k1-a589" class="o o1" style="padding-left:8.29em"><span class="oref">(pogl. 15)</span><span class="ilab he">ב.</span>u smrti, gdje o umijeću dobre smrti, i njegovoj: a. naravi, b. dobrima, c. pomagalima.</p>
 
 <p id="k1-a590">Podrobniji raspored crkvene povijesti nalazi se na početku osme knjige.</p>
-<h2 class="noteshead chap" id="notes">Bilješke uz uvodne dijelove</h2>
+<h2 class="noteshead" id="notes" class="chap">Bilješke uz uvodne dijelove</h2>
 <p class="enote" id="n-uvod-1"><span class="en-num">1.</span> Lat. <em>de Susceptore</em>: o jamcu (kumu) pri krštenju; Gerhardova rasprava. <a class="backref" href="#fnref-n-uvod-1" title="Natrag">↩</a></p>
 <p class="enote" id="n-uvod-2"><span class="en-num">2.</span> Lat. <em>et nomine et omine</em>: igra riječi (<em>nomen</em> „ime“, <em>omen</em> „znamen“). <a class="backref" href="#fnref-n-uvod-2" title="Natrag">↩</a></p>
 <p class="footer-nav"><a href="#top">↑ Na vrh</a> <span>Petrus van Mastricht · prev. Boris Dželajlija</span></p>
@@ -1272,7 +1266,7 @@ h1[id^="k"], h2[id^="k1-h"], .uvod h1, main h1:not(.chap) { text-align:center; }
 <button type="button" class="tts-toggle-fab" id="tts-toggle-fab" aria-controls="tts-bar" title="Aktiviraj čitanje naglas"><span class="fab-full">Aktiviraj čitanje naglas</span><span class="fab-short">Čitanje naglas</span></button>
 <div class="tts-bar" id="tts-bar" hidden>
   <div class="tts-bar-inner">
-    <button type="button" id="tts-play" title="Pokreni ili nastavi">▶ Čitaj</button>
+    <button type="button" id="tts-play" title="Pokreni">▶ Čitaj</button>
     <button type="button" id="tts-pause" title="Pauza">⏸ Pauza</button>
     <button type="button" id="tts-stop" title="Zaustavi">■ Stani</button>
     <label class="tts-label">Od
@@ -1288,7 +1282,7 @@ h1[id^="k"], h2[id^="k1-h"], .uvod h1, main h1:not(.chap) { text-align:center; }
         <option value="1.5">1,5×</option>
       </select>
     </label>
-    <button type="button" class="shelf-close tts-close" id="tts-close" title="Zatvori čitanje" aria-label="Zatvori čitanje">×</button>
+    <button type="button" class="shelf-close tts-close" id="tts-close" title="Zatvori" aria-label="Zatvori">×</button>
     <label class="tts-label tts-voice-label">Glas
       <select id="tts-voice" aria-label="Glas"></select>
     </label>
@@ -1296,7 +1290,7 @@ h1[id^="k"], h2[id^="k1-h"], .uvod h1, main h1:not(.chap) { text-align:center; }
   </div>
 </div>
 
-<script type="application/json" id="tts-sections">[{"id": "top", "label": "Uvod"}, {"id": "k1-h1", "label": "Napomena prevoditelja"}, {"id": "k1-h2", "label": "Predgovor"}, {"id": "k1-h3", "label": "Kazalo poglavlja"}, {"id": "k1-h4", "label": "Metodički raspored cijeloga djela"}]</script>
+<script type="application/json" id="tts-sections">[{"id": "top", "label": "Uvod"}]</script>
 <script src="../../assets/config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../../assets/auth.js"></script>

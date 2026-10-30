@@ -19,26 +19,29 @@ h2.sec .lab { font-size:0.78em; letter-spacing:0.08em; text-transform:uppercase;
 h2.sec .ttl { font-size:1.02em; margin-bottom:0.6rem; }
 span.secno { margin-right:0.55em; font-weight:600; color:var(--muted,#666); display:inline; }
 .dhead { text-align:center; font-size:0.92em; line-height:1.55; margin:2rem auto 1.2rem; max-width:36em; letter-spacing:0.02em; }
-.dhead br { display:block; }
 p.t-tr, .t-tr { text-align:center; margin:0.8rem 0; }
 header.titlepage { text-align:center; margin-bottom:2rem; }
 header.titlepage h1 { margin-bottom:0.3rem; }
-
-h2.sec, h1.chap { text-align:center; }
+h1.chap, h2.sec { text-align:center; }
 h2.sec { border-top:1px solid var(--rule,#ddd); padding-top:1.6rem; margin-top:2.4rem; }
-h1.chap { margin-top:2rem; }
+h1.chap { margin-top:2rem; border-top:1px solid var(--rule,#ddd); padding-top:1.8rem; }
 p.pars, .pars, .parthead, h3 { text-align:center; }
-.notes-anchor { scroll-margin-top:5rem; }
-
 p.adtext { text-align:center; margin:0.6rem 0 0.2rem; }
 blockquote.motto { text-align:center; font-style:italic; margin:0.3rem auto 1.2rem; max-width:36em; border:0; }
-
-h1.noteshead, .noteshead, h1.chap.notes, section.notes h1, 
-h2:has(+ .enote), h1:has(+ .enote) { text-align:center; border-top:1px solid var(--rule,#ddd); padding-top:1.6rem; margin-top:2.6rem; }
-.notes > h1, .notes > h2 { text-align:center; border-top:1px solid var(--rule,#ddd); padding-top:1.6rem; margin-top:2.6rem; }
-h1[id^="k"], h2[id^="k1-h"], .uvod h1, main h1:not(.chap) { text-align:center; }
+h3.theorema { border-top:1px solid var(--rule,#ddd); padding-top:1.4rem; margin:2.2rem 0 0.8rem; text-align:center; }
+h3.theorema .lab, h3.theorema .ttl { display:block; }
+h3.theorema .lab { font-size:0.82em; letter-spacing:0.08em; margin-bottom:0.2rem; }
+h3.theorema .ttl { font-size:1.02em; }
+.noteshead { text-align:center; border-top:1px solid var(--rule,#ddd); padding-top:1.6rem; margin-top:2.6rem; }
 .front { text-align:center; margin-top:2rem; }
+.titleblock, .titleblock p, .titleblock h1 { text-align:center; }
+.titleblock .t-vol { font-weight:700; }
+.titleblock .t-main { font-size:1.6em; margin:0.4rem 0; }
+.titleblock .t-sub { font-size:0.95em; color:var(--muted,#666); }
+aside.license { margin:1.6rem auto; max-width:42em; padding:1rem 1.2rem; border:1px solid var(--rule,#ddd); border-radius:6px; background:rgba(0,0,0,0.025); font-size:0.9em; line-height:1.5; }
+aside.license p { margin:0.5rem 0; }
 </style>
+
 </head>
 <body>
 <aside class="shelfbar" id="shelfbar" aria-label="Navigacija">
@@ -81,16 +84,16 @@ h1[id^="k"], h2[id^="k1-h"], .uvod h1, main h1:not(.chap) { text-align:center; }
     <a class="brand" href="#top">Teoretsko-praktična teologija</a>
     <button type="button" class="tts-toggle-nav" id="tts-toggle-nav" aria-controls="tts-bar" title="Aktiviraj čitanje naglas">Aktiviraj čitanje naglas</button>
   </div>
-  <nav class="chapbar" id="chapbar" aria-label="Poglavlja"><a href="#k9-h3">1</a><a href="#k9-h4">2</a><a href="#k9-h5">3</a><a href="#k9-h6">4</a><a href="#k9-h7">5</a><a href="#k9-h8">6</a><a href="#k9-h9">7</a><a href="#k9-h10">8</a><a href="#k9-h11">9</a><a href="#k9-h12">10</a><a href="#k9-h13">11</a><a href="#k9-h14">12</a><a href="#k9-h15">13</a><a href="#k9-h16">14</a><a href="#k9-h17">15</a><a href="#k9-h18">16</a><a href="#k9-h19">17</a><a href="#k9-h21">1</a><a href="#k9-h22">2</a><a href="#k9-h23">3</a><a href="#k9-h24">4</a><a href="#k9-h25">5</a><a href="#k9-h26">6</a><a href="#k9-h27">7</a><a href="#k9-h28">8</a><a href="#k9-h29">9</a><a href="#k9-h30">10</a><a href="#k9-h31">11</a><a href="#k9-h32">12</a><a href="#k9-h33">13</a><a href="#k9-h34">14</a><a href="#k9-h35">15</a><a href="#k9-h37">1</a><a href="#k9-h38">2</a><a href="#k9-h39">3</a><a href="#k9-h40">4</a><a href="#k9-h41">5</a><a href="#k9-h42">6</a><a href="#k9-h43">7</a><a href="#k9-h44">8</a></nav>
+  <nav class="chapbar" id="chapbar" aria-label="Poglavlja"><a href="#k9-h3">1</a><a href="#k9-h4">2</a><a href="#k9-h5">3</a><a href="#k9-h6">4</a><a href="#k9-h7">5</a><a href="#k9-h8">6</a><a href="#k9-h9">7</a><a href="#k9-h10">8</a><a href="#k9-h11">9</a><a href="#k9-h12">POGLAVLJE DESETO</a><a href="#k9-h13">POGLAVLJE JEDANAESTO</a><a href="#k9-h14">POGLAVLJE DVANAESTO</a><a href="#k9-h15">POGLAVLJE TRINAESTO</a><a href="#k9-h16">POGLAVLJE ČETRNAESTO</a><a href="#k9-h17">POGLAVLJE PETNAESTO</a><a href="#k9-h18">POGLAVLJE ŠESNAESTO</a><a href="#k9-h19">POGLAVLJE SEDAMNAESTO</a><a href="#k9-h21">1</a><a href="#k9-h22">2</a><a href="#k9-h23">3</a><a href="#k9-h24">4</a><a href="#k9-h25">5</a><a href="#k9-h26">6</a><a href="#k9-h27">7</a><a href="#k9-h28">8</a><a href="#k9-h29">9</a><a href="#k9-h30">POGLAVLJE DESETO</a><a href="#k9-h31">POGLAVLJE JEDANAESTO</a><a href="#k9-h32">POGLAVLJE DVANAESTO</a><a href="#k9-h33">POGLAVLJE TRINAESTO</a><a href="#k9-h34">POGLAVLJE ČETRNAESTO</a><a href="#k9-h35">POGLAVLJE PETNAESTO</a><a href="#k9-h37">1</a><a href="#k9-h38">2</a><a href="#k9-h39">3</a><a href="#k9-h40">4</a><a href="#k9-h41">5</a><a href="#k9-h42">6</a><a href="#k9-h43">7</a><a href="#k9-h44">8</a></nav>
 </div>
 <main class="wrap">
 <header class="titlepage" id="top">
-  <h1 style="text-align:center">Teoretsko-praktična teologija</h1>
+  <h1>Teoretsko-praktična teologija</h1>
   <p class="subtitle">Knjiga 9</p>
   <p class="author">Petrus van Mastricht</p>
   <p class="role">Prijevod: Boris Dželajlija</p>
 </header>
-<h1 id="k9-h1" class="front" style="text-align:center">Nacrt moralne teologije</h1>
+<h1 id="k9-h1" class="front">Nacrt moralne teologije</h1>
 
 <h3 id="k9-a2" class="fsub">Predgovor</h3>
 
@@ -1090,7 +1093,7 @@ h1[id^="k"], h2[id^="k1-h"], .uvod h1, main h1:not(.chap) { text-align:center; }
 <button type="button" class="tts-toggle-fab" id="tts-toggle-fab" aria-controls="tts-bar" title="Aktiviraj čitanje naglas"><span class="fab-full">Aktiviraj čitanje naglas</span><span class="fab-short">Čitanje naglas</span></button>
 <div class="tts-bar" id="tts-bar" hidden>
   <div class="tts-bar-inner">
-    <button type="button" id="tts-play" title="Pokreni ili nastavi">▶ Čitaj</button>
+    <button type="button" id="tts-play" title="Pokreni">▶ Čitaj</button>
     <button type="button" id="tts-pause" title="Pauza">⏸ Pauza</button>
     <button type="button" id="tts-stop" title="Zaustavi">■ Stani</button>
     <label class="tts-label">Od
@@ -1106,7 +1109,7 @@ h1[id^="k"], h2[id^="k1-h"], .uvod h1, main h1:not(.chap) { text-align:center; }
         <option value="1.5">1,5×</option>
       </select>
     </label>
-    <button type="button" class="shelf-close tts-close" id="tts-close" title="Zatvori čitanje" aria-label="Zatvori čitanje">×</button>
+    <button type="button" class="shelf-close tts-close" id="tts-close" title="Zatvori" aria-label="Zatvori">×</button>
     <label class="tts-label tts-voice-label">Glas
       <select id="tts-voice" aria-label="Glas"></select>
     </label>
@@ -1114,7 +1117,7 @@ h1[id^="k"], h2[id^="k1-h"], .uvod h1, main h1:not(.chap) { text-align:center; }
   </div>
 </div>
 
-<script type="application/json" id="tts-sections">[{"id": "top", "label": "Knjiga 9"}, {"id": "k9-h1", "label": "Nacrt moralne teologije"}, {"id": "k9-h2", "label": "O obdržavanju vjere općenito"}, {"id": "k9-h3", "label": "POGLAVLJE PRVOO poslušnosti vjere i nepo"}, {"id": "k9-h4", "label": "POGLAVLJE DRUGOO nastojanju oko Zakona i"}, {"id": "k9-h5", "label": "POGLAVLJE TREĆEO brizi za savjest i zane"}, {"id": "k9-h6", "label": "POGLAVLJE ČETVRTOO znanju i neznanju"}, {"id": "k9-h7", "label": "POGLAVLJE PETOO poniznosti i oholosti pr"}, {"id": "k9-h8", "label": "POGLAVLJE ŠESTOO strahu Božjem i omalova"}, {"id": "k9-h9", "label": "POGLAVLJE SEDMOO revnosti i mlakosti"}, {"id": "k9-h10", "label": "POGLAVLJE OSMOO iskrenosti i licemjerju"}, {"id": "k9-h11", "label": "POGLAVLJE DEVETOO kreposti i poroku"}, {"id": "k9-h12", "label": "POGLAVLJE DESETOO razboritosti i nerazbo"}, {"id": "k9-h13", "label": "POGLAVLJE JEDANAESTOO budnosti i pospano"}, {"id": "k9-h14", "label": "POGLAVLJE DVANAESTOO jakosti i slabosti"}, {"id": "k9-h15", "label": "POGLAVLJE TRINAESTOO pouzdanju i bojažlj"}, {"id": "k9-h16", "label": "POGLAVLJE ČETRNAESTOO postojanosti i nes"}, {"id": "k9-h17", "label": "POGLAVLJE PETNAESTOO strpljivosti i nest"}, {"id": "k9-h18", "label": "POGLAVLJE ŠESNAESTOO umjerenosti i neumj"}, {"id": "k9-h19", "label": "POGLAVLJE SEDAMNAESTOO dobrom i zlom dje"}, {"id": "k9-h20", "label": "O religiji"}, {"id": "k9-h21", "label": "POGLAVLJE PRVOO pobožnosti i bezbožnosti"}, {"id": "k9-h22", "label": "POGLAVLJE DRUGOO vjeri i nevjerovanju"}, {"id": "k9-h23", "label": "POGLAVLJE TREĆEO ispovijedanju vjere i z"}, {"id": "k9-h24", "label": "POGLAVLJE ČETVRTOO nadi i očaju"}, {"id": "k9-h25", "label": "POGLAVLJE PETOO ljubavi prema Bogu i mrž"}, {"id": "k9-h26", "label": "POGLAVLJE ŠESTOO slušanju i zanemarivanj"}, {"id": "k9-h27", "label": "POGLAVLJE SEDMOO vršenju i zanemarivanju"}, {"id": "k9-h28", "label": "POGLAVLJE OSMOO ispovijedanju i prešućiv"}, {"id": "k9-h29", "label": "POGLAVLJE DEVETOO uporabi i zloupotrebi "}, {"id": "k9-h30", "label": "POGLAVLJE DESETOO zakletvi i krivokletst"}, {"id": "k9-h31", "label": "POGLAVLJE JEDANAESTOO uporabi i zloupotr"}, {"id": "k9-h32", "label": "POGLAVLJE DVANAESTOO zajedništvu s Bogom"}, {"id": "k9-h33", "label": "POGLAVLJE TRINAESTOO ustanovljenom štova"}, {"id": "k9-h34", "label": "POGLAVLJE ČETRNAESTOO uporabi i zloupotr"}, {"id": "k9-h35", "label": "POGLAVLJE PETNAESTOO posvećivanju i oskv"}, {"id": "k9-h36", "label": "O pravednosti i nepravdi prema bližnjemu"}, {"id": "k9-h37", "label": "POGLAVLJE PRVOO pravednosti prema bližnj"}, {"id": "k9-h38", "label": "POGLAVLJE DRUGOO ljubavi i zlohotnosti p"}, {"id": "k9-h39", "label": "POGLAVLJE TREĆEO časti i omalovažavanju "}, {"id": "k9-h40", "label": "POGLAVLJE ČETVRTOO čovječnosti i ubojstv"}]</script>
+<script type="application/json" id="tts-sections">[{"id": "top", "label": "Knjiga 9"}, {"id": "k9-h3", "label": "POGLAVLJE PRVO"}, {"id": "k9-h4", "label": "POGLAVLJE DRUGO"}, {"id": "k9-h5", "label": "POGLAVLJE TREĆE"}, {"id": "k9-h6", "label": "POGLAVLJE ČETVRTO"}, {"id": "k9-h7", "label": "POGLAVLJE PETO"}, {"id": "k9-h8", "label": "POGLAVLJE ŠESTO"}, {"id": "k9-h9", "label": "POGLAVLJE SEDMO"}, {"id": "k9-h10", "label": "POGLAVLJE OSMO"}, {"id": "k9-h11", "label": "POGLAVLJE DEVETO"}, {"id": "k9-h12", "label": "POGLAVLJE DESETO"}, {"id": "k9-h13", "label": "POGLAVLJE JEDANAESTO"}, {"id": "k9-h14", "label": "POGLAVLJE DVANAESTO"}, {"id": "k9-h15", "label": "POGLAVLJE TRINAESTO"}, {"id": "k9-h16", "label": "POGLAVLJE ČETRNAESTO"}, {"id": "k9-h17", "label": "POGLAVLJE PETNAESTO"}, {"id": "k9-h18", "label": "POGLAVLJE ŠESNAESTO"}, {"id": "k9-h19", "label": "POGLAVLJE SEDAMNAESTO"}, {"id": "k9-h21", "label": "POGLAVLJE PRVO"}, {"id": "k9-h22", "label": "POGLAVLJE DRUGO"}, {"id": "k9-h23", "label": "POGLAVLJE TREĆE"}, {"id": "k9-h24", "label": "POGLAVLJE ČETVRTO"}, {"id": "k9-h25", "label": "POGLAVLJE PETO"}, {"id": "k9-h26", "label": "POGLAVLJE ŠESTO"}, {"id": "k9-h27", "label": "POGLAVLJE SEDMO"}, {"id": "k9-h28", "label": "POGLAVLJE OSMO"}, {"id": "k9-h29", "label": "POGLAVLJE DEVETO"}, {"id": "k9-h30", "label": "POGLAVLJE DESETO"}, {"id": "k9-h31", "label": "POGLAVLJE JEDANAESTO"}, {"id": "k9-h32", "label": "POGLAVLJE DVANAESTO"}, {"id": "k9-h33", "label": "POGLAVLJE TRINAESTO"}, {"id": "k9-h34", "label": "POGLAVLJE ČETRNAESTO"}, {"id": "k9-h35", "label": "POGLAVLJE PETNAESTO"}, {"id": "k9-h37", "label": "POGLAVLJE PRVO"}, {"id": "k9-h38", "label": "POGLAVLJE DRUGO"}, {"id": "k9-h39", "label": "POGLAVLJE TREĆE"}, {"id": "k9-h40", "label": "POGLAVLJE ČETVRTO"}, {"id": "k9-h41", "label": "POGLAVLJE PETO"}, {"id": "k9-h42", "label": "POGLAVLJE ŠESTO"}, {"id": "k9-h43", "label": "POGLAVLJE SEDMO"}, {"id": "k9-h44", "label": "POGLAVLJE OSMO"}]</script>
 <script src="../../assets/config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../../assets/auth.js"></script>

@@ -22,30 +22,24 @@ span.secno { margin-right:0.55em; font-weight:600; color:var(--muted,#666); disp
 p.t-tr, .t-tr { text-align:center; margin:0.8rem 0; }
 header.titlepage { text-align:center; margin-bottom:2rem; }
 header.titlepage h1 { margin-bottom:0.3rem; }
-
-.titleblock { text-align:center; margin:1.5rem auto 1.2rem; max-width:40em; }
+h1.chap, h2.sec { text-align:center; }
+h2.sec { border-top:1px solid var(--rule,#ddd); padding-top:1.6rem; margin-top:2.4rem; }
+h1.chap { margin-top:2rem; border-top:1px solid var(--rule,#ddd); padding-top:1.8rem; }
+p.pars, .pars, .parthead, h3 { text-align:center; }
+p.adtext { text-align:center; margin:0.6rem 0 0.2rem; }
+blockquote.motto { text-align:center; font-style:italic; margin:0.3rem auto 1.2rem; max-width:36em; border:0; }
+h3.theorema { border-top:1px solid var(--rule,#ddd); padding-top:1.4rem; margin:2.2rem 0 0.8rem; text-align:center; }
+h3.theorema .lab, h3.theorema .ttl { display:block; }
+h3.theorema .lab { font-size:0.82em; letter-spacing:0.08em; margin-bottom:0.2rem; }
+h3.theorema .ttl { font-size:1.02em; }
+.noteshead { text-align:center; border-top:1px solid var(--rule,#ddd); padding-top:1.6rem; margin-top:2.6rem; }
+.front { text-align:center; margin-top:2rem; }
+.titleblock, .titleblock p, .titleblock h1 { text-align:center; }
+.titleblock .t-vol { font-weight:700; }
 .titleblock .t-main { font-size:1.6em; margin:0.4rem 0; }
 .titleblock .t-sub { font-size:0.95em; color:var(--muted,#666); }
 aside.license { margin:1.6rem auto; max-width:42em; padding:1rem 1.2rem; border:1px solid var(--rule,#ddd); border-radius:6px; background:rgba(0,0,0,0.025); font-size:0.9em; line-height:1.5; }
 aside.license p { margin:0.5rem 0; }
-
-.titleblock, .titleblock p, .titleblock h1 { text-align:center; }
-.titleblock .t-vol { font-weight:700; }
-
-h2.sec, h1.chap { text-align:center; }
-h2.sec { border-top:1px solid var(--rule,#ddd); padding-top:1.6rem; margin-top:2.4rem; }
-h1.chap { margin-top:2rem; }
-p.pars, .pars, .parthead, h3 { text-align:center; }
-.notes-anchor { scroll-margin-top:5rem; }
-
-p.adtext { text-align:center; margin:0.6rem 0 0.2rem; }
-blockquote.motto { text-align:center; font-style:italic; margin:0.3rem auto 1.2rem; max-width:36em; border:0; }
-
-h1.noteshead, .noteshead, h1.chap.notes, section.notes h1, 
-h2:has(+ .enote), h1:has(+ .enote) { text-align:center; border-top:1px solid var(--rule,#ddd); padding-top:1.6rem; margin-top:2.6rem; }
-.notes > h1, .notes > h2 { text-align:center; border-top:1px solid var(--rule,#ddd); padding-top:1.6rem; margin-top:2.6rem; }
-h1[id^="k"], h2[id^="k1-h"], .uvod h1, main h1:not(.chap) { text-align:center; }
-.front { text-align:center; margin-top:2rem; }
 </style>
 
 </head>
@@ -90,11 +84,11 @@ h1[id^="k"], h2[id^="k1-h"], .uvod h1, main h1:not(.chap) { text-align:center; }
     <a class="brand" href="#top">Теоретско-практична теологија</a>
     <button type="button" class="tts-toggle-nav" id="tts-toggle-nav" aria-controls="tts-bar" title="Активирај читање наглас">Активирај читање наглас</button>
   </div>
-  
+  <nav class="chapbar" id="chapbar" aria-label="Поглавља"><a href="#notes">Белешке</a></nav>
 </div>
 <main class="wrap">
 <header class="titlepage" id="top">
-  <h1 style="text-align:center">Теоретско-практична теологија</h1>
+  <h1>Теоретско-практична теологија</h1>
   <p class="subtitle">Увод</p>
   <p class="author">Петрус ван Мастрихт</p>
   <p class="role">Превод: Борис Џелајлија</p>
@@ -103,7 +97,7 @@ h1[id^="k"], h2[id^="k1-h"], .uvod h1, main h1:not(.chap) { text-align:center; }
 <aside class="license"><p>© 2026 Борис Џелајлија (превод). Сва права задржана.</p><p>Ова дигитална верзија доступна је бесплатно под лиценцом Creative Commons Ауторство – Некомерцијално – Без прерада 4.0 Међународна (CC BY-NC-ND 4.0), <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.sr-latn">https://creativecommons.org/licenses/by-nc-nd/4.0/deed.sr-latn</a></p><p>Можете је без накнаде преузимати, читати, копирати и делити у изворном облику за личну, црквену и образовну употребу, уз навођење преводиоца.</p><p>Штампање или умножавање ради продаје није дозвољено. Изузетно, образовне установе, цркве и појединци смеју да штампају примерке за сопствене полазнике или чланове и да за то наплате само стварни трошак штампе, без зараде.</p>
 </aside>
 <div class="dhead">ПРЕСЛАВНОМ И ВРЛО УЧЕНОМ МУЖУ<br/>ГОСПОДИНУ ГЕРХАРДУ ВАН МАСТРИХТУ,<br/>ПРАВНИКУ, НЕКАДА ПРОФЕСОРУ ПРАВА И ИСТОРИЈЕ,<br/>А САДА СИНДИКУ БРЕМЕНСКЕ РЕПУБЛИКЕ,<br/>ПОЛИХИСТОРУ, ЧОВЕКУ НАЈВЕЋЕ УЧЕНОСТИ (<span class="gr" lang="el">εὐμαθεστάτῳ</span>),<br/>ЈЕДИНОМ БРАТУ,<br/>шаље много поздрава<br/>ПЕТРУС ВАН МАСТРИХТ</div>
-<p class="dedtext">Видиш, мој једини брате, како је твоје име истакнуто на овој насловној страни. Шта мислиш, зашто? Да бих тебе, скровитог и повученог, открио твојим Бременцима, или чак целом свету? Да бих твоје врлине, побожност, праведност, правичност и разборитост, изнео на видело? Да бих твоју ученост и многоструко знање у свакој грани студија, у теологији, праву, историји, критици и другом, показао нашем ученом веку? Ако те познајем, а познајем те добро, такве те испразности мало привлаче; а ако ти познајеш мене, оне ни мени мало приличе. Нека то чине други, а одавно су то и чинили, и то велики људи; чинио си то и ти са̂м, додуше не речима, него, што је боље, делима. О томе не говори само оно што си одавно јавно издао, <em>О јемцу</em>,<sup class="fnref"><a href="#n-uvod-1" id="fnref-n-uvod-1" title="Bilješka 1">1</a></sup> и о црквеном и папском праву у белешкама уз Антонија Августина и Грацијана, и друго; још више би говорило оно што си започео о различитим читањима Новог завета, о општој библиотеци, а нарочито о црквеним старинама, и друга дела те врсте, која сам некада својим очима видео, кад би ти само божанска промисао подарила доколицу да започето довршиш. Зашто се, дакле, овде истиче твоје име? Да бих, будући да је оно братско с нашим (<span class="gr" lang="el">ἀδελφίζει</span>), посведочио своју братску <em>љубав</em> (<span class="gr" lang="el">φιλαδελφίαν</span>); да би и потомство препознало наше заједништво, не само по крви него и по духу и по студијама; да бих показао своју жељу да јавно угледам твоја <em>необјављена дела</em> (<span class="gr" lang="el">ἀνέκδοτα</span>) која сам поменуо. Да и не спомињем оно што поуздано знам: да овај подухват, бар што се тиче повезивања теорије и праксе, потпуно одобраваш и да си био његов <em>подстрекач</em> (<span class="gr" lang="el">ἐργοδιώκτην</span>). Кад би такви људи свуда били међу државницима и правницима, и Црква и Држава сигурно би имале чему да се радују. Прими, дакле, брате мој, што ти нудим, и то с оним духом с којим ти нудим, да свет препозна како смо браћа и по имену и по знамењу.<sup class="fnref"><a href="#n-uvod-2" id="fnref-n-uvod-2" title="Bilješka 2">2</a></sup> Поздрав, и потруди се да ми видимо твоја дела, као што ти овде видиш моја.</p>
+<p class="dedtext">Видиш, мој једини брате, како је твоје име истакнуто на овој насловној страни. Шта мислиш, зашто? Да бих тебе, скровитог и повученог, открио твојим Бременцима, или чак целом свету? Да бих твоје врлине, побожност, праведност, правичност и разборитост, изнео на видело? Да бих твоју ученост и многоструко знање у свакој грани студија, у теологији, праву, историји, критици и другом, показао нашем ученом веку? Ако те познајем, а познајем те добро, такве те испразности мало привлаче; а ако ти познајеш мене, оне ни мени мало приличе. Нека то чине други, а одавно су то и чинили, и то велики људи; чинио си то и ти са̂м, додуше не речима, него, што је боље, делима. О томе не говори само оно што си одавно јавно издао, <em>О јемцу</em>,<sup class="fnref"><a href="#n-uvod-1" id="fnref-n-uvod-1" title="Белешка 1">1</a></sup> и о црквеном и папском праву у белешкама уз Антонија Августина и Грацијана, и друго; још више би говорило оно што си започео о различитим читањима Новог завета, о општој библиотеци, а нарочито о црквеним старинама, и друга дела те врсте, која сам некада својим очима видео, кад би ти само божанска промисао подарила доколицу да започето довршиш. Зашто се, дакле, овде истиче твоје име? Да бих, будући да је оно братско с нашим (<span class="gr" lang="el">ἀδελφίζει</span>), посведочио своју братску <em>љубав</em> (<span class="gr" lang="el">φιλαδελφίαν</span>); да би и потомство препознало наше заједништво, не само по крви него и по духу и по студијама; да бих показао своју жељу да јавно угледам твоја <em>необјављена дела</em> (<span class="gr" lang="el">ἀνέκδοτα</span>) која сам поменуо. Да и не спомињем оно што поуздано знам: да овај подухват, бар што се тиче повезивања теорије и праксе, потпуно одобраваш и да си био његов <em>подстрекач</em> (<span class="gr" lang="el">ἐργοδιώκτην</span>). Кад би такви људи свуда били међу државницима и правницима, и Црква и Држава сигурно би имале чему да се радују. Прими, дакле, брате мој, што ти нудим, и то с оним духом с којим ти нудим, да свет препозна како смо браћа и по имену и по знамењу.<sup class="fnref"><a href="#n-uvod-2" id="fnref-n-uvod-2" title="Белешка 2">2</a></sup> Поздрав, и потруди се да ми видимо твоја дела, као што ти овде видиш моја.</p>
 <h1 id="k1-h1" class="front" style="text-align:center">Напомена преводиоца</h1>
 
 <p id="k1-a11">Библијски наводи доносе се према Новом српском преводу (Стари завет: проф. др Драган Милин; Нови завет: проф. др Емилијан Чарнић), и то по његовој подели на поглавља и стихове; Псалми се наводе према бројању у електронском издању тог превода (bible.com), у коме се натпис псалма рачуна као стих. Где се Мастрихтово бројање (према Вулгати или другачијој подели текста) разликује, навод је без посебне напомене прерачунат. Исто су тако без напомене исправљени наводи који су у изворнику очигледно погрешно одштампани (замењена цифра, померај за један стих и сл.), као и друге очигледне грешке у библијским наводима: где наведени стих не садржи текст који Мастрихт наводи или на који се позива, стављен је стих у коме се тај текст заиста налази; попис свих таквих исправки води се у пратећој евиденцији.</p>
@@ -1262,7 +1256,7 @@ h1[id^="k"], h2[id^="k1-h"], .uvod h1, main h1:not(.chap) { text-align:center; }
 <p id="k1-a589" class="o o1" style="padding-left:8.29em"><span class="oref">(погл. 15)</span><span class="ilab he">ב.</span>у смрти, где о вештини добре смрти, и њеној: а. природи, б. добрима, в. помагалима.</p>
 
 <p id="k1-a590">Подробнији распоред црквене историје налази се на почетку осме књиге.</p>
-<h2 class="noteshead chap" id="notes">Белешке уз уводне делове</h2>
+<h2 class="noteshead" id="notes" class="chap">Белешке уз уводне делове</h2>
 <p class="enote" id="n-uvod-1"><span class="en-num">1.</span> Лат. <em>de Susceptore</em>: о јемцу (куму) при крштењу; Герхардова расправа. <a class="backref" href="#fnref-n-uvod-1" title="Назад">↩</a></p>
 <p class="enote" id="n-uvod-2"><span class="en-num">2.</span> Лат. <em>et nomine et omine</em>: игра речи (<em>nomen</em> „име“, <em>omen</em> „знамење“). <a class="backref" href="#fnref-n-uvod-2" title="Назад">↩</a></p>
 <p class="footer-nav"><a href="#top">↑ На врх</a> <span>Петрус ван Мастрихт · прев. Борис Џелајлија</span></p>

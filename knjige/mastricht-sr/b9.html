@@ -22,21 +22,24 @@ span.secno { margin-right:0.55em; font-weight:600; color:var(--muted,#666); disp
 p.t-tr, .t-tr { text-align:center; margin:0.8rem 0; }
 header.titlepage { text-align:center; margin-bottom:2rem; }
 header.titlepage h1 { margin-bottom:0.3rem; }
-
-h2.sec, h1.chap { text-align:center; }
+h1.chap, h2.sec { text-align:center; }
 h2.sec { border-top:1px solid var(--rule,#ddd); padding-top:1.6rem; margin-top:2.4rem; }
-h1.chap { margin-top:2rem; }
+h1.chap { margin-top:2rem; border-top:1px solid var(--rule,#ddd); padding-top:1.8rem; }
 p.pars, .pars, .parthead, h3 { text-align:center; }
-.notes-anchor { scroll-margin-top:5rem; }
-
 p.adtext { text-align:center; margin:0.6rem 0 0.2rem; }
 blockquote.motto { text-align:center; font-style:italic; margin:0.3rem auto 1.2rem; max-width:36em; border:0; }
-
-h1.noteshead, .noteshead, h1.chap.notes, section.notes h1, 
-h2:has(+ .enote), h1:has(+ .enote) { text-align:center; border-top:1px solid var(--rule,#ddd); padding-top:1.6rem; margin-top:2.6rem; }
-.notes > h1, .notes > h2 { text-align:center; border-top:1px solid var(--rule,#ddd); padding-top:1.6rem; margin-top:2.6rem; }
-h1[id^="k"], h2[id^="k1-h"], .uvod h1, main h1:not(.chap) { text-align:center; }
+h3.theorema { border-top:1px solid var(--rule,#ddd); padding-top:1.4rem; margin:2.2rem 0 0.8rem; text-align:center; }
+h3.theorema .lab, h3.theorema .ttl { display:block; }
+h3.theorema .lab { font-size:0.82em; letter-spacing:0.08em; margin-bottom:0.2rem; }
+h3.theorema .ttl { font-size:1.02em; }
+.noteshead { text-align:center; border-top:1px solid var(--rule,#ddd); padding-top:1.6rem; margin-top:2.6rem; }
 .front { text-align:center; margin-top:2rem; }
+.titleblock, .titleblock p, .titleblock h1 { text-align:center; }
+.titleblock .t-vol { font-weight:700; }
+.titleblock .t-main { font-size:1.6em; margin:0.4rem 0; }
+.titleblock .t-sub { font-size:0.95em; color:var(--muted,#666); }
+aside.license { margin:1.6rem auto; max-width:42em; padding:1rem 1.2rem; border:1px solid var(--rule,#ddd); border-radius:6px; background:rgba(0,0,0,0.025); font-size:0.9em; line-height:1.5; }
+aside.license p { margin:0.5rem 0; }
 </style>
 
 </head>
@@ -81,16 +84,16 @@ h1[id^="k"], h2[id^="k1-h"], .uvod h1, main h1:not(.chap) { text-align:center; }
     <a class="brand" href="#top">Теоретско-практична теологија</a>
     <button type="button" class="tts-toggle-nav" id="tts-toggle-nav" aria-controls="tts-bar" title="Активирај читање наглас">Активирај читање наглас</button>
   </div>
-  <nav class="chapbar" id="chapbar" aria-label="Поглавља"><a href="#k9-h3">1</a><a href="#k9-h4">2</a><a href="#k9-h5">3</a><a href="#k9-h6">4</a><a href="#k9-h7">5</a><a href="#k9-h8">6</a><a href="#k9-h9">7</a><a href="#k9-h10">8</a><a href="#k9-h11">9</a><a href="#k9-h12">10</a><a href="#k9-h13">11</a><a href="#k9-h14">12</a><a href="#k9-h15">13</a><a href="#k9-h16">14</a><a href="#k9-h17">15</a><a href="#k9-h18">16</a><a href="#k9-h19">17</a><a href="#k9-h21">1</a><a href="#k9-h22">2</a><a href="#k9-h23">3</a><a href="#k9-h24">4</a><a href="#k9-h25">5</a><a href="#k9-h26">6</a><a href="#k9-h27">7</a><a href="#k9-h28">8</a><a href="#k9-h29">9</a><a href="#k9-h30">10</a><a href="#k9-h31">11</a><a href="#k9-h32">12</a><a href="#k9-h33">13</a><a href="#k9-h34">14</a><a href="#k9-h35">15</a><a href="#k9-h37">1</a><a href="#k9-h38">2</a><a href="#k9-h39">3</a><a href="#k9-h40">4</a><a href="#k9-h41">5</a><a href="#k9-h42">6</a><a href="#k9-h43">7</a><a href="#k9-h44">8</a></nav>
+  <nav class="chapbar" id="chapbar" aria-label="Поглавља"><a href="#k9-h3">1</a><a href="#k9-h4">2</a><a href="#k9-h5">3</a><a href="#k9-h6">4</a><a href="#k9-h7">5</a><a href="#k9-h8">6</a><a href="#k9-h9">7</a><a href="#k9-h10">8</a><a href="#k9-h11">9</a><a href="#k9-h12">ПОГЛАВЉЕ ДЕСЕТО</a><a href="#k9-h13">ПОГЛАВЉЕ ЈЕДАНАЕСТО</a><a href="#k9-h14">ПОГЛАВЉЕ ДВАНАЕСТО</a><a href="#k9-h15">ПОГЛАВЉЕ ТРИНАЕСТО</a><a href="#k9-h16">ПОГЛАВЉЕ ЧЕТРНАЕСТО</a><a href="#k9-h17">ПОГЛАВЉЕ ПЕТНАЕСТО</a><a href="#k9-h18">ПОГЛАВЉЕ ШЕСНАЕСТО</a><a href="#k9-h19">ПОГЛАВЉЕ СЕДАМНАЕСТО</a><a href="#k9-h21">1</a><a href="#k9-h22">2</a><a href="#k9-h23">3</a><a href="#k9-h24">4</a><a href="#k9-h25">5</a><a href="#k9-h26">6</a><a href="#k9-h27">7</a><a href="#k9-h28">8</a><a href="#k9-h29">9</a><a href="#k9-h30">ПОГЛАВЉЕ ДЕСЕТО</a><a href="#k9-h31">ПОГЛАВЉЕ ЈЕДАНАЕСТО</a><a href="#k9-h32">ПОГЛАВЉЕ ДВАНАЕСТО</a><a href="#k9-h33">ПОГЛАВЉЕ ТРИНАЕСТО</a><a href="#k9-h34">ПОГЛАВЉЕ ЧЕТРНАЕСТО</a><a href="#k9-h35">ПОГЛАВЉЕ ПЕТНАЕСТО</a><a href="#k9-h37">1</a><a href="#k9-h38">2</a><a href="#k9-h39">3</a><a href="#k9-h40">4</a><a href="#k9-h41">5</a><a href="#k9-h42">6</a><a href="#k9-h43">7</a><a href="#k9-h44">8</a></nav>
 </div>
 <main class="wrap">
 <header class="titlepage" id="top">
-  <h1 style="text-align:center">Теоретско-практична теологија</h1>
+  <h1>Теоретско-практична теологија</h1>
   <p class="subtitle">Књига 9</p>
   <p class="author">Петрус ван Мастрихт</p>
   <p class="role">Превод: Борис Џелајлија</p>
 </header>
-<h1 id="k9-h1" class="front" style="text-align:center">Нацрт моралне теологије</h1>
+<h1 id="k9-h1" class="front">Нацрт моралне теологије</h1>
 
 <h3 id="k9-a2" class="fsub">Предговор</h3>
 
