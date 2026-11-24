@@ -1655,10 +1655,10 @@ p.fn .backref {
 .site-footer p { text-indent: 0; }
 .site-footer img { margin-left: auto; margin-right: auto; }
 
-/* Bočna traka: umjesto pečata natpis "Post tenebras lux" (isti font kao naslov u gornjoj traci). */
+/* Bočna traka: umjesto pečata natpis "Ad fontes" (isti font kao naslov u gornjoj traci). */
 .shelfbar-head .shelf-seal { display: none !important; }
 .shelfbar-head::before {
-  content: "Post tenebras lux";
+  content: "Ad fontes";
   font-family: "Grenze Gotisch", "Times New Roman", serif;
   font-weight: 400;
   font-size: 1.5rem;
