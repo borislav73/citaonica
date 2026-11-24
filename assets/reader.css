@@ -1686,3 +1686,6 @@ body.catalog .catalog-home > h1 { font-weight: 400; font-size: 2.3rem; }
 .book-card p { text-indent: 0; }
 /* Naslovni blok knjige: podnaslov ne smije imati uvlaku odlomka (bio je pomaknut udesno). */
 header.titlepage p { text-indent: 0; }
+/* Bočna traka, OZNAČAVANJE: naslov i ime korisnika nasljeđivali su uvlaku odlomka,
+   pa je "Odjava"/"Prijava" izgledala pomaknuta ulijevo. Sad sve kreće od istog lijevog ruba. */
+.account-slot p { text-indent: 0; }
