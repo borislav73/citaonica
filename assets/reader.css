@@ -1606,7 +1606,7 @@ p.fn .backref {
 
 
 .brand-fraktur {
-  font-family: "UnifrakturMaguntia", "Times New Roman", serif !important;
+  font-family: "Grenze Gotisch", "Times New Roman", serif !important;
   font-size: 1.35rem;
   letter-spacing: 0.01em;
   font-weight: 400;
@@ -1614,11 +1614,12 @@ p.fn .backref {
 }
 .shelf-seal {
   display: block;
-  width: 72px;
-  height: 72px;
+  width: 2.15rem;
+  height: 2.15rem;
   object-fit: contain;
-  margin: 0 auto;
+  flex: 0 0 auto;
 }
 .shelfbar-head {
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
 }
