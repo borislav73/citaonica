@@ -137,6 +137,7 @@ a:hover { text-decoration-thickness: 2px; }
   max-width: var(--max);
   margin: 0 auto;
   padding: 1.5rem 1.25rem 4rem;
+  overflow-x: auto;
 }
 
 .titlepage {
@@ -1109,6 +1110,10 @@ body:not(.shelf-open) .shelf-open-btn { display: flex; }
 body.shelf-open .stage {
   margin-left: min(14.5rem, 78vw);
 }
+body.shelf-open .wrap {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
 body.catalog .topnav { position: sticky; top: 0; }
 .catalog-home { padding-top: 2.2rem; padding-bottom: 4rem; max-width: 52rem; }
 .catalog-home h1 { margin-top: 0; margin-bottom: 1.4rem; }
@@ -1620,7 +1625,8 @@ p.fn .backref {
   flex: 0 0 auto;
 }
 .shelfbar-head {
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
-  gap: 0.75rem;
+  padding-left: 0.6rem;
+  padding-right: 0.4rem;
 }
