@@ -1649,3 +1649,40 @@ p.fn .backref {
   display: block;
 }
 .site-footer p { margin: 0.25rem 0; text-align: center; }
+
+/* ===== 2026-11-24 ===== */
+/* Podnožje: tekst je bio pomaknut udesno jer je nasljeđivao uvlaku odlomka (text-indent 1.15em). */
+.site-footer p { text-indent: 0; }
+.site-footer img { margin-left: auto; margin-right: auto; }
+
+/* Bočna traka: umjesto pečata natpis "Post tenebras lux" (isti font kao naslov u gornjoj traci). */
+.shelfbar-head .shelf-seal { display: none !important; }
+.shelfbar-head::before {
+  content: "Post tenebras lux";
+  font-family: "Grenze Gotisch", "Times New Roman", serif;
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--accent);
+  white-space: nowrap;
+  padding-left: 0.45rem;
+  padding-bottom: 0.1rem;
+}
+
+/* Naslovna: latinični naslovi i oznake u fontu naslova gornje trake; ćirilica ostaje u dosadašnjem fontu. */
+body.catalog .catalog-home > h1,
+.book-card:not([data-lang="sr"]) h2,
+.lang-filter-btn,
+.shelf-list a.shelf-item[href$="index.html"] .ttl {
+  font-family: "Grenze Gotisch", "Citaonica Greek", "Noto Serif", "Liberation Serif", Georgia, "Times New Roman", serif;
+  letter-spacing: 0.01em;
+}
+body.catalog .catalog-home > h1 { font-weight: 400; font-size: 2.3rem; }
+.book-card:not([data-lang="sr"]) h2 { font-weight: 600; font-size: 1.45rem; line-height: 1.15; }
+.lang-filter-btn { font-weight: 600; font-size: 1.12rem; }
+.shelf-list a.shelf-item[href$="index.html"] .ttl { font-weight: 600; font-size: 1.22rem; line-height: 1.1; }
+/* Kartice na naslovnoj: podnaslov i autor također su nasljeđivali uvlaku odlomka. */
+.book-card p { text-indent: 0; }
+/* Naslovni blok knjige: podnaslov ne smije imati uvlaku odlomka (bio je pomaknut udesno). */
+header.titlepage p { text-indent: 0; }

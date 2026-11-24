@@ -8,39 +8,65 @@
 <meta name="book-subtitle" content="The Symbolical Books of the Evangelical Lutheran Church">
 <meta name="book-author" content="Triglot Concordia, 1917">
 <meta name="book-lang" content="English">
-<title>Visitation Articles — Book of Concord</title>
+<title>Visitation Articles — The Book of Concord</title>
 <link rel="stylesheet" href="../../assets/reader.css">
 <link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="../../assets/favicon-16.png">
 <link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@400;600&display=swap" rel="stylesheet">
 
-<style>
-h1.chap, h2.sec, h3.sub, .ptitle, .titleblock, .center, h1, h2, h3 { text-align:center; }
-h1.chap, h1 { border-top:1px solid var(--rule,#ddd); padding-top:1.8rem; margin-top:2.6rem; }
-h2, h2.sec { border-top:1px solid var(--rule,#ddd); padding-top:1.6rem; margin-top:2.4rem; text-align:center; }
-h3, h3.sub { margin:1.8rem 0 0.6rem; text-align:center; }
-.ptitle { font-size:1.3em; margin:1rem 0; }
-.sep { border:0; border-top:1px solid var(--rule,#ddd); margin:1.5rem auto; width:40%; }
-.vn { font-size:0.75em; vertical-align:super; color:var(--muted,#888); margin-right:0.2em; }
-header.titlepage { text-align:center; margin-bottom:2rem; }
-header.titlepage h1 { border:0; margin-top:0; padding-top:0; }
 
-.tl, .tl.big { text-align:center; margin:0.6rem auto; max-width:36em; line-height:1.5; }
-.tl.big { font-size:1.15em; font-weight:600; margin:0.8rem auto; }
-hr.sep { width:30%; margin:1.2rem auto; border:0; border-top:1px solid var(--rule,#ddd); }
+<style>
+h1.chap .lab, h1.chap .ttl, h2.sec .lab, h2.sec .ttl { display:block; }
+h1.chap .lab { font-size:0.72em; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:0.25rem; color:var(--muted,#666); }
+h1.chap .ttl { font-size:1.05em; }
+h2.sec .lab { font-size:0.78em; letter-spacing:0.08em; text-transform:uppercase; margin:1.4rem 0 0.2rem; color:var(--muted,#666); }
+h2.sec .ttl { font-size:1.02em; margin-bottom:0.6rem; }
+span.secno { margin-right:0.55em; font-weight:600; color:var(--muted,#666); display:inline; }
+.dhead { text-align:center; font-size:0.92em; line-height:1.55; margin:2rem auto 1.2rem; max-width:36em; letter-spacing:0.02em; }
+p.t-tr, .t-tr { text-align:center; margin:0.8rem 0; }
+header.titlepage { text-align:center; margin-bottom:2rem; }
+header.titlepage h1 { margin-bottom:0.3rem; }
+h1.chap, h2.sec { text-align:center; }
+h2.sec { border-top:1px solid var(--rule,#ddd); padding-top:1.6rem; margin-top:2.4rem; }
+h1.chap { margin-top:2rem; border-top:1px solid var(--rule,#ddd); padding-top:1.8rem; }
+p.pars, .pars, .parthead, h3 { text-align:center; }
+p.adtext { text-align:center; margin:0.6rem 0 0.2rem; }
+blockquote.motto { text-align:center; font-style:italic; margin:0.3rem auto 1.2rem; max-width:36em; border:0; }
+h3.theorema { border-top:1px solid var(--rule,#ddd); padding-top:1.4rem; margin:2.2rem 0 0.8rem; text-align:center; }
+h3.theorema .lab, h3.theorema .ttl { display:block; }
+h3.theorema .lab { font-size:0.82em; letter-spacing:0.08em; margin-bottom:0.2rem; }
+h3.theorema .ttl { font-size:1.02em; }
+.noteshead { text-align:center; border-top:1px solid var(--rule,#ddd); padding-top:1.6rem; margin-top:2.6rem; }
+.front { text-align:center; margin-top:2rem; }
+.titleblock, .titleblock p, .titleblock h1 { text-align:center; }
+.titleblock .t-vol { font-weight:700; }
+.titleblock .t-main { font-size:1.6em; margin:0.4rem 0; }
+.titleblock .t-sub { font-size:0.95em; color:var(--muted,#666); }
+aside.license { margin:1.6rem auto; max-width:42em; padding:1rem 1.2rem; border:1px solid var(--rule,#ddd); border-radius:6px; background:rgba(0,0,0,0.025); font-size:0.9em; line-height:1.5; }
+aside.license p { margin:0.5rem 0; }
+</style>
+<style>
+/* Book of Concord: dodatni stilovi u duhu Mastrichta */
+h3, h4 { text-align:center; }
+h3 { margin:1.8rem 0 0.6rem; }
+p.center { text-align:center; }
+hr.sep { width:30%; margin:1.4rem auto; border:0; border-top:1px solid var(--rule,#ddd); }
+.vn { font-size:0.68em; vertical-align:super; line-height:0; color:var(--muted,#888); margin:0 0.15em 0 0.1em; font-weight:600; }
+p.tl { text-align:center; margin:0.6rem auto; max-width:36em; line-height:1.5; }
+p.tl.big { font-size:1.15em; font-weight:600; margin:0.8rem auto; }
 </style>
 
 </head>
-<body data-tts-lang="en-GB">
-<aside class="shelfbar" id="shelfbar" aria-label="Navigation">
+<body>
+<aside class="shelfbar" id="shelfbar" aria-label="Navigacija">
   <div class="shelfbar-head">
     <img class="shelf-seal" src="../../assets/seal-sidebar.png" alt="Reformacijska čitaonica" />
-    <button type="button" class="shelf-close" id="shelf-close" title="Close" aria-label="Close">×</button>
+    <button type="button" class="shelf-close" id="shelf-close" title="Zatvori" aria-label="Zatvori">×</button>
   </div>
   <nav class="shelf-list">
     <a class="shelf-item" href="../../index.html">
-      <span class="lang">Home</span>
+      <span class="lang">Početna</span>
       <span class="ttl">Reformacijska čitaonica</span>
     </a>
     <div class="shelf-rule" aria-hidden="true"></div>
@@ -57,21 +83,21 @@ hr.sep { width:30%; margin:1.2rem auto; border:0; border-top:1px solid var(--rul
   </nav>
   <div id="account-slot" class="account-slot">
     <div class="markup-block">
-      <p class="markup-kicker">Markup</p>
-      <button type="button" class="markup-link" id="auth-signin">Sign in</button>
+      <p class="markup-kicker">Označavanje</p>
+      <button type="button" class="markup-link" id="auth-signin">Prijava</button>
     </div>
   </div>
 </aside>
 <div class="stage">
 <div class="topnav">
   <div class="topnav-inner">
-    <button type="button" class="shelf-open-btn" id="shelf-open" title="Open book list" aria-label="Open book list" aria-controls="shelfbar">
+    <button type="button" class="shelf-open-btn" id="shelf-open" title="Otvori popis knjiga" aria-label="Otvori popis knjiga" aria-controls="shelfbar">
       <span></span><span></span><span></span>
     </button>
     <a class="brand brand-fraktur" href="#top">Reformacijska čitaonica</a>
-    <button type="button" class="tts-toggle-nav" id="tts-toggle-nav" aria-controls="tts-bar" title="Activate read-aloud">Activate read-aloud</button>
+    <button type="button" class="tts-toggle-nav" id="tts-toggle-nav" aria-controls="tts-bar" title="Aktiviraj čitanje naglas">Aktiviraj čitanje naglas</button>
   </div>
-  <nav class="chapbar" id="chapbar" aria-label="Sections"><a href="#s214">Visitation Articles</a><a href="#s215">Article I.</a><a href="#s216">Article II.</a><a href="#s217">Article III.</a><a href="#s218">Article IV.</a></nav>
+  <nav class="chapbar" id="chapbar" aria-label="Poglavlja"><a href="#s215">I</a><a href="#s216">II</a><a href="#s217">III</a><a href="#s218">IV</a></nav>
 </div>
 <main class="wrap">
 <header class="titlepage" id="top">
@@ -79,39 +105,99 @@ hr.sep { width:30%; margin:1.2rem auto; border:0; border-top:1px solid var(--rul
   <p class="subtitle">Visitation Articles</p>
   <p class="author">Triglot Concordia, 1917</p>
 </header>
-<h1 id="s214" class="chap">Visitation Articles</h1><h2 id="s215" class="sec">Article I.</h2><p class="center"><strong>Of the Holy Supper.</strong></p><p class="center">The pure and true doctrine of our churches concerning the Holy Supper:</p><p>I. That the words of Christ: <em>Take, eat, this is My body; drink, this is My blood</em>, are to be understood simply and according to the letter, as they read.</p><p>II. That in the Sacrament there are two things which are given [tendered] and received with one another: one earthly, which is bread and wine; and one heavenly, which is the body and blood of Christ.</p><p class="center">III. That this [union, tendering and taking] occurs here on earth, and not above in heaven.</p><p>IV. That it [what is tendered and received] is the true natural body of Christ which hung on the cross, and the true natural blood which flowed from the side of Christ.</p><p>V. That the body and blood of Christ are received not only by faith spiritually, which can also occur outside of the Supper, but here with the bread and wine orally, yet in an inscrutable and supernatural manner [and that] for a pledge and assurance of the resurrection of our bodies from the dead.</p><p>VI. That the oral partaking of the body and blood of Christ is done not only by the worthy, but also by the unworthy, who approach without repentance and true faith; nevertheless, with a different result: by the worthy for salvation, by the unworthy for judgment.</p><h2 id="s216" class="sec">Article II.</h2><p class="center"><strong>Of the Person of Christ.</strong></p><p class="center">The pure and true doctrine of our churches on this article concerning the Person of Christ:</p><p>I. In Christ there are two distinct natures, the divine and the human. These remain to eternity unconfused and unseparated [inseparable (or undivided)].</p><p>II. These two natures are personally so united with one another that there is only one Christ, [and] one person.</p><p>III. Because of this personal union it is rightly said, and it is so also in deed and truth, that God is man, and man God, that Mary bore the Son of God, and God redeemed us with His own blood.</p><p>IV. Through this personal union and the exaltation that followed upon it, Christ, according to His flesh, has been placed at God’s right hand, and has received all power in heaven and on earth, and has become partaker of all divine majesty, honor, power, and glory.</p><h2 id="s217" class="sec">Article III.</h2><p class="center"><strong>Of Holy Baptism.</strong></p><p class="center">The pure and true doctrine of our churches concerning this article of Holy Baptism:</p><p>I. That there is but <em>one</em> Baptism and <em>one</em> washing [ablution]—not such as is wont to remove the filth of the body, but [such as] washes us from sins.</p><p>II. Through Baptism, as the washing of regeneration and renewing of the Holy Ghost, God saves us, and works in us such righteousness and cleansing from sins that he who perseveres in this covenant and confidence unto the end is not lost, but has eternal life.</p><p>III. All who are baptized into Christ Jesus are baptized into His death, and through Baptism are buried with Him into His death, and have put on Christ.</p><p>IV. Baptism is the washing of regeneration for the reason that in it we are born anew, and sealed with and graciously [by grace] given the Spirit of adoption.</p><p>V. Except a man is born of water and the Spirit, he cannot enter into the kingdom of God. However, this does not refer to a case of necessity.</p><p>VI. That which is born of the flesh is flesh, and by nature we all are the children of God’s wrath, for we are begotten of sinful seed and are all conceived in sins.</p><h2 id="s218" class="sec">Article IV.</h2><p class="center"><strong>Of Predestination and the Eternal Providence of God.</strong></p><p class="center">The pure and true doctrine of our churches concerning this article:</p><p>I. That Christ has died for all men, and as the Lamb of God has borne the sins of the whole world.</p><p>II. That God created no one for condemnation, but will have all men to be saved, and to come to the knowledge of the truth. [Therefore] He commands all to hear His Son Christ in the Gospel, and promises by it [through such hearing] the power and working of the Holy Ghost for conversion and salvation.</p><p>III. That many men are condemned [perish] by their own guilt, who are either unwilling to hear the Gospel of Christ, or again fall from grace, [whether] by error against the foundation or by sins against conscience.</p><p>IV. That all sinners who repent are received into grace, and no one is excluded, even though his sins were as scarlet, since God’s mercy is much greater than the sins of all the world, and God has compassion on all His works.</p><p class="center">False and Erroneous Doctrine of the Calvinists<br/><strong>Concerning the Holy Supper:</strong></p><p>I. That the words of Christ cited above are to be understood in a figurative way, and not as they read.</p><p>II. That in the Supper there are only bare signs, the body of Christ, however, being as far from the bread as the highest heaven is from the earth.</p><p>III. That Christ is present there only by His power and working, and not with His body, just as the sun is present and efficacious here below on earth by its brilliancy and working, while the sun itself is above in the sky.</p><p>IV. That it is a <em>typicum corpus</em>, a figurative body, which is only signified and prefigured [by the bread and wine].</p><p class="center">V. That it is received by faith alone, which soars [elevates itself] into heaven, and not orally.</p><p>VI. That only the worthy receive it; the unworthy, however, who have not such faith as can ascend into heaven, receive nothing but bread and wine.</p><p class="center">False and Erroneous Doctrine of the Calvinists<br/><strong>Concerning the Person of Christ,</strong></p><p class="center">which conflicts especially with the Third and Fourth Articles of the pure doctrine:</p><p class="center">I. In the first place, that the expression, “God is man,” and, “Man is God,” is figurative.</p><p>II. That the human nature has communion with the divine not in deed and truth, but only in name and words.</p><p>III. That it is impossible for God, with all His omnipotence, to cause the natural body of Christ to be at the same time [simultaneously and instantaneously] in more than one place.</p><p>IV. That by His exaltation Christ, according to His human nature, has received only created gifts and finite power, and neither knows nor can do all things.</p><p>V. That Christ, according to His human nature, rules absently, just as the King of Spain rules the new islands.</p><p>VI. That it is damnable idolatry if the confidence and faith of the heart is placed in Christ not only according to His divine, but also according to His human nature, and the honor of adoration is directed to it [to both natures].</p><p class="center">False and Erroneous Doctrine of the Calvinists</p><p class="center"><strong>Concerning Holy Baptism:</strong></p><p>I. That Baptism is an outward washing of water, whereby an inner washing [ablution] from sins is only signified.</p><p>II. That Baptism neither works nor confers regeneration, faith, the grace of God, and salvation, but only signifies and seals these.</p><p>III. That not all who are baptized with water, but only the elect, receive therewith the grace of Christ or the gift of faith.</p><p>IV. That regeneration occurs not in and at [with] Baptism, but not till afterwards in adult years, and in some [many] not until old age.</p><p>V. That salvation depends not upon Baptism, and accordingly emergency baptism [baptism in case of necessity] should not be permitted in the Church, but if the service of the Church [of the ordinary ministry of the Church] cannot be obtained, the child should be allowed to die without Baptism.</p><p>VI. That children of Christians are holy before Baptism and from their mothers’ wombs; yea, that while still in their mothers’ wombs they are [established] in the covenant of eternal life; otherwise holy Baptism could not be administered to them.</p><p class="center">False and Erroneous Doctrine of the Calvinists<br/><strong>Concerning Predestination and the Providence of God:</strong></p><p class="center">I. That Christ died, not for all men, but only for the elect.</p><p>II. That God created the greater part of men for eternal condemnation, and is unwilling that they be converted and saved.</p><p>III. That the elect and regenerate cannot lose faith and the Holy Ghost and be condemned, even though they commit great sins and crimes of every kind.</p><p>IV. That they who are not elect must be condemned, and cannot attain salvation, even though they be baptized a thousand times and daily go to the Lord’s Supper, and also live in as holy and irreproachable a way as ever possible.</p>
-<p class="footer-nav"><a href="#top">↑ Top</a> <span>Book of Concord · Triglot Concordia, 1917</span></p>
+<h1 class="chap" id="s214">Visitation Articles</h1>
+<h2 class="sec" id="s215">Article I.</h2>
+<p class="center"><strong>Of the Holy Supper.</strong></p>
+<p class="center">The pure and true doctrine of our churches concerning the Holy Supper:</p>
+<p>I. That the words of Christ: <em>Take, eat, this is My body; drink, this is My blood</em>, are to be understood simply and according to the letter, as they read.</p>
+<p>II. That in the Sacrament there are two things which are given [tendered] and received with one another: one earthly, which is bread and wine; and one heavenly, which is the body and blood of Christ.</p>
+<p class="center">III. That this [union, tendering and taking] occurs here on earth, and not above in heaven.</p>
+<p>IV. That it [what is tendered and received] is the true natural body of Christ which hung on the cross, and the true natural blood which flowed from the side of Christ.</p>
+<p>V. That the body and blood of Christ are received not only by faith spiritually, which can also occur outside of the Supper, but here with the bread and wine orally, yet in an inscrutable and supernatural manner [and that] for a pledge and assurance of the resurrection of our bodies from the dead.</p>
+<p>VI. That the oral partaking of the body and blood of Christ is done not only by the worthy, but also by the unworthy, who approach without repentance and true faith; nevertheless, with a different result: by the worthy for salvation, by the unworthy for judgment.</p>
+<h2 class="sec" id="s216">Article II.</h2>
+<p class="center"><strong>Of the Person of Christ.</strong></p>
+<p class="center">The pure and true doctrine of our churches on this article concerning the Person of Christ:</p>
+<p>I. In Christ there are two distinct natures, the divine and the human. These remain to eternity unconfused and unseparated [inseparable (or undivided)].</p>
+<p>II. These two natures are personally so united with one another that there is only one Christ, [and] one person.</p>
+<p>III. Because of this personal union it is rightly said, and it is so also in deed and truth, that God is man, and man God, that Mary bore the Son of God, and God redeemed us with His own blood.</p>
+<p>IV. Through this personal union and the exaltation that followed upon it, Christ, according to His flesh, has been placed at God’s right hand, and has received all power in heaven and on earth, and has become partaker of all divine majesty, honor, power, and glory.</p>
+<h2 class="sec" id="s217">Article III.</h2>
+<p class="center"><strong>Of Holy Baptism.</strong></p>
+<p class="center">The pure and true doctrine of our churches concerning this article of Holy Baptism:</p>
+<p>I. That there is but <em>one</em> Baptism and <em>one</em> washing [ablution]—not such as is wont to remove the filth of the body, but [such as] washes us from sins.</p>
+<p>II. Through Baptism, as the washing of regeneration and renewing of the Holy Ghost, God saves us, and works in us such righteousness and cleansing from sins that he who perseveres in this covenant and confidence unto the end is not lost, but has eternal life.</p>
+<p>III. All who are baptized into Christ Jesus are baptized into His death, and through Baptism are buried with Him into His death, and have put on Christ.</p>
+<p>IV. Baptism is the washing of regeneration for the reason that in it we are born anew, and sealed with and graciously [by grace] given the Spirit of adoption.</p>
+<p>V. Except a man is born of water and the Spirit, he cannot enter into the kingdom of God. However, this does not refer to a case of necessity.</p>
+<p>VI. That which is born of the flesh is flesh, and by nature we all are the children of God’s wrath, for we are begotten of sinful seed and are all conceived in sins.</p>
+<h2 class="sec" id="s218">Article IV.</h2>
+<p class="center"><strong>Of Predestination and the Eternal Providence of God.</strong></p>
+<p class="center">The pure and true doctrine of our churches concerning this article:</p>
+<p>I. That Christ has died for all men, and as the Lamb of God has borne the sins of the whole world.</p>
+<p>II. That God created no one for condemnation, but will have all men to be saved, and to come to the knowledge of the truth. [Therefore] He commands all to hear His Son Christ in the Gospel, and promises by it [through such hearing] the power and working of the Holy Ghost for conversion and salvation.</p>
+<p>III. That many men are condemned [perish] by their own guilt, who are either unwilling to hear the Gospel of Christ, or again fall from grace, [whether] by error against the foundation or by sins against conscience.</p>
+<p>IV. That all sinners who repent are received into grace, and no one is excluded, even though his sins were as scarlet, since God’s mercy is much greater than the sins of all the world, and God has compassion on all His works.</p>
+<p class="center">False and Erroneous Doctrine of the Calvinists<br/><strong>Concerning the Holy Supper:</strong></p>
+<p>I. That the words of Christ cited above are to be understood in a figurative way, and not as they read.</p>
+<p>II. That in the Supper there are only bare signs, the body of Christ, however, being as far from the bread as the highest heaven is from the earth.</p>
+<p>III. That Christ is present there only by His power and working, and not with His body, just as the sun is present and efficacious here below on earth by its brilliancy and working, while the sun itself is above in the sky.</p>
+<p>IV. That it is a <em>typicum corpus</em>, a figurative body, which is only signified and prefigured [by the bread and wine].</p>
+<p class="center">V. That it is received by faith alone, which soars [elevates itself] into heaven, and not orally.</p>
+<p>VI. That only the worthy receive it; the unworthy, however, who have not such faith as can ascend into heaven, receive nothing but bread and wine.</p>
+<p class="center">False and Erroneous Doctrine of the Calvinists<br/><strong>Concerning the Person of Christ,</strong></p>
+<p class="center">which conflicts especially with the Third and Fourth Articles of the pure doctrine:</p>
+<p class="center">I. In the first place, that the expression, “God is man,” and, “Man is God,” is figurative.</p>
+<p>II. That the human nature has communion with the divine not in deed and truth, but only in name and words.</p>
+<p>III. That it is impossible for God, with all His omnipotence, to cause the natural body of Christ to be at the same time [simultaneously and instantaneously] in more than one place.</p>
+<p>IV. That by His exaltation Christ, according to His human nature, has received only created gifts and finite power, and neither knows nor can do all things.</p>
+<p>V. That Christ, according to His human nature, rules absently, just as the King of Spain rules the new islands.</p>
+<p>VI. That it is damnable idolatry if the confidence and faith of the heart is placed in Christ not only according to His divine, but also according to His human nature, and the honor of adoration is directed to it [to both natures].</p>
+<p class="center">False and Erroneous Doctrine of the Calvinists</p>
+<p class="center"><strong>Concerning Holy Baptism:</strong></p>
+<p>I. That Baptism is an outward washing of water, whereby an inner washing [ablution] from sins is only signified.</p>
+<p>II. That Baptism neither works nor confers regeneration, faith, the grace of God, and salvation, but only signifies and seals these.</p>
+<p>III. That not all who are baptized with water, but only the elect, receive therewith the grace of Christ or the gift of faith.</p>
+<p>IV. That regeneration occurs not in and at [with] Baptism, but not till afterwards in adult years, and in some [many] not until old age.</p>
+<p>V. That salvation depends not upon Baptism, and accordingly emergency baptism [baptism in case of necessity] should not be permitted in the Church, but if the service of the Church [of the ordinary ministry of the Church] cannot be obtained, the child should be allowed to die without Baptism.</p>
+<p>VI. That children of Christians are holy before Baptism and from their mothers’ wombs; yea, that while still in their mothers’ wombs they are [established] in the covenant of eternal life; otherwise holy Baptism could not be administered to them.</p>
+<p class="center">False and Erroneous Doctrine of the Calvinists<br/><strong>Concerning Predestination and the Providence of God:</strong></p>
+<p class="center">I. That Christ died, not for all men, but only for the elect.</p>
+<p>II. That God created the greater part of men for eternal condemnation, and is unwilling that they be converted and saved.</p>
+<p>III. That the elect and regenerate cannot lose faith and the Holy Ghost and be condemned, even though they commit great sins and crimes of every kind.</p>
+<p>IV. That they who are not elect must be condemned, and cannot attain salvation, even though they be baptized a thousand times and daily go to the Lord’s Supper, and also live in as holy and irreproachable a way as ever possible.</p>
+<p class="footer-nav"><a href="#top">↑ Na vrh</a> <span>The Book of Concord · Triglot Concordia, 1917</span></p>
 </main>
 </div>
 
-<button type="button" class="tts-toggle-fab" id="tts-toggle-fab" aria-controls="tts-bar" title="Activate read-aloud"><span class="fab-full">Activate read-aloud</span><span class="fab-short">Read aloud</span></button>
+<button type="button" class="tts-toggle-fab" id="tts-toggle-fab" aria-controls="tts-bar" title="Aktiviraj čitanje naglas"><span class="fab-full">Aktiviraj čitanje naglas</span><span class="fab-short">Čitanje naglas</span></button>
 <div class="tts-bar" id="tts-bar" hidden>
   <div class="tts-bar-inner">
-    <button type="button" id="tts-play" title="Play">▶ Read</button>
-    <button type="button" id="tts-pause" title="Pause">⏸ Pause</button>
-    <button type="button" id="tts-stop" title="Stop">■ Stop</button>
-    <label class="tts-label">From
-      <select id="tts-from" aria-label="Start from section"></select>
+    <button type="button" id="tts-play" title="Pokreni">▶ Čitaj</button>
+    <button type="button" id="tts-pause" title="Pauza">⏸ Pauza</button>
+    <button type="button" id="tts-stop" title="Zaustavi">■ Stani</button>
+    <label class="tts-label">Od
+      <select id="tts-from" aria-label="Počni od poglavlja"></select>
     </label>
-    <label class="tts-label">Speed
-      <select id="tts-rate" aria-label="Reading speed">
-        <option value="0.8">0.8×</option>
-        <option value="0.9" selected>0.9×</option>
+    <label class="tts-label">Brzina
+      <select id="tts-rate" aria-label="Brzina čitanja">
+        <option value="0.8">0,8×</option>
+        <option value="0.9" selected>0,9×</option>
         <option value="1">1×</option>
-        <option value="1.15">1.15×</option>
-        <option value="1.3">1.3×</option>
-        <option value="1.5">1.5×</option>
+        <option value="1.15">1,15×</option>
+        <option value="1.3">1,3×</option>
+        <option value="1.5">1,5×</option>
       </select>
     </label>
-    <button type="button" class="shelf-close tts-close" id="tts-close" title="Close" aria-label="Close">×</button>
-    <label class="tts-label tts-voice-label">Voice
-      <select id="tts-voice" aria-label="Voice"></select>
+    <button type="button" class="shelf-close tts-close" id="tts-close" title="Zatvori" aria-label="Zatvori">×</button>
+    <label class="tts-label tts-voice-label">Glas
+      <select id="tts-voice" aria-label="Glas"></select>
     </label>
     <span class="tts-status" id="tts-status" hidden></span>
   </div>
 </div>
 
-<script type="application/json" id="tts-sections">[{"id": "top", "label": "Visitation Articles"}, {"id": "s214", "label": "Visitation Articles"}, {"id": "s215", "label": "Article I."}, {"id": "s216", "label": "Article II."}, {"id": "s217", "label": "Article III."}, {"id": "s218", "label": "Article IV."}]</script>
+<script type="application/json" id="tts-sections">[{"id": "top", "label": "Visitation Articles"}, {"id": "s215", "label": "Article I."}, {"id": "s216", "label": "Article II."}, {"id": "s217", "label": "Article III."}, {"id": "s218", "label": "Article IV."}]</script>
 <script src="../../assets/config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../../assets/auth.js"></script>
