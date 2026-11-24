@@ -1607,19 +1607,25 @@ p.fn .backref {
 
 .brand-fraktur {
   font-family: "Grenze Gotisch", "Times New Roman", serif !important;
-  font-size: 1.35rem;
+  font-size: 1.65rem;
   letter-spacing: 0.01em;
   font-weight: 400;
   line-height: 1.1;
 }
 .shelf-seal {
   display: block;
-  width: 2.15rem;
-  height: 2.15rem;
+  width: 2.55rem;
+  height: 2.55rem;
   object-fit: contain;
   flex: 0 0 auto;
+  margin: 0 auto;
 }
 .shelfbar-head {
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  position: relative;
+}
+.shelf-close {
+  position: absolute;
+  right: 0.5rem;
 }
