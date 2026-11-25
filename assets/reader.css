@@ -1689,3 +1689,17 @@ header.titlepage p { text-indent: 0; }
 /* Bočna traka, OZNAČAVANJE: naslov i ime korisnika nasljeđivali su uvlaku odlomka,
    pa je "Odjava"/"Prijava" izgledala pomaknuta ulijevo. Sad sve kreće od istog lijevog ruba. */
 .account-slot p { text-indent: 0; }
+
+/* ===== 2026-11-24 (izmjene11) ===== */
+/* Bočna traka u knjizi: umjesto "Početna / Reformacijska čitaonica" naslov knjige (autor kao mala oznaka iznad),
+   isti font i veličina kao "Reformacijska čitaonica" na naslovnoj; dugi naslovi se lijepo lome. */
+.shelf-list a.shelf-item.book-home .ttl {
+  font-family: "Grenze Gotisch", "Citaonica Greek", "Noto Serif", "Liberation Serif", Georgia, "Times New Roman", serif;
+  letter-spacing: 0.01em;
+  font-weight: 600;
+  font-size: 1.22rem;
+  line-height: 1.1;
+  overflow-wrap: break-word;
+  hyphens: manual;
+}
+.shelf-list a.shelf-item.book-home .lang { white-space: normal; overflow-wrap: break-word; }
