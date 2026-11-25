@@ -62,8 +62,11 @@ h1.chap .sub, h2.sec .sub { display:block; font-size:0.62em; font-weight:400; fo
 h3.sub { text-align:center; font-style:italic; font-weight:600; font-size:1em; margin:1.8rem 0 0.6rem; }
 p.lead { text-align:center; text-indent:0; font-variant:small-caps; letter-spacing:0.08em; margin:1.2rem 0 0.6rem; }
 
-p.sn { text-indent:0; margin:1.5rem 0 0.4rem; font-weight:600; }
-p.sn em { font-weight:600; }
+h4.secgroup { font-size:0.95em; font-weight:500; font-style:italic; text-align:center; letter-spacing:0.02em; color:var(--muted,#555); margin:2.2rem 0 0.9rem; }
+h4.sectitle { font-size:1em; font-weight:600; font-style:italic; text-align:left; margin:1.5rem 0 0.45rem; line-height:1.4; }
+h4.secgroup + h4.sectitle { margin-top:0.6rem; }
+p.secstart { text-indent:0; }
+p.secstart .secno, span.secno { font-weight:700; margin-right:0.15em; }
 ol.sections { margin:0.6rem 0 1.8rem; padding-left:2.2em; font-size:0.93em; line-height:1.5; }
 ol.sections li { margin:0.25rem 0; }
 ol.sections ol { margin:0.15rem 0; padding-left:1.6em; }
