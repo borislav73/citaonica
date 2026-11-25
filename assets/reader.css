@@ -1703,3 +1703,6 @@ header.titlepage p { text-indent: 0; }
   hyphens: manual;
 }
 .shelf-list a.shelf-item.book-home .lang { white-space: normal; overflow-wrap: break-word; }
+
+/* Natpis u bočnoj traci s uskličnikom. */
+.shelfbar-head::before { content: "Ad fontes!"; }
