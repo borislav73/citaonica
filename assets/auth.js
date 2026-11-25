@@ -13,6 +13,10 @@
       ? "Пријави се да бис означио текст и писао биљешке. Ознаке се вежу за твој рачун."
       : "Prijavi se da bi označio tekst i pisao bilješke. Oznake se vežu uz tvoj račun.",
     google: sr ? "Prijava preko Googlea" : "Prijava preko Googlea",
+    consent: sr
+      ? "Пријавом пристајеш да се твоје ознаке и биљешке чувају уз твој рачун. Будући да могу откривати твоја вјерска увјерења, видљиве су само теби и не дијелимо их ни с ким."
+      : "Prijavom pristaješ da se tvoje oznake i bilješke spremaju uz tvoj račun. Budući da mogu otkrivati tvoja vjerska uvjerenja, vidljive su samo tebi i ne dijelimo ih ni s kim.",
+    privacy: sr ? "Политика приватности" : "Politika privatnosti",
     needCfg: sr
       ? "Google prijava još nije podešena (Supabase)."
       : "Google prijava još nije podešena (Supabase)."
@@ -69,11 +73,25 @@
         '<h2 id="auth-modal-title"></h2>' +
         '<p class="auth-modal-body"></p>' +
         '<button type="button" class="auth-google" id="auth-google"></button>' +
+        '<p class="auth-error" id="auth-error" hidden></p>' +
+        '<p class="auth-consent" id="auth-consent"></p>' +
       '</div>';
     document.body.appendChild(ov);
     ov.querySelector("#auth-modal-title").textContent = t.modalTitle;
     ov.querySelector(".auth-modal-body").textContent = t.modalBody;
     ov.querySelector("#auth-google").textContent = t.google;
+    // Obavijest uz prijavu (čl. 9 GDPR): klik na prijavu je potvrdna radnja.
+    // Kuka za poveznicu: kad stranica s politikom privatnosti postoji, dodaj u config.js
+    //   privacyUrl: "/politika-privatnosti.html"  (put od korijena stranice)
+    const consent = ov.querySelector("#auth-consent");
+    consent.textContent = t.consent;
+    if (cfg.privacyUrl) {
+      consent.appendChild(document.createTextNode(" "));
+      const a = document.createElement("a");
+      a.href = cfg.privacyUrl;
+      a.textContent = t.privacy;
+      consent.appendChild(a);
+    }
     ov.addEventListener("click", function (ev) {
       if (ev.target === ov) hideModal();
     });
@@ -140,7 +158,8 @@
 
   async function signIn() {
     if (!ready || !client) {
-      alert(t.needCfg);
+      const err = document.getElementById("auth-error");
+      if (err) { err.textContent = t.needCfg; err.hidden = false; }
       return;
     }
     await client.auth.signInWithOAuth({
@@ -149,10 +168,19 @@
     });
   }
 
+  // Odjava: lokalne oznake i bilješke brišu se s uređaja (i s prikaza), da ih sljedeći korisnik ne vidi.
+  function clearLocalNotes() {
+    if (window.CitaonicaNotes && window.CitaonicaNotes.clearLocal) window.CitaonicaNotes.clearLocal();
+  }
+
   async function signOut() {
-    if (client) await client.auth.signOut();
-    user = null;
-    emit();
+    try {
+      if (client) await client.auth.signOut();
+    } finally {
+      clearLocalNotes();
+      user = null;
+      emit();
+    }
   }
 
   window.CitaonicaAuth = {
@@ -172,7 +200,8 @@
     const { data } = await client.auth.getSession();
     user = data && data.session ? data.session.user : null;
     emit();
-    client.auth.onAuthStateChange(function (_evt, session) {
+    client.auth.onAuthStateChange(function (evt, session) {
+      if (evt === "SIGNED_OUT") clearLocalNotes();   // i odjava iz druge kartice / istek sesije
       user = session ? session.user : null;
       emit();
     });

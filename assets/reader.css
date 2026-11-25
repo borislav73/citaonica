@@ -1706,3 +1706,182 @@ header.titlepage p { text-indent: 0; }
 
 /* Natpis u bočnoj traci s uskličnikom. */
 .shelfbar-head::before { content: "Ad fontes!"; }
+
+/* Obavijest uz Google prijavu (čl. 9 GDPR) — ubacuje je auth.js */
+.auth-consent {
+  margin: 0.85rem 0 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  text-indent: 0;
+  text-align: left;
+  hyphens: manual;
+}
+.auth-consent a { color: var(--link); }
+
+/* Prozor za prijavu: uredniji raspored teksta */
+.auth-modal-card {
+  padding: 1.7rem 1.7rem 1.4rem;
+  text-align: center;
+}
+.auth-modal-card h2 {
+  margin: 0 1.6rem 0.55rem;
+  font-size: 1.22rem;
+  line-height: 1.3;
+  text-align: center;
+  text-wrap: balance;
+}
+.auth-modal-card p {
+  text-indent: 0;
+  hyphens: manual;
+  -webkit-hyphens: manual;
+}
+.auth-modal-body {
+  margin: 0 0 1.25rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  text-align: center;
+  text-wrap: balance;
+}
+.auth-google {
+  display: block;
+  text-align: center;
+}
+.auth-consent {
+  margin: 1.2rem 0 0;
+  padding-top: 0.95rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.8rem;
+  line-height: 1.55;
+  text-align: center;
+  text-wrap: balance;
+  color: var(--muted);
+}
+.auth-modal-x {
+  top: 0.6rem;
+  right: 0.7rem;
+  line-height: 1;
+}
+@media (max-width: 480px) {
+  .auth-modal-card { padding: 1.45rem 1.25rem 1.2rem; }
+  .auth-modal-card h2 { font-size: 1.15rem; }
+  .auth-modal-body { font-size: 0.93rem; }
+}
+
+/* Uređivač bilješke (umjesto prompt prozora) — isti izgled kao prozor za prijavu */
+.note-modal {
+  z-index: 130;
+  top: 0;
+  bottom: auto;
+  height: 100vh;
+  height: 100dvh;
+}
+.note-modal-card {
+  width: min(30rem, 100%);
+  max-height: calc(100% - 1rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.note-modal-card h2 { margin-bottom: 0.7rem; }
+.note-modal-quote {
+  margin: 0 0 1rem;
+  padding: 0.55rem 0.8rem;
+  border: 0;
+  border-left: 3px solid var(--rule);
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 0 6px 6px 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-style: italic;
+  line-height: 1.5;
+  text-align: left;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+}
+.note-modal-text {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 5.2em;
+  max-height: 40vh;
+  max-height: 40dvh;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: #fff;
+  font: inherit;
+  font-size: 0.97rem;
+  line-height: 1.5;
+  text-align: left;
+  resize: none;
+  overflow-y: auto;
+}
+.note-modal-text:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05); }
+.note-modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.note-modal-actions button {
+  font: inherit;
+  font-size: 0.92rem;
+  padding: 0.5rem 0.95rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.note-modal-save {
+  font-weight: 600 !important;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+.note-modal-save:hover { filter: brightness(1.08); }
+.note-modal-cancel {
+  border: 1px solid var(--rule);
+  background: #fff;
+  color: inherit;
+}
+.note-modal-cancel:hover { border-color: var(--accent); }
+.note-modal-del {
+  margin-right: auto;
+  border: 0;
+  background: none;
+  color: #a0413a;
+  padding-left: 0 !important;
+}
+.note-modal-del:hover { text-decoration: underline; }
+.note-modal-hint {
+  margin: 0.8rem 0 0;
+  color: var(--muted);
+  font-size: 0.74rem;
+  text-align: right;
+  text-indent: 0;
+}
+.note-body { white-space: pre-wrap; }
+.auth-error {
+  margin: 0.8rem 0 0;
+  color: #a0413a;
+  font-size: 0.85rem;
+  text-align: center;
+}
+@media (max-width: 480px) {
+  .note-modal { align-items: flex-end; padding: 0.5rem; }
+  .note-modal-card { width: 100%; }
+  .note-modal-actions button { flex: 1 1 auto; }
+  .note-modal-del { flex: 1 0 100% !important; order: 3; text-align: center; padding-left: 0.95rem !important; }
+}
+/* ispravak: citat točno na 3 retka (bez dijela 4. retka u paddingu) */
+.note-modal-quote {
+  padding-top: 0;
+  padding-bottom: 0;
+  border-top: 0.55rem solid transparent;
+  border-bottom: 0.55rem solid transparent;
+}
+body.note-modal-open .hl-tray,
+body.note-modal-open .hl-sheet { visibility: hidden; }

@@ -27,8 +27,131 @@
     clear: sr ? "Уклони ознаку" : "Ukloni oznaku",
     copy: sr ? "Копирај" : "Kopiraj",
     addNote: sr ? "Биљешка" : "Bilješka",
-    highlight: sr ? "Означи" : "Označi"
+    highlight: sr ? "Означи" : "Označi",
+    edTitle: sr ? "Биљешка" : "Bilješka",
+    edPlaceholder: sr ? "Напиши биљешку уз овај одломак…" : "Napiši bilješku uz ovaj odlomak…",
+    edSave: sr ? "Спреми" : "Spremi",
+    edCancel: sr ? "Одустани" : "Odustani",
+    edDelete: sr ? "Обриши биљешку" : "Obriši bilješku",
+    edHint: sr ? "Ctrl+Enter спрема · Esc одустаје" : "Ctrl+Enter sprema · Esc odustaje"
   };
+
+  /* Uređivač bilješke (umjesto window.prompt). done(text) dobiva isto što je prompt vraćao:
+     null = odustao, "" = prazna bilješka (ostaje samo oznaka), inače tekst bilješke. */
+  function noteEditor(quote, current, done) {
+    const prev = document.getElementById("note-modal");
+    if (prev) prev.remove();
+    const back = document.activeElement;
+    const initial = current || "";
+    const ov = document.createElement("div");
+    ov.id = "note-modal";
+    ov.className = "auth-modal note-modal";
+    const card = document.createElement("div");
+    card.className = "auth-modal-card note-modal-card";
+    card.setAttribute("role", "dialog");
+    card.setAttribute("aria-modal", "true");
+    card.setAttribute("aria-labelledby", "note-modal-title");
+    const x = document.createElement("button");
+    x.type = "button";
+    x.className = "auth-modal-x";
+    x.setAttribute("aria-label", t.edCancel);
+    x.textContent = "×";
+    const h = document.createElement("h2");
+    h.id = "note-modal-title";
+    h.textContent = t.edTitle;
+    const q = document.createElement("blockquote");
+    q.className = "note-modal-quote";
+    q.textContent = quote || "";
+    const ta = document.createElement("textarea");
+    ta.className = "note-modal-text";
+    ta.rows = 3;
+    ta.value = initial;
+    ta.placeholder = t.edPlaceholder;
+    ta.setAttribute("aria-label", t.prompt);
+    const row = document.createElement("div");
+    row.className = "note-modal-actions";
+    function btn(label, cls, fn) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = cls;
+      b.textContent = label;
+      b.addEventListener("click", fn);
+      return b;
+    }
+    const hint = document.createElement("p");
+    hint.className = "note-modal-hint";
+    hint.textContent = t.edHint;
+    let closed = false;
+    function close(result) {
+      if (closed) return;
+      closed = true;
+      ov.remove();
+      document.body.classList.remove("note-modal-open");
+      document.removeEventListener("keydown", onKey, true);
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener("resize", fit);
+        window.visualViewport.removeEventListener("scroll", fit);
+      }
+      try { if (back && back.focus) back.focus({ preventScroll: true }); } catch (e) {}
+      done(result);
+    }
+    const save = function () { close(ta.value); };
+    const cancel = function () { close(null); };
+    if (initial) row.appendChild(btn(t.edDelete, "note-modal-del", function () { close(""); }));
+    row.appendChild(btn(t.edCancel, "note-modal-cancel", cancel));
+    row.appendChild(btn(t.edSave, "note-modal-save", save));
+    x.addEventListener("click", cancel);
+    card.appendChild(x);
+    card.appendChild(h);
+    if (quote) card.appendChild(q);
+    card.appendChild(ta);
+    card.appendChild(row);
+    if (!isTouch()) card.appendChild(hint);
+    ov.appendChild(card);
+    // klik na pozadinu odustaje samo ako ništa nije promijenjeno
+    ov.addEventListener("click", function (ev) {
+      if (ev.target !== ov) return;
+      if (ta.value === initial) cancel();
+      else ta.focus({ preventScroll: true });
+    });
+    function grow() {
+      ta.style.height = "auto";
+      ta.style.height = Math.max(ta.scrollHeight + 2, 0) + "px";
+    }
+    ta.addEventListener("input", grow);
+    function onKey(ev) {
+      if (!card.contains(document.activeElement) && ev.key !== "Escape") {
+        if (ev.key === "Tab") { ev.preventDefault(); ta.focus(); }
+        return;
+      }
+      if (ev.key === "Escape") { ev.preventDefault(); ev.stopPropagation(); cancel(); return; }
+      if (ev.key === "Enter" && (ev.ctrlKey || ev.metaKey)) { ev.preventDefault(); save(); return; }
+      if (ev.key === "Tab") {
+        const f = Array.prototype.slice.call(card.querySelectorAll("button, textarea"));
+        const i = f.indexOf(document.activeElement);
+        if (ev.shiftKey && (i <= 0)) { ev.preventDefault(); f[f.length - 1].focus(); }
+        else if (!ev.shiftKey && i === f.length - 1) { ev.preventDefault(); f[0].focus(); }
+      }
+    }
+    document.addEventListener("keydown", onKey, true);
+    // mobitel: prozor prati vidljivi dio ekrana iznad tipkovnice
+    function fit() {
+      const vv = window.visualViewport;
+      if (!vv) return;
+      ov.style.top = vv.offsetTop + "px";
+      ov.style.height = vv.height + "px";
+    }
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", fit);
+      window.visualViewport.addEventListener("scroll", fit);
+    }
+    document.body.appendChild(ov);
+    document.body.classList.add("note-modal-open");
+    fit();
+    grow();
+    ta.focus({ preventScroll: true });
+    ta.setSelectionRange(ta.value.length, ta.value.length);
+  }
 
   let pendingQuote = "";
   let sheetMode = "actions";
@@ -412,13 +535,14 @@
       nb.type = "button";
       nb.textContent = t.note;
       nb.addEventListener("click", function () {
-        const text = window.prompt(t.prompt, it.text || "");
-        if (text === null) return;
-        it.text = text;
-        it.kind = text ? "note" : "mark";
-        persist();
-        paint();
-        renderList();
+        noteEditor(it.quote, it.text || "", function (text) {
+          if (text === null) return;
+          it.text = text;
+          it.kind = text ? "note" : "mark";
+          persist();
+          paint();
+          renderList();
+        });
       });
       const rm = document.createElement("button");
       rm.type = "button";
@@ -550,18 +674,19 @@
       if (needLogin()) return;
       const q = pendingQuote || currentQuote();
       if (!q) return;
-      const text = window.prompt(t.prompt, "");
-      if (text === null) return;
-      applyColor("gold", q);
-      const last = items[items.length - 1];
-      if (last && last.quote === q.slice(0, 500)) {
-        last.text = text || "";
-        last.kind = text ? "note" : "mark";
-        persist();
-        paint();
-        renderList();
-      }
-      hideSheet();
+      noteEditor(q, "", function (text) {
+        if (text === null) return;
+        applyColor("gold", q);
+        const last = items[items.length - 1];
+        if (last && last.quote === q.slice(0, 500)) {
+          last.text = text || "";
+          last.kind = text ? "note" : "mark";
+          persist();
+          paint();
+          renderList();
+        }
+        hideSheet();
+      });
     });
     action(t.highlight, function () {
       if (needLogin()) return;
@@ -680,13 +805,14 @@
     }
     const it = items.find(function (x) { return x.id === mark.dataset.id; });
     if (!it) return;
-    const text = window.prompt(t.prompt, it.text || "");
-    if (text === null) return;
-    it.text = text;
-    it.kind = text ? "note" : "mark";
-    persist();
-    paint();
-    renderList();
+    noteEditor(it.quote, it.text || "", function (text) {
+      if (text === null) return;
+      it.text = text;
+      it.kind = text ? "note" : "mark";
+      persist();
+      paint();
+      renderList();
+    });
   });
 
   function loggedIn() {
@@ -734,13 +860,37 @@
     tools.appendChild(listBtn);
   }
 
+  const LAST_UID = "citaonica-last-uid";
+  // Briše sve lokalne oznake i bilješke (sve knjige) i uklanja ih s prikaza.
+  function clearLocal() {
+    try {
+      const keys = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && k.indexOf("citaonica-notes:") === 0) keys.push(k);
+      }
+      keys.forEach(function (k) { localStorage.removeItem(k); });
+    } catch (e) {}
+    items = [];
+    paint();
+    renderList();
+  }
+
   window.CitaonicaNotes = {
-    syncAuth: function () {
+    clearLocal: clearLocal,
+    syncAuth: function (u) {
       addToggle();
       if (!loggedIn()) {
         setTrayOpen(false);
         document.body.classList.remove("notes-open");
       } else {
+        // Promjena korisnika na istom uređaju: tuđe lokalne bilješke ne smiju ući u novi račun.
+        // (Gostove oznake prije prve prijave, kad zadnjeg korisnika nema, smiju se spojiti s tim računom.)
+        const id = (u && u.id) || userId();
+        let last = null;
+        try { last = localStorage.getItem(LAST_UID); } catch (e) {}
+        if (id && last && last !== id) clearLocal();
+        if (id) { try { localStorage.setItem(LAST_UID, id); } catch (e) {} }
         pullCloud();
       }
     }
