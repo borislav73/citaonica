@@ -1885,3 +1885,7 @@ header.titlepage p { text-indent: 0; }
 }
 body.note-modal-open .hl-tray,
 body.note-modal-open .hl-sheet { visibility: hidden; }
+
+/* "Ad fontes!" je poveznica na naslovnicu. */
+.shelfbar-head { cursor: pointer; }
+.shelfbar-head .shelf-close { cursor: pointer; }
